@@ -1,6 +1,7 @@
 # react-native-elm
 
-项目还没做完，网络api连的是https://github.com/bailicangdu/vue2-elm的服务器，如被告知禁止使用，本人立马删除相应的api。
+项目还没做完，网络api连的是https://github.com/bailicangdu/vue2-elm的服务器
+如被告知禁止使用，本人立马删除相应的api。
 
 
 项目运行
