@@ -1,0 +1,180 @@
+import React from 'react'
+import {ScrollView, StyleSheet, TouchableOpacity} from "react-native";
+import BaseScreen from "../BaseScreen";
+import Row from "../../view/Row";
+import Image from "../../view/Image";
+import {borderWidthLR, marginTB, paddingLR, paddingTB, px2dp, px2sp, screenW, wh} from "../../utils/ScreenUtil";
+import Column from "../../view/Column";
+import Text from "../../view/Text";
+import Color from "../../app/Color";
+import Images from "../../app/Images";
+import Divider from "../../view/Divider";
+import ElmVIPScreen from "../member/ElmVIPScreen";
+import ServiceCenterScreen from "../member/ServiceCenterScreen";
+
+export default class MyScreen extends BaseScreen {
+
+  static navigationOptions = {
+    header: null,
+    gesturesEnabled: false
+  };
+  // 构造
+  constructor(props) {
+    super(props);
+    this.setTitle('我的');
+
+    // 初始状态
+    this.state = {};
+  }
+
+  renderGoBack(){
+    return(
+      <Image source={Images.My.notice} style={{...wh(40), marginLeft:px2dp(20)}}/>
+    )
+  }
+
+  renderMenu(){
+    return(
+      <Image source={Images.My.setting} style={{...wh(40), marginRight:px2dp(20)}}/>
+    )
+  }
+
+  _userInfoClick = () => {
+    this.props.navigation.navigate('UserInfo',{callback:this._handleLogoutSuccess})
+    // this.props.navigation.navigate('Login',{callback:this._handleLoginSuccess})
+  };
+
+  /*登录成功后回来刷新页面*/
+  _handleLoginSuccess = () => {
+    alert('登录成功')
+  };
+
+  /*退出登录成功后回来刷新页面*/
+  _handleLogoutSuccess = () => {
+    alert('退出登录成功')
+  };
+
+  _onItemCLick = (label) => {
+    if(label === '我的订单'){
+      this.props.navigation.navigate('Order')
+    }else if (label === '饿了么会员卡'){
+      this.props.navigation.navigate('ElmVIP')
+    }else if (label === '服务中心'){
+      this.props.navigation.navigate('ServiceCenter')
+    }
+  };
+
+  _onBalanceItemClick = (label) => {
+    if (label === '我的余额'){
+      this.props.navigation.navigate('Balance')
+    } else if (label === '我的优惠'){
+      this.props.navigation.navigate('Discount')
+    } else {
+      this.props.navigation.navigate('Point')
+    }
+  };
+
+  renderView() {
+    return (
+      <ScrollView>
+        <TouchableOpacity onPress={this._userInfoClick} activeOpacity={0.8}>
+          <Row verticalCenter style={styles.userInfoStyle}>
+            {/*用户信息*/}
+            <Row verticalCenter>
+              <Image source={Images.My.head} style={styles.headStyle}/>
+              <Column style={{justifyContent:'space-between'}}>
+                <Text largeSize white text={'登录/注册'} style={{fontWeight: '600',marginBottom:px2dp(10)}}/>
+                <Row verticalCenter>
+                  <Image source={Images.My.phone} style={{...wh(25, 30)}}/>
+                  <Text mediumSize white text={'暂无绑定手机号'}/>
+                </Row>
+              </Column>
+            </Row>
+            {/*前往登录*/}
+            <Image source={Images.Common.arrowRight} style={{...wh(30)}}/>
+          </Row>
+        </TouchableOpacity>
+        {/*三块数值*/}
+        <Row verticalCenter style={{justifyContent: 'space-between', backgroundColor: Color.white}}>
+          {this._renderBalanceItem('0.00', Color.theme, '元', '我的余额')}
+          {this._renderBalanceItem('0', Color.pink, '个', '我的优惠')}
+          {this._renderBalanceItem('0', Color.reseda, '分', '我的积分')}
+        </Row>
+        <Column style={{...marginTB(20), backgroundColor: Color.white}}>
+          {this._renderItem(Images.My.order, '我的订单')}
+          <Divider style={styles.dividerStyle}/>
+          {this._renderItem(Images.My.point, '积分商城')}
+          <Divider style={styles.dividerStyle}/>
+          {this._renderItem(Images.My.vip, '饿了么会员卡')}
+        </Column>
+        <Column style={{marginBottom: px2dp(20), backgroundColor: Color.white}}>
+          {this._renderItem(Images.My.service, '服务中心')}
+        </Column>
+      </ScrollView>
+    )
+  }
+
+  _renderBalanceItem = (value, color, unit, label) => {
+    let style = null;
+    if (label === '我的优惠'){
+      style = styles.balanceLineStyle
+    }
+    return(
+      <TouchableOpacity onPress={()=>this._onBalanceItemClick(label)}>
+        <Column style={[styles.balanceStyle,style]}>
+          <Row style={{alignItems: 'flex-end'}}>
+            <Text theme text={value} style={{fontSize: px2sp(50),color:color}}/>
+            <Text microSize text={unit} style={{marginBottom: px2dp(10)}}/>
+          </Row>
+          <Text text={label}/>
+        </Column>
+      </TouchableOpacity>
+    )
+  };
+
+  _renderItem(img, label) {
+    return (
+      <TouchableOpacity onPress={()=>this._onItemCLick(label)}>
+        <Row verticalCenter style={styles.itemStyle}>
+          <Row verticalCenter>
+            <Image source={img} style={{...wh(30), marginRight: px2dp(10)}}/>
+            <Text text={label}/>
+          </Row>
+          <Image source={Images.Common.arrowRight} style={{...wh(25), tintColor: Color.gray3}}/>
+        </Row>
+      </TouchableOpacity>
+    )
+  }
+}
+
+const styles = StyleSheet.create({
+  userInfoStyle:{
+    ...paddingLR(20),
+    ...paddingTB(25),
+    justifyContent: 'space-between',
+    backgroundColor: Color.theme
+  },
+  headStyle:{
+    ...wh(100),
+    borderRadius: px2dp(50),
+    marginRight: px2dp(10)
+  },
+  balanceStyle: {
+    width: screenW / 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    ...paddingTB(25)
+  },
+  balanceLineStyle: {
+    borderColor: Color.divider,
+    ...borderWidthLR(1),
+  },
+  dividerStyle: {
+    marginLeft: px2dp(30)
+  },
+  itemStyle:{
+    justifyContent: 'space-between',
+    ...paddingTB(20),
+    ...paddingLR(25)
+  },
+});
