@@ -19,4 +19,12 @@
 如果对您有帮助，您可以点右上角 "Star" 支持一下 谢谢！ ^_^
 
 
+![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/1.png)
+![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/2.png)
+![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/3.png)
+![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/4.png)
+![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/5.png)
+![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/6.png)
+
+
 
