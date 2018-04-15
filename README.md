@@ -3,6 +3,8 @@
 项目还没做完，网络api连的是https://github.com/bailicangdu/vue2-elm的服务器
 如被告知禁止使用，本人立马删除相应的api。
 
+由于没有文档，api方面能做多少就多少了。
+
 
 项目运行
  
