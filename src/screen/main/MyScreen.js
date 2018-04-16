@@ -9,8 +9,8 @@ import Text from "../../view/Text";
 import Color from "../../app/Color";
 import Images from "../../app/Images";
 import Divider from "../../view/Divider";
-import ElmVIPScreen from "../member/ElmVIPScreen";
-import ServiceCenterScreen from "../member/ServiceCenterScreen";
+import {toDecimal2} from "../../store/ShoppingCartStore";
+import AuthApi from "../../api/AuthApi";
 
 export default class MyScreen extends BaseScreen {
 
@@ -18,61 +18,101 @@ export default class MyScreen extends BaseScreen {
     header: null,
     gesturesEnabled: false
   };
-  // 构造
+
   constructor(props) {
     super(props);
     this.setTitle('我的');
-
-    // 初始状态
-    this.state = {};
+    this.state = {
+      avatar: '', //头像
+      username: '', //用户名
+      balance: 0, //余额
+      gift_amount: 0, //优惠
+      point: 0, //积分
+    };
   }
 
-  renderGoBack(){
-    return(
-      <Image source={Images.My.notice} style={{...wh(40), marginLeft:px2dp(20)}}/>
+  componentDidMount() {
+    if (isLogin) this._fetchUserInfo()
+  }
+
+  renderGoBack() {
+    return (
+      <Image source={Images.My.notice} style={{...wh(40), marginLeft: px2dp(20)}}/>
     )
   }
 
-  renderMenu(){
-    return(
-      <Image source={Images.My.setting} style={{...wh(40), marginRight:px2dp(20)}}/>
+  renderMenu() {
+    return (
+      <Image source={Images.My.setting} style={{...wh(40), marginRight: px2dp(20)}}/>
     )
   }
 
   _userInfoClick = () => {
-    this.props.navigation.navigate('UserInfo',{callback:this._handleLogoutSuccess})
-    // this.props.navigation.navigate('Login',{callback:this._handleLoginSuccess})
+    if (isLogin) this.props.navigation.navigate('UserInfo', {callback: this._handleLogoutSuccess});
+    else this._toLogin()
   };
+
+  _toLogin() {
+    this.props.navigation.navigate('Login', {callback: this._handleLoginSuccess})
+  }
 
   /*登录成功后回来刷新页面*/
   _handleLoginSuccess = () => {
-    alert('登录成功')
+    this.setState({
+      avatar: UserInfo.avatar,
+      username: UserInfo.username,
+      balance: UserInfo.balance,
+      gift_amount: UserInfo.gift_amount,
+      point: UserInfo.point,
+    })
   };
 
   /*退出登录成功后回来刷新页面*/
   _handleLogoutSuccess = () => {
-    alert('退出登录成功')
+    this.setState({
+      avatar: '',
+      username: '',
+      balance: 0,
+      gift_amount: 0,
+      point: 0,
+    })
   };
 
   _onItemCLick = (label) => {
-    if(label === '我的订单'){
+    if (!isLogin) {
+      this._toLogin();
+      return
+    }
+    if (label === '我的订单') {
       this.props.navigation.navigate('Order')
-    }else if (label === '饿了么会员卡'){
+    } else if (label === '积分商城') {
+      this.props.navigation.navigate('PointMall')
+    } else if (label === '饿了么会员卡') {
       this.props.navigation.navigate('ElmVIP')
-    }else if (label === '服务中心'){
+    } else if (label === '服务中心') {
       this.props.navigation.navigate('ServiceCenter')
     }
   };
 
   _onBalanceItemClick = (label) => {
-    if (label === '我的余额'){
+    if (!isLogin) {
+      this._toLogin();
+      return
+    }
+    if (label === '我的余额') {
       this.props.navigation.navigate('Balance')
-    } else if (label === '我的优惠'){
+    } else if (label === '我的优惠') {
       this.props.navigation.navigate('Discount')
     } else {
       this.props.navigation.navigate('Point')
     }
   };
+
+  _fetchUserInfo() {
+    AuthApi.fetchUserInfo(UserInfo.id).then((res) => {
+      UserInfo = res
+    })
+  }
 
   renderView() {
     return (
@@ -81,9 +121,10 @@ export default class MyScreen extends BaseScreen {
           <Row verticalCenter style={styles.userInfoStyle}>
             {/*用户信息*/}
             <Row verticalCenter>
-              <Image source={Images.My.head} style={styles.headStyle}/>
-              <Column style={{justifyContent:'space-between'}}>
-                <Text largeSize white text={'登录/注册'} style={{fontWeight: '600',marginBottom:px2dp(10)}}/>
+              <Image source={isLogin ? this.state.avatar : Images.My.head} style={styles.headStyle}/>
+              <Column style={{justifyContent: 'space-between'}}>
+                <Text largeSize white text={isLogin ? this.state.username : '登录/注册'}
+                      style={{fontWeight: '600', marginBottom: px2dp(10)}}/>
                 <Row verticalCenter>
                   <Image source={Images.My.phone} style={{...wh(25, 30)}}/>
                   <Text mediumSize white text={'暂无绑定手机号'}/>
@@ -96,9 +137,9 @@ export default class MyScreen extends BaseScreen {
         </TouchableOpacity>
         {/*三块数值*/}
         <Row verticalCenter style={{justifyContent: 'space-between', backgroundColor: Color.white}}>
-          {this._renderBalanceItem('0.00', Color.theme, '元', '我的余额')}
-          {this._renderBalanceItem('0', Color.pink, '个', '我的优惠')}
-          {this._renderBalanceItem('0', Color.reseda, '分', '我的积分')}
+          {this._renderBalanceItem(isLogin ? toDecimal2(this.state.balance) : '0.00', Color.theme, '元', '我的余额')}
+          {this._renderBalanceItem(isLogin ? this.state.gift_amount : '0', Color.pink, '个', '我的优惠')}
+          {this._renderBalanceItem(isLogin ? this.state.point : '0', Color.reseda, '分', '我的积分')}
         </Row>
         <Column style={{...marginTB(20), backgroundColor: Color.white}}>
           {this._renderItem(Images.My.order, '我的订单')}
@@ -116,14 +157,14 @@ export default class MyScreen extends BaseScreen {
 
   _renderBalanceItem = (value, color, unit, label) => {
     let style = null;
-    if (label === '我的优惠'){
+    if (label === '我的优惠') {
       style = styles.balanceLineStyle
     }
-    return(
-      <TouchableOpacity onPress={()=>this._onBalanceItemClick(label)}>
-        <Column style={[styles.balanceStyle,style]}>
+    return (
+      <TouchableOpacity onPress={() => this._onBalanceItemClick(label)}>
+        <Column style={[styles.balanceStyle, style]}>
           <Row style={{alignItems: 'flex-end'}}>
-            <Text theme text={value} style={{fontSize: px2sp(50),color:color}}/>
+            <Text theme text={value} style={{fontSize: px2sp(50), color: color}}/>
             <Text microSize text={unit} style={{marginBottom: px2dp(10)}}/>
           </Row>
           <Text text={label}/>
@@ -134,7 +175,7 @@ export default class MyScreen extends BaseScreen {
 
   _renderItem(img, label) {
     return (
-      <TouchableOpacity onPress={()=>this._onItemCLick(label)}>
+      <TouchableOpacity onPress={() => this._onItemCLick(label)}>
         <Row verticalCenter style={styles.itemStyle}>
           <Row verticalCenter>
             <Image source={img} style={{...wh(30), marginRight: px2dp(10)}}/>
@@ -148,13 +189,13 @@ export default class MyScreen extends BaseScreen {
 }
 
 const styles = StyleSheet.create({
-  userInfoStyle:{
+  userInfoStyle: {
     ...paddingLR(20),
     ...paddingTB(25),
     justifyContent: 'space-between',
     backgroundColor: Color.theme
   },
-  headStyle:{
+  headStyle: {
     ...wh(100),
     borderRadius: px2dp(50),
     marginRight: px2dp(10)
@@ -172,7 +213,7 @@ const styles = StyleSheet.create({
   dividerStyle: {
     marginLeft: px2dp(30)
   },
-  itemStyle:{
+  itemStyle: {
     justifyContent: 'space-between',
     ...paddingTB(20),
     ...paddingLR(25)

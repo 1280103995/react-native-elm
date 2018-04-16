@@ -10,6 +10,7 @@ import Button from "../../view/Button";
 import {FlatList,StyleSheet} from "react-native";
 import Divider from "../../view/Divider";
 import Images from "../../app/Images";
+import PointQuestionScreen from "./PointQuestionScreen";
 
 export default class PointScreen extends BaseScreen {
 
@@ -30,11 +31,11 @@ export default class PointScreen extends BaseScreen {
               <Text mediumSize gray text={'当前积分'}/>
               <Row verticalCenter>
                 <Image source={Images.My.phone} style={{...wh(25)}}/>
-                <Text mediumSize theme text={'积分说明'}/>
+                <Text mediumSize theme text={'积分说明'} onPress={()=>this.props.navigation.navigate('PointQuestion')}/>
               </Row>
             </Row>
             <Row style={{alignItems: 'flex-end'}}>
-              <Text text={'0'} style={{fontSize: px2sp(50)}}/>
+              <Text text={UserInfo.point} style={{fontSize: px2sp(50)}}/>
               <Text microSize text={'分'} style={{marginBottom: px2dp(10),marginLeft:px2dp(10)}}/>
             </Row>
             <Button title={'积分兑换商品'} style={{height: px2dp(70), marginTop: px2dp(40), backgroundColor: Color.orange}}/>
@@ -45,7 +46,7 @@ export default class PointScreen extends BaseScreen {
           renderItem={this._renderItem}
           keyExtractor={(item, index) => index + ''}
           ItemSeparatorComponent={() => <Divider/>}
-          ListHeaderComponent={() => <Text microSize gray text={'最近30天积分记录'}/>}
+          ListHeaderComponent={() => <Text microSize gray text={'最近30天积分记录'} style={{margin:px2dp(15)}}/>}
         />
       </Column>
     )

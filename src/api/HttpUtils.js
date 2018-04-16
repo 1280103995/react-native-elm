@@ -40,14 +40,14 @@ function timeout_fetch(fetch_promise, timeout = 10000) {
  * @param isFormData 是否表单
  * @return 返回Promise
  */
-function baseRequest(method, url, params = '', isFormData) {
-  if (method == null) {
-    method = 'GET';
-  }
+function baseRequest(method, url, params = '', isFormData = false) {
 
-  let header = {
+  let header = !isFormData ? {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
+  }:{
+    'Accept': 'application/json',
+    'Content-Type': 'multipart/form-data',
   };
 
   let option = params === '' ? {

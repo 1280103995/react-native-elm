@@ -11,6 +11,7 @@ export default class App extends Component<Props> {
   }
 }
 global.isLogin = false;
+global.UserInfo = {}; //用户信息
 let store = new ShoppingCarStore();
 global.CartStore = store;
 

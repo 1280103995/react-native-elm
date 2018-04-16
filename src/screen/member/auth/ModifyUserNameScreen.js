@@ -9,6 +9,7 @@ import Text from "../../../view/Text";
 import Button from "../../../view/Button";
 import Toast from "../../../view/Toast";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
+import AuthApi from "../../../api/AuthApi";
 
 export default class ModifyUserNameScreen extends BaseScreen {
 
@@ -23,6 +24,7 @@ export default class ModifyUserNameScreen extends BaseScreen {
       Toast.show('请输入用户名');
       return
     }
+    UserInfo.username = this.name;
     const navigation = this.props.navigation;
     navigation.state.params.callback(this.name);
     navigation.goBack()

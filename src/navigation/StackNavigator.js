@@ -19,6 +19,9 @@ import ExchangeVIPScreen from "../screen/member/ExchangeVIPScreen";
 import BuyRecordScreen from "../screen/member/BuyRecordScreen";
 import ServiceCenterScreen from "../screen/member/ServiceCenterScreen";
 import DiscountScreen from "../screen/member/discount/DiscountScreen";
+import BalanceQuestionScreen from "../screen/member/BalanceQuestionScreen";
+import PointQuestionScreen from "../screen/member/PointQuestionScreen";
+import PointMallScreen from "../screen/member/PointMallScreen";
 
 const initial = __DEV__
   ? "Splash" // 调试用
@@ -45,6 +48,9 @@ const nav = {
   BuyRecord:{screen: BuyRecordScreen},
   ServiceCenter:{screen: ServiceCenterScreen},
   Discount:{screen: DiscountScreen},
+  BalanceQuestion:{screen: BalanceQuestionScreen},
+  PointQuestion: {screen: PointQuestionScreen},
+  PointMall: {screen: PointMallScreen},
 };
 
 // 注册导航

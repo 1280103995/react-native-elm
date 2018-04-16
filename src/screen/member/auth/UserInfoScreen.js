@@ -11,6 +11,7 @@ import Divider from "../../../view/Divider";
 import Button from "../../../view/Button";
 import DialogLogout from "../../../dialog/DialogLogout";
 import ModifyPwdScreen from "./ModifyPwdScreen";
+import AuthApi from "../../../api/AuthApi";
 
 export default class UserInfoScreen extends BaseScreen {
 
@@ -20,7 +21,7 @@ export default class UserInfoScreen extends BaseScreen {
     this.setTitle('账号信息');
     // 初始状态
     this.state = {
-      userName:'霸霸a'
+      userName:UserInfo.username
     };
   }
 
@@ -45,6 +46,7 @@ export default class UserInfoScreen extends BaseScreen {
   };
 
   _handleRightBth = () => {
+    isLogin = false;
     const navigation = this.props.navigation;
     navigation.state.params.callback();
     navigation.goBack()
@@ -54,14 +56,14 @@ export default class UserInfoScreen extends BaseScreen {
     return (
       <ScrollView style={styles.contain}>
         <Divider style={styles.headDividerStyle}/>
-        {this._renderItem(null, '头像', <Image source={Images.UserInfo.head} style={styles.iconHeadStyle}/>)}
+        {this._renderItem(null, '头像', <Image source={UserInfo.avatar} style={styles.iconHeadStyle}/>)}
         <Divider/>
         {this._renderItem(null, '用户名', <Text text={this.state.userName}/>)}
         <Divider/>
         {this._renderItem(null, '收货地址', null)}
         <Divider/>
         {this._renderItemType2('账号绑定')}
-        {this._renderItem(<Image source={Images.My.phone} style={styles.iconPhoneStyle}/>, '手机', null)}
+        {this._renderItem(<Image source={Images.My.phone} style={styles.iconPhoneStyle}/>, '手机', UserInfo.mobile)}
         {this._renderItemType2('安全设置')}
         {this._renderItem(null, '登录密码', <Text gray text={'修改'}/>)}
         <Button style={styles.logoutBtnStyle} title={'退出登录'} onPress={this._logoutBtnClick}/>

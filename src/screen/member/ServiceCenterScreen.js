@@ -1,6 +1,6 @@
 import React from 'react'
 import BaseScreen from "../BaseScreen";
-import {FlatList, TouchableOpacity,StyleSheet} from "react-native";
+import {FlatList, TouchableOpacity,StyleSheet,Linking} from "react-native";
 import Divider from "../../view/Divider";
 import Column from "../../view/Column";
 import Color from "../../app/Color";
@@ -23,29 +23,33 @@ export default class ServiceCenterScreen extends BaseScreen {
 
   componentDidMount() {
       RedPacketApi.fetchGetSearch().then((res)=>{
-        let obj = res
-        let keys = Object.keys(obj)
-        let arr = []
-        let objj = {}
+        let obj = res;
+        let keys = Object.keys(obj);
+        let arr = [];
         keys.forEach((key,index) => {
           if(key.indexOf('Caption')>-1) {
-            console.log(key)
-            objj[key] = obj[key]
-            arr.push(objj)
-            objj = {}
+            arr.push(obj[key])
           }
-        })
+        });
+        this.setState({data:arr})
       })
   }
 
   _onHeaderItemClick = (index) => {
-
+    if (index !== 1) return;
+    Linking.canOpenURL(url).then(supported => {
+      if (!supported) {
+        alert('该设备不支持拨号功能')
+      } else {
+        return Linking.openURL('tel: 10086');
+      }
+    }).catch(err => console.error('An error occurred', err));
   };
 
   renderView() {
     return (
       <FlatList
-        data={[]}
+        data={this.state.data}
         renderItem={this._renderItem}
         keyExtractor={(item, index) => index + ''}
         ListHeaderComponent={this._renderHeader}
@@ -88,7 +92,7 @@ export default class ServiceCenterScreen extends BaseScreen {
     return(
       <Row verticalCenter style={{justifyContent:'space-between',padding:px2dp(25),backgroundColor:Color.white}}>
         <Text text={item}/>
-        <Image source={Images.Common.arrowRight} style={{...wh(25)}}/>
+        <Image source={Images.Common.arrowRight} style={{...wh(25),tintColor:Color.gray3}}/>
       </Row>
     )
   };

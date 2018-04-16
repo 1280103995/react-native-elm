@@ -18,7 +18,7 @@ export default class LoginScreen extends BaseScreen {
 
   constructor(props) {
     super(props);
-    this.setTitle('登录');
+    this.setTitle('密码登录');
     this.state = {
       captcha:null
     };
@@ -59,8 +59,9 @@ export default class LoginScreen extends BaseScreen {
   };
 
   _fetchLogin(){
-    AuthApi.fetchAccountLogin(this.name,this.pwd,this.code).then((res)=>{
+    AuthApi.fetchAccountLogin(this.nameText,this.pwdText,this.codeText).then((res)=>{
       isLogin = true;
+      UserInfo = res;
       const navigation = this.props.navigation;
       navigation.state.params.callback();
       navigation.goBack()
