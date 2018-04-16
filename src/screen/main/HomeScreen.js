@@ -1,9 +1,8 @@
 import React from 'react'
-import {
-  View, Platform, StatusBar, TouchableWithoutFeedback, StyleSheet, SafeAreaView, FlatList,
-  TouchableOpacity
+import {View, Platform, StatusBar, TouchableWithoutFeedback, StyleSheet, SafeAreaView, FlatList,
+  TouchableOpacity, ScrollView
 } from "react-native";
-import {isIphoneX, marginLR, paddingTB, px2dp, screenW, wh} from "../../utils/ScreenUtil";
+import {isIphoneX, marginLR, marginTB, paddingTB, px2dp, screenW, wh} from "../../utils/ScreenUtil";
 import Color from "../../app/Color";
 import Row from "../../view/Row";
 import Divider from "../../view/Divider";
@@ -13,7 +12,6 @@ import LocationApi from "../../api/LocationApi";
 import Text from "../../view/Text";
 import ShopListItem from "../../view/ShopListItem";
 import Image from "../../view/Image";
-import Swiper from 'react-native-swiper';
 import Column from "../../view/Column";
 
 export default class HomeScreen extends BaseScreen {
@@ -30,6 +28,7 @@ export default class HomeScreen extends BaseScreen {
     // 初始状态
     this.state = {
       location: '', //当前位置
+      currentPage: 0,
       category: [],
       shop: [],
     };
@@ -68,6 +67,15 @@ export default class HomeScreen extends BaseScreen {
     LocationApi.fetchShopList(latitude, longitude, 0).then((res) => {
       this.setState({shop: res})
     })
+  }
+
+  /**2.手动滑动分页实现 */
+  _onAnimationEnd(e) {
+    //求出偏移量
+    let offsetX = e.nativeEvent.contentOffset.x;
+    //求出当前页数
+    let pageIndex = Math.floor(offsetX / screenW);
+    this.setState({ currentPage: pageIndex });
   }
 
   renderView() {
@@ -124,20 +132,23 @@ export default class HomeScreen extends BaseScreen {
    */
   _renderHeader = () => {
     return (
-      <Swiper
-        height={px2dp(330)}
-        loop={true}         //每隔4秒切换
-        horizontal={true}              //水平方向，为false可设置为竖直方向
-        paginationStyle={{bottom: px2dp(30)}} //小圆点的位置：距离底部20px
-        showsButtons={false}           //为false时不显示控制按钮
-        showsPagination={true}       //为false不显示下方圆点
-        dot={
-          <View style={[styles.bannerDotStyle, {backgroundColor: Color.gray3}]}/>}//未选中的圆点样式
-        activeDot={
-          <View style={[styles.bannerDotStyle, {backgroundColor: Color.theme}]}/>}//选中的圆点样式
-      >
-        {this.state.category.map((data, index) => this._renderPage(data, index))}
-      </Swiper>
+      <Column style={{backgroundColor:Color.white}}>
+        <ScrollView
+          contentContainerStyle={{width:screenW * this.state.category.length}}
+          bounces={false}
+          pagingEnabled={true}
+          horizontal={true}
+          //滑动完一贞
+          onMomentumScrollEnd={(e)=>{this._onAnimationEnd(e)}}
+          showsHorizontalScrollIndicator={false}>
+          {this.state.category.map((data, index) => this._renderPage(data, index))}
+        </ScrollView>
+        <Row horizontalCenter>
+          {this._renderAllIndicator()}
+        </Row>
+        <Divider style={{height:px2dp(20),backgroundColor:Color.background}}/>
+        <Text text={'附近商家'} style={{margin:px2dp(20)}}/>
+      </Column>
     )
   };
 
@@ -154,13 +165,24 @@ export default class HomeScreen extends BaseScreen {
               alignItems: 'center',
               ...paddingTB(20)
             }}>
-            {/*<Image source={item.image_url} style={{...wh(80)}}/>*/}
-            <View style={{...wh(80),backgroundColor:'pink'}}/>
+            <Image source={Image.cdn + item.image_url} style={{...wh(80)}} needBaseUrl={false}/>
             <Text mediumSize text={item.title}/>
           </TouchableOpacity>
         )}
       </View>
     )
+  }
+
+  /**3.页面指针实现 */
+  _renderAllIndicator() {
+    let indicatorArr = [];
+    let style;
+    let length = this.state.category.length;
+    for (let i = 0; i < length; i++) {
+      style = (i===this.state.currentPage)?{backgroundColor:Color.theme}:{backgroundColor:Color.gray3};
+      indicatorArr.push(<View key={i} style={[styles.bannerDotStyle,style]}/>);
+    }
+    return indicatorArr;
   }
 
   _renderItem = ({item, index}) => {
@@ -181,15 +203,14 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   bannerDotStyle: {
-    ...wh(12, 12),
-    borderRadius: px2dp(6),
-    marginHorizontal: px2dp(9)
+    ...wh(16),
+    borderRadius:px2dp(8),
+    ...marginTB(0,15),
+    ...marginLR(6)
   },
   typesView: {
     flex: 1,
-    backgroundColor: Color.white,
     flexDirection: "row",
-    flexWrap: "wrap",
-    marginBottom: px2dp(20)
+    flexWrap: "wrap"
   },
 });

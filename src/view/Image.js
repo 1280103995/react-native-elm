@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 
 export default class ImageView extends Image {
 
+  static cdn = 'https://fuss10.elemecdn.com'; //分类的图片用这个域名，搞不到原作为什么用两个图片基础域名
+
   constructor(props) {
     super(props);
     this.baseUrl = 'http://cangdu.org:8001/img/'

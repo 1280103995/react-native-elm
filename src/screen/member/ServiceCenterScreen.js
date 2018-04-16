@@ -16,11 +16,25 @@ export default class ServiceCenterScreen extends BaseScreen {
   constructor(props) {
     super(props);
     this.setTitle('服务中心');
-    this.state = {};
+    this.state = {
+      data:[]
+    };
   }
 
   componentDidMount() {
       RedPacketApi.fetchGetSearch().then((res)=>{
+        let obj = res
+        let keys = Object.keys(obj)
+        let arr = []
+        let objj = {}
+        keys.forEach((key,index) => {
+          if(key.indexOf('Caption')>-1) {
+            console.log(key)
+            objj[key] = obj[key]
+            arr.push(objj)
+            objj = {}
+          }
+        })
       })
   }
 
