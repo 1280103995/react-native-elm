@@ -12,7 +12,7 @@ import {
 import BaseScreen from "../BaseScreen";
 import Column from "../../view/Column";
 import {BlurView} from "react-native-blur";
-import {marginLR, marginTB, paddingLR, paddingTB, px2dp, px2sp, screenW, wh} from "../../utils/ScreenUtil";
+import {marginTB, paddingLR, paddingTB, px2dp, px2sp, screenW, wh} from "../../utils/ScreenUtil";
 import Images from "../../app/Images";
 import Image from "../../view/Image";
 import Text from "../../view/Text";
@@ -72,7 +72,6 @@ export default class ShopInfoScreen extends BaseScreen {
       downsampleFactor: 10,
       overlayColor: 'rgba(255,255,255,.1)'
     };
-    const top = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
     return (
       <Column style={{flex: 1}}>
         {/*模糊层*/}
@@ -122,7 +121,7 @@ export default class ShopInfoScreen extends BaseScreen {
           tabBarInactiveTextColor={Color.gray3}
           tabBarTextStyle={{fontSize: px2sp(28)}}>
           <ShopInfoList shopID={this._shopID()} tabLabel="商品"/>
-          <ShopInfoEvaluation tabLabel="评价"/>
+          <ShopInfoEvaluation shopID={this._shopID()} tabLabel="评价"/>
         </ScrollableTabView>
 
       </Column>
