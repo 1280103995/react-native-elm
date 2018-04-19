@@ -22,6 +22,7 @@ import DiscountScreen from "../screen/member/discount/DiscountScreen";
 import BalanceQuestionScreen from "../screen/member/BalanceQuestionScreen";
 import PointQuestionScreen from "../screen/member/PointQuestionScreen";
 import PointMallScreen from "../screen/member/PointMallScreen";
+import OrderConfirmScreen from "../screen/shop/OrderConfirmScreen";
 
 const initial = __DEV__
   ? "Splash" // 调试用
@@ -51,6 +52,7 @@ const nav = {
   BalanceQuestion:{screen: BalanceQuestionScreen},
   PointQuestion: {screen: PointQuestionScreen},
   PointMall: {screen: PointMallScreen},
+  OrderConfirm: {screen: OrderConfirmScreen},
 };
 
 // 注册导航

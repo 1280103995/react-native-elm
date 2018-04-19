@@ -20,8 +20,20 @@ export default class AddressScreen extends BaseScreen {
     };
   }
 
+  _isChose(){
+    return this.props.navigation.state.params.chose
+  }
+
   _onMenuClick = () => {
     this.props.navigation.navigate('AddAddress')
+  };
+
+  _onItemClick = (item) => {
+    const navigation = this.props.navigation;
+    if (this._isChose()){
+      navigation.state.params.callback(item);
+      navigation.goBack()
+    }
   };
 
   renderMenu(){
@@ -45,15 +57,17 @@ export default class AddressScreen extends BaseScreen {
 
   _renderItem = ({item, index}) => {
     return (
-      <Row style={styles.itemStyle}>
-        <Column style={{justifyContent:'space-between'}}>
-          <Text mediumSize text={'新增'}/>
-          <Text mediumSize text={'新增'}/>
-        </Column>
-        <TouchableOpacity onPress={()=>null}>
-          <Image source={Images.Common.close} style={{...wh(30),margin:px2dp(10)}}/>
-        </TouchableOpacity>
-      </Row>
+      <TouchableOpacity activeOpacity={this._isChose() ? 0.1 : 1} onPress={()=>this._onItemClick(item)}>
+        <Row style={styles.itemStyle}>
+          <Column style={{justifyContent:'space-between'}}>
+            <Text mediumSize text={'新增'}/>
+            <Text mediumSize text={'新增'}/>
+          </Column>
+          <TouchableOpacity onPress={()=>null}>
+            <Image source={Images.Common.close} style={{...wh(30),margin:px2dp(10)}}/>
+          </TouchableOpacity>
+        </Row>
+      </TouchableOpacity>
     )
   };
 }

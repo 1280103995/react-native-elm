@@ -49,8 +49,8 @@ export default class ShopBar extends Component<Props>{
       <View style={styles.cartView}>
         {/*各种满减*/}
         <Row verticalCenter horizontalCenter style={{height: px2dp(40), borderTopColor: '#EEC900', borderTopWidth:px2dp(1), backgroundColor: '#EEE9BF'}}>
-          <Text microSize text={'满20减12'}/>
-          <Text microSize text={'满35减17'}/>
+          <Text microSize text={'满20减12，'}/>
+          <Text microSize text={'满35减17，'}/>
           <Text microSize text={'满50减22'}/>
         </Row>
         <Row verticalCenter style={{height: px2dp(90), justifyContent: 'space-between',backgroundColor: Color.gray3}}>
@@ -61,6 +61,7 @@ export default class ShopBar extends Component<Props>{
           <Button
             style={{...wh(160,90), backgroundColor: CartStore.totalCount > 0 && CartStore.totalPrice >= 20 ? Color.reseda : 'transparent'}}
             activeOpacity={CartStore.totalCount > 0 ? 0.8 : 1}
+            onPress={()=>this.props.navigation.navigate('OrderConfirm')}
             title={'￥20起送'}/>
         </Row>
 

@@ -16,7 +16,7 @@ export class ShoppingCarStore {
 
   @action
   subFood(food){
-    this.list.forEach(item => item.id === food.id && (--item.buyNum))
+    this.list.forEach(item => item.id === food.id && item.buyNum > 0 && (--item.buyNum))
   }
 
   @action

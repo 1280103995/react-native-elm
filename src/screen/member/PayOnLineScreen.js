@@ -21,7 +21,7 @@ export default class PayOnLineScreen extends BaseScreen {
     this.state = {
       selectIndex:0
     };
-    this.endTime = new Date().getTime() + 1000 * 60
+    this.endTime = new Date().getTime() + 1000 * 15
   }
 
   _onItemClick = (index) => {

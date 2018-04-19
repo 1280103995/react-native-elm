@@ -120,7 +120,7 @@ export default class ShopInfoScreen extends BaseScreen {
           tabBarActiveTextColor={Color.theme}
           tabBarInactiveTextColor={Color.gray3}
           tabBarTextStyle={{fontSize: px2sp(28)}}>
-          <ShopInfoList shopID={this._shopID()} tabLabel="商品"/>
+          <ShopInfoList shopID={this._shopID()} tabLabel="商品" navigation={this.props.navigation}/>
           <ShopInfoEvaluation shopID={this._shopID()} tabLabel="评价"/>
         </ScrollableTabView>
 

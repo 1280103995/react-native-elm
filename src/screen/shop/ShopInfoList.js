@@ -10,14 +10,14 @@ import {observer} from 'mobx-react';
 import ParcelData from './ParcelData.json'
 import Color from "../../app/Color";
 import Button from "../../view/Button";
-import {marginLR, px2dp, px2sp, screenH, screenW, wh} from "../../utils/ScreenUtil";
+import {marginLR, px2dp, px2sp, screenW, wh} from "../../utils/ScreenUtil";
 import Divider from "../../view/Divider";
 import ShopBar from "../../view/ShopBar";
 import Row from "../../view/Row";
 import Column from "../../view/Column";
 import Text from "../../view/Text";
 import VisibleView from "../../view/VisibleView";
-import Parabola from "../../view/Parabola";
+import CartAnimated from "../../view/CartAnimated";
 
 let Headers = [];
 
@@ -30,11 +30,9 @@ export default class ShopInfoList extends Component {
     // 初始状态
     this.state = {
       selectIndex: 0, //左边列表选中的位置
-      //小球
-      isTrigger: false,
     };
-    this.start = {x: 0, y: 0};
-    this.end = {x: 20, y: screenH - 46}
+    this.startPosition = {x: 200, y:200};
+    this.endPosition = null
   }
 
   componentDidMount() {
@@ -43,21 +41,13 @@ export default class ShopInfoList extends Component {
     });
   };
 
-   _add = (data) => {
+  _add = (data) => {
     CartStore.addFood(data.item);
-    // this.addAction.measure((x, y, width, height, px, py) => {
-    //   this.start = {x:100, y:0};
-      // this.cartElement.measure((x, y, width, height, px, py) => {
-      //   this.end = {x:px, y:py};
-      //
-      // })
 
-    //   this.setState({
-    //     isTrigger: true
-    //   })
-    // });
-
-    // this.cart.runAnimate()
+    this.cartElement.measure((x, y, width, height, px, py) => {
+      this.endPosition = {x: px, y: py};
+      this.refs.cart.startAnim(this.startPosition,this.endPosition,()=>this.cart.runAnimate())
+    });
   };
 
   _sub = (data) => {
@@ -91,7 +81,7 @@ export default class ShopInfoList extends Component {
   render() {
     return (
       <Column style={styles.container}>
-        <Row style={{flex:1}}>
+        <Row style={{flex: 1}}>
           <FlatList
             ref={(flat) => this.flat = flat}
             style={styles.leftList}
@@ -112,29 +102,11 @@ export default class ShopInfoList extends Component {
             onViewableItemsChanged={(info) => this.itemChange(info)}
           />
         </Row>
-
-        <Parabola
-          isTrigger={this.state.isTrigger} //开始标志
-          start={this.start}
-          end={this.end}
-          renderParabola={this._renderParabola}/>
-        <ShopBar ref={(s)=>this.cart=s} cartElement={(c)=>this.cartElement=c}/>
+        <CartAnimated ref={'cart'}/>
+        <ShopBar ref={(s) => this.cart = s} cartElement={(c) => this.cartElement = c} navigation={this.props.navigation}/>
       </Column>
     );
   }
-
-  _renderParabola = ({index, translateX, translateY}) => {
-    return (
-      <View
-        key={`'parabola-ball-'${index}`}
-        style={[
-          {position: 'absolute', overflow: "hidden"},    //Don't forget to set this
-          {...wh(40), borderRadius: px2dp(20), backgroundColor: Color.theme},
-          {transform: [{translateX}, {translateY}]},
-        ]}
-      />
-    )
-  };
 
   renderLRow = (item) => {
     return (
@@ -154,7 +126,7 @@ export default class ShopInfoList extends Component {
   renderRRow = (item) => {
     return (
       <View style={styles.rItem}>
-        <Row style={{flex:1}}>
+        <Row style={{flex: 1}}>
           <Image style={styles.icon} source={{uri: item.item.img}}/>
           <Column style={styles.rItemDetail}>
             <Text mediumSize text={item.item.name} style={{fontWeight: '600'}}/>
@@ -165,18 +137,19 @@ export default class ShopInfoList extends Component {
             <Text microSize orange text={`￥${item.item.money}`}/>
           </Column>
           {/*加减*/}
-          <Row verticalCenter style={{position:'absolute',right:px2dp(20),bottom:px2dp(20)}}>
+          <Row verticalCenter style={{position: 'absolute', right: px2dp(20), bottom: px2dp(20)}}>
             <VisibleView visible={CartStore.getFoodBuyNum(item.item) > 0}>
               <Row verticalCenter>
-                <TouchableOpacity style={[styles.itemActionStyle,styles.lItemActionBg]} onPress={()=>this._sub(item)}>
+                <TouchableOpacity style={[styles.itemActionStyle, styles.lItemActionBg]}
+                                  onPress={() => this._sub(item)}>
                   <Text largeSize theme text={'-'}/>
                 </TouchableOpacity>
                 <Text text={CartStore.getFoodBuyNum(item.item)} style={{...marginLR(20)}}/>
               </Row>
             </VisibleView>
             <TouchableOpacity
-              ref={(t)=>this.addAction=t}
-              style={[styles.itemActionStyle,styles.rItemActionBg]} onPress={()=>this._add(item)}>
+              ref={(t) => this.addAction = t}
+              style={[styles.itemActionStyle, styles.rItemActionBg]} onPress={() => this._add(item)}>
               <Text largeSize white text={'+'}/>
             </TouchableOpacity>
           </Row>
@@ -197,7 +170,7 @@ export default class ShopInfoList extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     backgroundColor: Color.background
   },
   leftList: {
@@ -218,13 +191,13 @@ const styles = StyleSheet.create({
   },
   rItem: {
     flexDirection: 'row',
-    justifyContent:'space-between',
-    backgroundColor:Color.white
+    justifyContent: 'space-between',
+    backgroundColor: Color.white
   },
   rItemDetail: {
-    flex:1,
+    flex: 1,
     marginVertical: 10,
-    marginLeft: 5,justifyContent:'space-between'
+    marginLeft: 5, justifyContent: 'space-between'
   },
   icon: {
     height: 60,
@@ -240,19 +213,19 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
   },
-  itemActionStyle:{
+  itemActionStyle: {
     ...wh(40),
-    justifyContent:'center',
-    alignItems:'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  lItemActionBg:{
-    borderRadius:px2dp(20),
-    borderWidth:px2dp(1),
-    borderColor:Color.theme,
-    backgroundColor:Color.white
+  lItemActionBg: {
+    borderRadius: px2dp(20),
+    borderWidth: px2dp(1),
+    borderColor: Color.theme,
+    backgroundColor: Color.white
   },
-  rItemActionBg:{
-    borderRadius:px2dp(20),
-    backgroundColor:Color.theme
+  rItemActionBg: {
+    borderRadius: px2dp(20),
+    backgroundColor: Color.theme
   },
 });
