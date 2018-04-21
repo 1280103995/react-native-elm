@@ -6,7 +6,7 @@ import {
   SectionList,
   Image, TouchableOpacity,
 } from 'react-native';
-import {observer} from 'mobx-react';
+import {inject, observer} from 'mobx-react';
 import ParcelData from './ParcelData.json'
 import Color from "../../app/Color";
 import Button from "../../view/Button";
@@ -21,6 +21,7 @@ import CartAnimated from "../../view/CartAnimated";
 
 let Headers = [];
 
+@inject(['cartStore'])
 @observer
 export default class ShopInfoList extends Component {
 
@@ -42,16 +43,20 @@ export default class ShopInfoList extends Component {
   };
 
   _add = (data) => {
-    CartStore.addFood(data.item);
+    this.props.cartStore.addFood(data.item);
 
     this.cartElement.measure((x, y, width, height, px, py) => {
       this.endPosition = {x: px, y: py};
-      this.refs.cart.startAnim(this.startPosition,this.endPosition,()=>this.cart.runAnimate())
+      this.refs.cart.startAnim(this.startPosition,this.endPosition,this._doAnim)
     });
   };
 
+  _doAnim = () => {
+    this.shopBar.runAnimate()
+  };
+
   _sub = (data) => {
-    CartStore.subFood(data.item)
+    this.props.cartStore.subFood(data.item)
   };
 
   _measureView(view) {
@@ -103,7 +108,11 @@ export default class ShopInfoList extends Component {
           />
         </Row>
         <CartAnimated ref={'cart'}/>
-        <ShopBar ref={(s) => this.cart = s} cartElement={(c) => this.cartElement = c} navigation={this.props.navigation}/>
+        <ShopBar
+          ref={(s) => this.shopBar = s}
+          cartElement={(c) => this.cartElement = c}
+          store={this.props.cartStore}
+          navigation={this.props.navigation}/>
       </Column>
     );
   }
@@ -138,13 +147,13 @@ export default class ShopInfoList extends Component {
           </Column>
           {/*加减*/}
           <Row verticalCenter style={{position: 'absolute', right: px2dp(20), bottom: px2dp(20)}}>
-            <VisibleView visible={CartStore.getFoodBuyNum(item.item) > 0}>
+            <VisibleView visible={this.props.cartStore.getFoodBuyNum(item.item) > 0}>
               <Row verticalCenter>
                 <TouchableOpacity style={[styles.itemActionStyle, styles.lItemActionBg]}
                                   onPress={() => this._sub(item)}>
                   <Text largeSize theme text={'-'}/>
                 </TouchableOpacity>
-                <Text text={CartStore.getFoodBuyNum(item.item)} style={{...marginLR(20)}}/>
+                <Text text={this.props.cartStore.getFoodBuyNum(item.item)} style={{...marginLR(20)}}/>
               </Row>
             </VisibleView>
             <TouchableOpacity

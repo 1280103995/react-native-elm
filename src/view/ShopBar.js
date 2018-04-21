@@ -25,6 +25,7 @@ type Props = {
 export default class ShopBar extends Component<Props>{
   constructor(props) {
     super(props);
+    this.CartStore = props.store;
     this.state = {
       scale: new Animated.Value(0)
     };
@@ -55,12 +56,12 @@ export default class ShopBar extends Component<Props>{
         </Row>
         <Row verticalCenter style={{height: px2dp(90), justifyContent: 'space-between',backgroundColor: Color.gray3}}>
           <Column style={{height:px2dp(90),marginLeft:px2dp(160),justifyContent:'center'}}>
-            <Text white text={`￥${CartStore.totalPrice}`}/>
+            <Text white text={`￥${this.CartStore.totalPrice}`}/>
             <Text white text={'配送费￥3'} style={{fontSize: px2sp(18)}}/>
           </Column>
           <Button
-            style={{...wh(160,90), backgroundColor: CartStore.totalCount > 0 && CartStore.totalPrice >= 20 ? Color.reseda : 'transparent'}}
-            activeOpacity={CartStore.totalCount > 0 ? 0.8 : 1}
+            style={{...wh(160,90), backgroundColor: this.CartStore.totalCount > 0 && this.CartStore.totalPrice >= 20 ? Color.reseda : 'transparent'}}
+            activeOpacity={this.CartStore.totalCount > 0 ? 0.8 : 1}
             onPress={()=>this.props.navigation.navigate('OrderConfirm')}
             title={'￥20起送'}/>
         </Row>
@@ -75,14 +76,14 @@ export default class ShopBar extends Component<Props>{
           ]
         }]}>
           {/*购物车图标*/}
-          <View style={[styles.iconView, CartStore.totalCount > 0 ? {backgroundColor: Color.theme} : null]}>
+          <View style={[styles.iconView, this.CartStore.totalCount > 0 ? {backgroundColor: Color.theme} : null]}>
             <Image  source={Images.Shop.cart} ref={(cart)=>this.props.cartElement(cart)}
-              style={{...wh(50), tintColor: CartStore.totalCount > 0 ? Color.white : Color.gray3}}/>
+              style={{...wh(50), tintColor: this.CartStore.totalCount > 0 ? Color.white : Color.gray3}}/>
           </View>
           {/*数量*/}
-          {CartStore.totalCount > 0 ?
+          {this.CartStore.totalCount > 0 ?
             <View style={styles.count}>
-              <Text white text={CartStore.totalCount} style={{fontSize: px2sp(18)}}/>
+              <Text white text={this.CartStore.totalCount} style={{fontSize: px2sp(18)}}/>
             </View> : null}
         </Animated.View>
       </View>

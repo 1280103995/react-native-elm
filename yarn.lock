@@ -3905,8 +3905,8 @@ mobx-react@^5.0.0:
     hoist-non-react-statics "^2.3.1"
 
 mobx@^4.1.1:
-  version "4.1.1"
-  resolved "http://registry.npm.taobao.org/mobx/download/mobx-4.1.1.tgz#7ce7ef92b22e85271d1fc274a124d7fa32fcceeb"
+  version "4.2.0"
+  resolved "http://registry.npm.taobao.org/mobx/download/mobx-4.2.0.tgz#ee0b0a4f3da2f4776225046ab208ac329a4841d4"
 
 morgan@^1.9.0:
   version "1.9.0"

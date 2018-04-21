@@ -13,7 +13,10 @@ import Text from "../../view/Text";
 import ShopListItem from "../../view/ShopListItem";
 import Image from "../../view/Image";
 import Column from "../../view/Column";
+import {inject, observer} from "mobx-react";
 
+@inject('homeStore')
+@observer
 export default class HomeScreen extends BaseScreen {
 
   static navigationOptions = {
@@ -21,19 +24,14 @@ export default class HomeScreen extends BaseScreen {
     gesturesEnabled: false
   };
 
-  // 构造
   constructor(props) {
     super(props);
     this.setNavBarVisible(false);
-    // 初始状态
-    this.state = {
-      location: '', //当前位置
-      currentPage: 0,
-      category: [],
-      shop: [],
-    };
     this.latitude = null;
-    this.longitude = null
+    this.longitude = null;
+    this.state = {
+      curSelectPage: 0
+    }
   }
 
   _onCategoryItemClick = (category) => {
@@ -43,20 +41,23 @@ export default class HomeScreen extends BaseScreen {
   componentDidMount() {
     LocationApi.fetchCityGuess().then((res) => {
       Geohash = res.geohash;
-      this.state.location = res.name;
+      this.props.homeStore.setLocation(res.name);
       this.latitude = res.latitude;
       this.longitude = res.longitude;
 
       LocationApi.fetchFoodTypes(res.geohash).then((res) => {
+        let temp = [];
         const itemCount = 8;//一页8个分类
         const pageCount = res.length / itemCount;
         const last = res.length % 8; //余下的个数，不满一页8个的，如果=0则刚刚被整除
         for (let i = 0; i < pageCount; i++) {
-          this.state.category.push(res.slice(i * itemCount, (i + 1) * itemCount));
+          temp.push(res.slice(i * itemCount, (i + 1) * itemCount));
         }
         if (last > 0) {
-          this.state.category.push(res.slice(itemCount * pageCount, res.length))
+          temp.push(res.slice(itemCount * pageCount, res.length))
         }
+        this.props.homeStore.categoryAddAll(temp);
+        temp = null
       });
 
       this._fetchShop(res.latitude, res.longitude);
@@ -65,7 +66,7 @@ export default class HomeScreen extends BaseScreen {
 
   _fetchShop(latitude, longitude) {
     LocationApi.fetchShopList(latitude, longitude, 0).then((res) => {
-      this.setState({shop: res})
+      this.props.homeStore.shopAddAll(res)
     })
   }
 
@@ -75,7 +76,7 @@ export default class HomeScreen extends BaseScreen {
     let offsetX = e.nativeEvent.contentOffset.x;
     //求出当前页数
     let pageIndex = Math.floor(offsetX / screenW);
-    this.setState({ currentPage: pageIndex });
+    this.setState({curSelectPage: pageIndex})
   }
 
   renderView() {
@@ -83,7 +84,7 @@ export default class HomeScreen extends BaseScreen {
       <View style={{flex: 1}}>
         {this._renderNavBar()}
         <FlatList
-          data={this.state.shop}
+          data={this.props.homeStore.getShopList}
           renderItem={this._renderItem}
           keyExtractor={(item, index) => index + item.name}
           ItemSeparatorComponent={() => <Divider/>}
@@ -102,7 +103,7 @@ export default class HomeScreen extends BaseScreen {
           <Row verticalCenter style={{justifyContent: 'space-between', ...marginLR(20)}}>
             <Row verticalCenter>
               <Image source={Images.Main.location} style={{...wh(30)}}/>
-              <Text white text={this.state.location}/>
+              <Text white text={this.props.homeStore.getLocation}/>
               <Image source={Images.Main.arrow} style={{...wh(18, 25)}}/>
             </Row>
             {/*天气*/}
@@ -134,14 +135,14 @@ export default class HomeScreen extends BaseScreen {
     return (
       <Column style={{backgroundColor:Color.white}}>
         <ScrollView
-          contentContainerStyle={{width:screenW * this.state.category.length}}
+          contentContainerStyle={{width:screenW * this.props.homeStore.getCategoryList.length}}
           bounces={false}
           pagingEnabled={true}
           horizontal={true}
           //滑动完一贞
           onMomentumScrollEnd={(e)=>{this._onAnimationEnd(e)}}
           showsHorizontalScrollIndicator={false}>
-          {this.state.category.map((data, index) => this._renderPage(data, index))}
+          {this.props.homeStore.getCategoryList.map((data, index) => this._renderPage(data, index))}
         </ScrollView>
         <Row horizontalCenter>
           {this._renderAllIndicator()}
@@ -177,9 +178,9 @@ export default class HomeScreen extends BaseScreen {
   _renderAllIndicator() {
     let indicatorArr = [];
     let style;
-    let length = this.state.category.length;
+    let length = this.props.homeStore.getCategoryList.length;
     for (let i = 0; i < length; i++) {
-      style = (i===this.state.currentPage)?{backgroundColor:Color.theme}:{backgroundColor:Color.gray3};
+      style = (i===this.state.curSelectPage)?{backgroundColor:Color.theme}:{backgroundColor:Color.gray3};
       indicatorArr.push(<View key={i} style={[styles.bannerDotStyle,style]}/>);
     }
     return indicatorArr;

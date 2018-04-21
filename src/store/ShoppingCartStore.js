@@ -1,6 +1,6 @@
 import {action, computed, observable} from 'mobx';
 
-export class ShoppingCarStore {
+class ShoppingCarStore {
   @observable list = [];
 
   @action
@@ -21,7 +21,7 @@ export class ShoppingCarStore {
 
   @action
   clearFood() {
-    this.list.length = 0;
+    this.list.clear()
   }
 
   @action
@@ -54,6 +54,8 @@ export class ShoppingCarStore {
     return toDecimal2(totalPrice);
   }
 }
+const cartStore = new ShoppingCarStore();
+export default cartStore
 
 //制保留2位小数，如：2，会在2后面补上00.即2.00
 export function toDecimal2(x) {

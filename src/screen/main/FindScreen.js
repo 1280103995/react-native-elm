@@ -4,7 +4,7 @@ import Column from "../../view/Column";
 import Row from "../../view/Row";
 import {TextInput, StyleSheet, FlatList, View, TouchableOpacity} from "react-native";
 import Button from "../../view/Button";
-import {paddingLR, paddingTB, px2dp, px2sp, screenW, wh} from "../../utils/ScreenUtil";
+import {px2dp, px2sp, screenW, wh} from "../../utils/ScreenUtil";
 import Color from "../../app/Color";
 import Divider from "../../view/Divider";
 import ShopListItem from "../../view/ShopListItem";
@@ -13,7 +13,11 @@ import VisibleView from "../../view/VisibleView";
 import Text from "../../view/Text";
 import Image from "../../view/Image";
 import Images from "../../app/Images";
+import {inject, observer} from "mobx-react";
+import Toast from "../../view/Toast";
 
+@inject('findStore')
+@observer
 export default class FindScreen extends BaseScreen {
 
   static navigationOptions = {
@@ -28,9 +32,7 @@ export default class FindScreen extends BaseScreen {
     // 初始状态
     this.state = {
       keyWord: '',
-      searchHis: [],
-      noResult: false,
-      shop: []
+      noResult: false
     };
   }
 
@@ -39,38 +41,28 @@ export default class FindScreen extends BaseScreen {
   };
 
   _clear = () => {
-    this.state.searchHis.length = 0;
-    this.setState({searchHis: []})
+    this.props.findStore.clear()
   };
 
   _deleteHisItem = (item) => {
-    const size = this.state.searchHis.length;
-    let arr = this.state.searchHis;
-    for (let i = 0; i < size; i++) {
-      if (arr[i] === item) {
-        arr.splice(i, 1);
-        break;
-      }
-    }
-    this.setState({noResult: this.state.noResult})
+    this.props.findStore.deleteItem(item)
   };
 
   _onBtnClick = () => {
     if (this.state.keyWord !== '') {
-      this.state.searchHis.push(this.state.keyWord);
       this._fetch()
     } else {
-      console.log('请输入内容')
+      Toast.show('请输入内容')
     }
   };
 
   _fetch() {
     ShopAip.fethcSearchRestaurant(Geohash, this.state.keyWord).then((res) => {
-      this.state.shop.length = 0;
-      this.setState({shop: res, noResult: false})
+      this.props.findStore.shopAddAll(res);
+      this.setState({noResult: false})
     }).catch((err) => {
       this.setState({noResult: true})
-    })
+    }).finally(()=> this.props.findStore.addItem(this.state.keyWord))
   }
 
   renderView() {
@@ -101,15 +93,15 @@ export default class FindScreen extends BaseScreen {
 
           <FlatList
             style={[styles.contain, {marginTop: px2dp(10)}]}
-            data={this.state.shop}
+            data={this.props.findStore.getShopList}
             renderItem={this._renderItem}
             keyExtractor={(item, index) => index + ''}
             ItemSeparatorComponent={() => <Divider/>}/>
 
-          <VisibleView visible={this.state.searchHis.length > 0 && !this.state.noResult}>
+          <VisibleView visible={this.props.findStore.getList.length > 0 && !this.state.noResult}>
             <FlatList
               style={[styles.contain, {position: 'absolute'}]}
-              data={this.state.searchHis}
+              data={this.props.findStore.getList}
               bounces={false}
               renderItem={({item, index}) =>
                 <Row verticalCenter style={styles.hisItemStyle}>
