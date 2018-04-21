@@ -29,12 +29,13 @@
 如果对您有帮助，您可以点右上角 "Star" 支持一下 谢谢！ ^_^
 
 
-![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/1-1.png)
-![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/2.png)
-![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/3.png)
-![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/4.png)
-![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/5.png)
-![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/6.png)
+![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/1%E9%A6%96%E9%A1%B5.png)
+![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/2%E5%8F%91%E7%8E%B0.png)
+![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/3-1%E5%BA%97%E9%93%BA%E8%AF%A6%E6%83%85.png)
+![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/3-2%E5%BA%97%E9%93%BA%E8%AF%84%E8%AE%BA.png)
+![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/4%E5%88%86%E7%B1%BB.png)
+![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/5%E4%B8%AA%E4%BA%BA%E4%B8%AD%E5%BF%83.png)
+![image](https://github.com/1280103995/react-native-elm/blob/master/screenshot/6%E6%94%AF%E4%BB%98%E9%A1%B5%E9%9D%A2.png)
 
 
 
