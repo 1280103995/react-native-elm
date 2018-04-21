@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {FlatList, StyleSheet, View} from "react-native";
+import {FlatList, SafeAreaView, StyleSheet, View} from "react-native";
 import Row from "../../view/Row";
 import Column from "../../view/Column";
 import Divider from "../../view/Divider";
@@ -69,7 +69,7 @@ export default class ShopInfoEvaluation extends Component {
             <Row>
               <StarRating
                 maxStars={5}
-                disabled={false}
+                disabled={true}
                 rating={parseInt(this.state.overallScore)}
                 starSize={15}
               />
@@ -84,7 +84,7 @@ export default class ShopInfoEvaluation extends Component {
               <Text mediumSize text={'服务态度'} style={{marginRight: px2dp(15), marginBottom: px2dp(10)}}/>
               <StarRating
                 maxStars={5}
-                disabled={false}
+                disabled={true}
                 rating={parseInt(this.state.serviceScore)}
                 starSize={15}
               />
@@ -94,7 +94,7 @@ export default class ShopInfoEvaluation extends Component {
               <Text mediumSize text={'菜品评价'} style={{marginRight: px2dp(15), marginBottom: px2dp(10)}}/>
               <StarRating
                 maxStars={5}
-                disabled={false}
+                disabled={true}
                 rating={parseInt(this.state.foodScore)}
                 starSize={15}
               />

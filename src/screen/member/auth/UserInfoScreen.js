@@ -10,8 +10,6 @@ import Images from "../../../app/Images";
 import Divider from "../../../view/Divider";
 import Button from "../../../view/Button";
 import DialogLogout from "../../../dialog/DialogLogout";
-import ModifyPwdScreen from "./ModifyPwdScreen";
-import AuthApi from "../../../api/AuthApi";
 
 export default class UserInfoScreen extends BaseScreen {
 

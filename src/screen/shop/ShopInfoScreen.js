@@ -12,7 +12,7 @@ import {
 import BaseScreen from "../BaseScreen";
 import Column from "../../view/Column";
 import {BlurView} from "react-native-blur";
-import {marginTB, paddingLR, paddingTB, px2dp, px2sp, screenW, wh} from "../../utils/ScreenUtil";
+import {isIphoneX, marginTB, paddingLR, paddingTB, px2dp, px2sp, screenW, wh} from "../../utils/ScreenUtil";
 import Images from "../../app/Images";
 import Image from "../../view/Image";
 import Text from "../../view/Text";
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     bottom: 0,
-    paddingTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
+    paddingTop: Platform.OS === 'ios' ? isIphoneX() ? 30: 20 : StatusBar.currentHeight,
     backgroundColor: "rgba(0,0,0,.3)"
   },
   bg: {

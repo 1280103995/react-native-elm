@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import {View, Image, TouchableOpacity, Text, Button,StatusBar} from 'react-native'
+import {View, Image, TouchableOpacity, StatusBar, SafeAreaView} from 'react-native'
 import VisibleView from "../view/VisibleView";
 import NavigationBar from "../view/NavigationBar";
-import {px2dp, px2sp, wh} from "../utils/ScreenUtil";
+import {px2dp, wh} from "../utils/ScreenUtil";
 import Color from "../app/Color";
 import Images from "../app/Images";
-import Column from "../view/Column";
 
 export default class BaseScreen extends Component {
 
@@ -48,28 +47,11 @@ export default class BaseScreen extends Component {
           {this.renderNavigationBar()}
         </VisibleView>
 
-        <VisibleView visible={this.state.netErrorVisible}>
-          {this.renderNetError()}
-        </VisibleView>
-
         <VisibleView visible={!this.state.netErrorVisible}>
           {this.renderView()}
         </VisibleView>
-      </View>
-    )
-  }
 
-  /**
-   * 渲染网络异常页面
-   * @returns {*}
-   */
-  renderNetError() {
-    return (
-      <View style={{flex: 1, backgroundColor: Color.background}}>
-        <Column style={{justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{fontSize:px2sp(30),color:Color.black}}>网络出错了</Text>
-          <Button title='重新加载' onPress={this._handleRefetchData}/>
-        </Column>
+        <SafeAreaView style={{backgroundColor: Color.white}}/>
       </View>
     )
   }
@@ -195,28 +177,5 @@ export default class BaseScreen extends Component {
    */
   setTitleColor(color: string) {
     this.titleColor = color
-  }
-
-  _handleRefetchData = () => {
-    this.onReLoad()
-  };
-
-  /**
-   * 网络异常页面，点击重新加载调用的方法
-   */
-  onReLoad() {
-
-  }
-
-  /**
-   * 设置是否显示网络异常页面
-   * @param visible
-   */
-  setNetErrorVisible(visible: boolean) {
-    this.setState({netErrorVisible: visible})
-  }
-
-  get getNetErrorVisible() {
-    return this.state.netErrorVisible
   }
 }
