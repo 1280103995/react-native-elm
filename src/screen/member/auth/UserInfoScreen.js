@@ -28,11 +28,10 @@ export default class UserInfoScreen extends BaseScreen {
     if (label === '用户名'){
       navigation.navigate('ModifyUserName',{callback:this._handleModifySuccess})
     }else if (label === '收货地址'){
-      navigation.navigate('Address')
+      navigation.navigate('Address',{chose:false})
     }else if (label === '登录密码'){
       navigation.navigate('ModifyPwd',{name:this.state.userName})
     }
-
   };
 
   _handleModifySuccess = (name) => {
@@ -61,7 +60,7 @@ export default class UserInfoScreen extends BaseScreen {
         {this._renderItem(null, '收货地址', null)}
         <Divider/>
         {this._renderItemType2('账号绑定')}
-        {this._renderItem(<Image source={Images.My.phone} style={styles.iconPhoneStyle}/>, '手机', UserInfo.mobile)}
+        {this._renderItem(this._renderPhoneIcon(), '手机', <Text text={UserInfo.mobile}/>)}
         {this._renderItemType2('安全设置')}
         {this._renderItem(null, '登录密码', <Text gray text={'修改'}/>)}
         <Button style={styles.logoutBtnStyle} title={'退出登录'} onPress={this._logoutBtnClick}/>
@@ -96,6 +95,8 @@ export default class UserInfoScreen extends BaseScreen {
       </Row>
     )
   };
+
+  _renderPhoneIcon = () => <Image source={Images.My.phone} style={styles.iconPhoneStyle}/>
 }
 const styles = StyleSheet.create({
   container: {

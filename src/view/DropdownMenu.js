@@ -73,7 +73,7 @@ export default class DropdownMenu extends PureComponent {
       this.state.contentAnimated.setValue(0);
       this.setState({contentVisible: false});
     });
-    this._createArrowAnimation(0)
+    if (this.state.tabSelectIndex !== null) this._createArrowAnimation(0)
   };
 
   _show = () => {

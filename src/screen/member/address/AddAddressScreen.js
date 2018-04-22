@@ -9,6 +9,8 @@ import Input from "../../../view/Input";
 import Button from "../../../view/Button";
 import Row from "../../../view/Row";
 import Text from "../../../view/Text";
+import AddressApi from "../../../api/AddressApi";
+import Toast from "../../../view/Toast";
 
 export default class AddAddressScreen extends BaseScreen {
 
@@ -44,6 +46,36 @@ export default class AddAddressScreen extends BaseScreen {
     })
   };
 
+  _onBtnClick = () => {
+    if (this.name === ''){
+      Toast.show('请输入您的姓名');
+      return
+    }
+    if (this.state.addressName === ''){
+      Toast.show('请选择地址');
+      return
+    }
+    if (this.detailAddress === ''){
+      Toast.show('请填写详细送餐地址');
+      return
+    }
+    if (this.phone === ''){
+      Toast.show('请输入手机号');
+      return
+    }
+    this._fetchAddress()
+  };
+
+  _fetchAddress(){
+    AddressApi.fetchAddAddress(UserInfo.user_id,this.state.addressName,
+      this.detailAddress,this.address.geohash,this.name,this.phone,this.phone2,).then((res)=>{
+      Toast.show(res.success);
+      const navigation = this.props.navigation;
+      navigation.state.params.callback(true);
+      navigation.goBack()
+    })
+  }
+
   renderView() {
     return (
       <KeyboardAwareScrollView>
@@ -74,7 +106,7 @@ export default class AddAddressScreen extends BaseScreen {
             onChange={(text) => this.phone2 = text}
           />
         </Column>
-        <Button title={'新增地址'} style={styles.btnStyle} onPress={() => null}/>
+        <Button title={'新增地址'} style={styles.btnStyle} onPress={this._onBtnClick}/>
       </KeyboardAwareScrollView>
     )
   }

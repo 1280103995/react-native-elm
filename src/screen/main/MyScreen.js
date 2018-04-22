@@ -109,7 +109,7 @@ export default class MyScreen extends BaseScreen {
   };
 
   _fetchUserInfo() {
-    AuthApi.fetchUserInfo(UserInfo.id).then((res) => {
+    AuthApi.fetchUserInfo(UserInfo.user_id).then((res) => {
       UserInfo = res
     })
   }

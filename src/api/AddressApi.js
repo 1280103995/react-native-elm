@@ -43,7 +43,8 @@ export default class AddressApi{
    * @param tag_type
    * @returns {返回Promise}
    */
-  static fetchAddAddress(userId, address, address_detail, geohash, name, phone, phone_bk, poi_type, sex, tag, tag_type){
+  static fetchAddAddress(userId, address, address_detail, geohash, name, phone, phone_bk,
+                         poi_type = 0, sex = 1, tag = '公司', tag_type = 4){
     let params = {
       address,
       address_detail,
