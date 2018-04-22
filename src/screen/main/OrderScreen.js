@@ -25,6 +25,7 @@ export default class OrderScreen extends BaseScreen {
   }
 
   componentDidMount() {
+    if (!isLogin) return;
     OrderApi.fetchOrderList(UserInfo.user_id, 0).then((res)=>{
         this.setState({data:res})
     })
@@ -37,7 +38,8 @@ export default class OrderScreen extends BaseScreen {
         data={this.state.data}
         renderItem={this._renderItem}
         keyExtractor={(item, index) => index + item.restaurant_name}
-        ListEmptyComponent={()=> <Text text={'没有数据'} style={{textAlign:'center',marginTop:200}}/>}
+        contentContainerStyle={[{flex: 1}, this._contentStyle()]}
+        ListEmptyComponent={()=> <Text text={'没有数据'}/>}
         ItemSeparatorComponent={() => <Divider style={{height:px2dp(20),backgroundColor:Color.background}}/>}/>
     )
   }
@@ -47,8 +49,12 @@ export default class OrderScreen extends BaseScreen {
       <OrderItem
         data={item}
         onItemClick={() => null}
-        onAgainClick={()=>this.props.navigation.navigate('ShopInfo', {id: item.id})}
+        onAgainClick={()=>this.props.navigation.navigate('ShopInfo', {id: item.restaurant_id})}
       />
     );
+  }
+
+  _contentStyle(){
+    return this.state.data.length ? null : {justifyContent: 'center', alignItems:'center'}
   }
 }
