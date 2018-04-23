@@ -37,7 +37,7 @@ export default class ModifyUserNameScreen extends BaseScreen {
           <Input
             style={styles.inputStyle}
             placeholder={'输入用户名'}
-            onChange={(text) => this.name = text}
+            onChangeText={(text) => this.name = text}
           />
           <Text microSize gray text={'用户名智能修改一次（5-24字符之间）'}/>
           <Button style={styles.btnStyle} title={'确认修改'} onPress={this._onBtnClick}/>

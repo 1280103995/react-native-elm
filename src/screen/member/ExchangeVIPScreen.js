@@ -28,7 +28,7 @@ export default class ExchangeVIPScreen extends BaseScreen {
         <Input
           bgViewStyle={[styles.rowStyle,{backgroundColor: Color.white}]}
           placeholder={'请输入与10位卡号'}
-          onChange={(text) => null}/>
+          onChangeText={(text) => null}/>
         <Divider/>
         <Input
           bgViewStyle={[styles.rowStyle,{backgroundColor: Color.white}]}

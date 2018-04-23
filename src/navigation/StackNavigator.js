@@ -24,6 +24,7 @@ import PointQuestionScreen from "../screen/member/PointQuestionScreen";
 import PointMallScreen from "../screen/member/PointMallScreen";
 import OrderConfirmScreen from "../screen/shop/OrderConfirmScreen";
 import VIPDesScreen from "../screen/member/VIPDesScreen";
+import ChangeRedPacketScreen from "../screen/member/ChangeRedPacketScreen";
 
 const initial = __DEV__
   ? "Splash" // 调试用
@@ -54,7 +55,8 @@ const nav = {
   PointQuestion: {screen: PointQuestionScreen},
   PointMall: {screen: PointMallScreen},
   OrderConfirm: {screen: OrderConfirmScreen},
-  VIPDes: {screen: VIPDesScreen}
+  VIPDes: {screen: VIPDesScreen},
+  ChangeRedPacket: {screen: ChangeRedPacketScreen},
 };
 
 // 注册导航

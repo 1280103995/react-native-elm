@@ -76,7 +76,7 @@ export default class LoginScreen extends BaseScreen {
             bgViewStyle={styles.input}
             label={'账号'}
             placeholder={'请输入账号'}
-            onChange={(text) => this.nameText = text}/>
+            onChangeText={(text) => this.nameText = text}/>
           <Divider/>
           <Input
             id={(p)=>this.pwd=p}
@@ -84,7 +84,7 @@ export default class LoginScreen extends BaseScreen {
             label={'密码'}
             placeholder={'请输入密码'}
             secureTextEntry={true}
-            onChange={(text) => this.pwdText = text}>
+            onChangeText={(text) => this.pwdText = text}>
             <CheckBox
               tintColorEnable={false}
               checkedIcon={Images.Login.hidePwd}
@@ -96,7 +96,7 @@ export default class LoginScreen extends BaseScreen {
             bgViewStyle={styles.input}
             label={'验证码'}
             placeholder={'请输入验证码'}
-            onChange={(text) => this.codeText = text}>
+            onChangeText={(text) => this.codeText = text}>
             <TouchableOpacity onPress={this._fetchRefreshCaptcha}>
               <Image
                 source={decodeURIComponent(this.state.captcha)}
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   btnStyle:{
     height:px2dp(88),
     margin:px2dp(30),
-    borderRadius:px2dp(15)
+    borderRadius:px2dp(10)
   },
   captchaImgStyle:{
     ...wh(170,70),

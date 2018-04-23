@@ -83,7 +83,7 @@ export default class AddAddressScreen extends BaseScreen {
           <Input
             style={styles.inputStyle}
             placeholder={'请填写您的姓名'}
-            onChange={(text) => this.name = text}
+            onChangeText={(text) => this.name = text}
           />
           <TouchableOpacity onPress={this._onAddressClick} activeOpacity={1}>
             <Row style={styles.inputStyle}>
@@ -93,17 +93,17 @@ export default class AddAddressScreen extends BaseScreen {
           <Input
             style={styles.inputStyle}
             placeholder={'请填写详细送餐地址'}
-            onChange={(text) => this.detailAddress = text}
+            onChangeText={(text) => this.detailAddress = text}
           />
           <Input
             style={styles.inputStyle}
             placeholder={'请填写能够联系到您的手机号'}
-            onChange={(text) => this.phone = text}
+            onChangeText={(text) => this.phone = text}
           />
           <Input
             style={[styles.inputStyle, {marginBottom: 0}]}
             placeholder={'备用联系电话（选填）'}
-            onChange={(text) => this.phone2 = text}
+            onChangeText={(text) => this.phone2 = text}
           />
         </Column>
         <Button title={'新增地址'} style={styles.btnStyle} onPress={this._onBtnClick}/>

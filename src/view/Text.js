@@ -21,6 +21,7 @@ export default class TextView extends Text {
     gray: PropTypes.bool, // Color.gray2
     orange: PropTypes.bool, // Color.orange
     black: PropTypes.bool, // Color.black default
+    red: PropTypes.bool,
 
     text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   };
@@ -41,6 +42,8 @@ export default class TextView extends Text {
       color = Color.gray2
     } else if (this.props.orange){
       color = Color.orange
+    } else if (this.props.red){
+      color = Color.red
     }
 
     let fontSize = px2sp(28);

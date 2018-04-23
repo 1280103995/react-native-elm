@@ -23,6 +23,7 @@ import ShopInfoList from "./ShopInfoList";
 import ShopInfoEvaluation from "./ShopInfoEvaluation";
 import LocationApi from "../../api/LocationApi";
 import ShopAip from "../../api/ShopApi";
+import TabBar from "../../view/TabBar";
 
 export default class ShopInfoScreen extends BaseScreen {
 
@@ -114,12 +115,7 @@ export default class ShopInfoScreen extends BaseScreen {
           {/*活动*/}
           {this._renderActivitiesItem()}
         </View>
-        <ScrollableTabView
-          tabBarUnderlineStyle={{backgroundColor: Color.theme}}
-          tabBarBackgroundColor={Color.white}
-          tabBarActiveTextColor={Color.theme}
-          tabBarInactiveTextColor={Color.gray3}
-          tabBarTextStyle={{fontSize: px2sp(28)}}>
+        <ScrollableTabView renderTabBar={() => <TabBar/>}>
           <ShopInfoList shopID={this._shopID()} tabLabel="商品" navigation={this.props.navigation}/>
           <ShopInfoEvaluation shopID={this._shopID()} tabLabel="评价"/>
         </ScrollableTabView>

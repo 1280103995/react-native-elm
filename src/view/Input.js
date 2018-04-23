@@ -28,7 +28,7 @@ export default class Input extends Component {
     value: PropTypes.string,
     onFocus: PropTypes.func,
     onEndEditing: PropTypes.func,
-    onChange: PropTypes.func, //接收数据
+    onChangeText: PropTypes.func, //接收数据
     numberOfLines: PropTypes.number
   };
 
@@ -52,7 +52,7 @@ export default class Input extends Component {
 
   _onChang = (text) => {
     this.setState({text});
-    this.props.onChange(text)
+    this.props.onChangeText(text)
   };
 
   render() {

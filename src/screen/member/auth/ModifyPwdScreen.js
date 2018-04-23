@@ -78,34 +78,34 @@ export default class ModifyPwdScreen extends BaseScreen{
             bgViewStyle={styles.input}
             label={'账号'}
             placeholder={'请输入账号'}
-            onChange={(text) => this.nameText = text}/>
+            onChangeText={(text) => this.nameText = text}/>
           <Divider/>
           <Input
             bgViewStyle={styles.input}
             label={'旧密码'}
             placeholder={'请输入旧密码'}
             secureTextEntry={true}
-            onChange={(text) => this.oldPwdText = text}/>
+            onChangeText={(text) => this.oldPwdText = text}/>
           <Divider/>
           <Input
             bgViewStyle={styles.input}
             label={'新密码'}
             placeholder={'请输入新密码'}
             secureTextEntry={true}
-            onChange={(text) => this.pwdText = text}/>
+            onChangeText={(text) => this.pwdText = text}/>
           <Divider/>
           <Input
             bgViewStyle={styles.input}
             label={'确认密码'}
             placeholder={'请输入确认密码'}
             secureTextEntry={true}
-            onChange={(text) => this.confirmPwdText = text}/>
+            onChangeText={(text) => this.confirmPwdText = text}/>
           <Divider/>
           <Input
             bgViewStyle={styles.input}
             label={'验证码'}
             placeholder={'请输入验证码'}
-            onChange={(text) => this.codeText = text}>
+            onChangeText={(text) => this.codeText = text}>
             <TouchableOpacity onPress={this._fetchRefreshCaptcha}>
               <Image
                 source={decodeURIComponent(this.state.captcha)}

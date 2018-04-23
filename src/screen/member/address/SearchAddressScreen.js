@@ -5,7 +5,7 @@ import Divider from "../../../view/Divider";
 import Row from "../../../view/Row";
 import Color from "../../../app/Color";
 import Column from "../../../view/Column";
-import {paddingTB, px2dp, px2sp, wh} from "../../../utils/ScreenUtil";
+import {paddingTB, px2dp, wh} from "../../../utils/ScreenUtil";
 import Input from "../../../view/Input";
 import Button from "../../../view/Button";
 import Text from "../../../view/Text";
@@ -58,7 +58,7 @@ export default class SearchAddressScreen extends BaseScreen {
           <Input
             style={styles.inputStyle}
             placeholder={'请输入小区/写字楼/学校等'}
-            onChange={(text) => this.keyWord = text}/>
+            onChangeText={(text) => this.keyWord = text}/>
           <Button style={styles.searchBtnStyle} title={'确认'} onPress={this._onSearchBtnClick}/>
         </Row>
         <Row horizontalCenter verticalCenter style={{...paddingTB(5),backgroundColor: '#fce6c9'}}>
