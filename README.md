@@ -1,7 +1,7 @@
 # react-native-elm
 
 项目还没做完，网络api连的是 https://github.com/bailicangdu/vue2-elm 的服务器
-如被告知禁止使用，本人立马删除相应的api，本人QQ1280103995。由于没有文档，随便玩玩了，毕竟不是商业项目。
+由于没有文档，随便玩玩了，毕竟不是商业项目。
 
 
 项目路由使用的是 react-navigation，状态管理使用的是mobx，封装了HttpUtils，以及各个接口api，封装了一些基本组件，自定义下拉框组件等。
