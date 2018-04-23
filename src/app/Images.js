@@ -4,6 +4,7 @@ export default {
     arrowRight:require('../img/icon_arrow_right_white.png'),
     shopBg:require('../img/bg.jpg'),
     close:require('../img/icon_close_gray.png'),
+    empty:require('../img/icon_empty.png'),
   },
   Main:{
     homeTabNormal:require('../img/icon_elm_gray.png'),

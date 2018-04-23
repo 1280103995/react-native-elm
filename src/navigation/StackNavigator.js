@@ -23,6 +23,7 @@ import BalanceQuestionScreen from "../screen/member/BalanceQuestionScreen";
 import PointQuestionScreen from "../screen/member/PointQuestionScreen";
 import PointMallScreen from "../screen/member/PointMallScreen";
 import OrderConfirmScreen from "../screen/shop/OrderConfirmScreen";
+import VIPDesScreen from "../screen/member/VIPDesScreen";
 
 const initial = __DEV__
   ? "Splash" // 调试用
@@ -34,25 +35,26 @@ const nav = {
   Login: {screen: LoginScreen},
   ShopInfo: {screen: ShopInfoScreen},
   Splash: {screen: SplashScreen},
-  Category:{screen: CategoryScreen},
-  UserInfo:{screen: UserInfoScreen},
-  ModifyUserName:{screen: ModifyUserNameScreen},
-  Address:{screen: AddressScreen},
-  AddAddress:{screen: AddAddressScreen},
-  SearchAddress:{screen: SearchAddressScreen},
-  ModifyPwd:{screen: ModifyPwdScreen},
-  Balance:{screen:BalanceScreen},
-  Point:{screen: PointScreen},
-  ElmVIP:{screen: ElmVIPScreen},
-  PayOnLine:{screen: PayOnLineScreen},
-  ExchangeVIP:{screen: ExchangeVIPScreen},
-  BuyRecord:{screen: BuyRecordScreen},
-  ServiceCenter:{screen: ServiceCenterScreen},
-  Discount:{screen: DiscountScreen},
-  BalanceQuestion:{screen: BalanceQuestionScreen},
+  Category: {screen: CategoryScreen},
+  UserInfo: {screen: UserInfoScreen},
+  ModifyUserName: {screen: ModifyUserNameScreen},
+  Address: {screen: AddressScreen},
+  AddAddress: {screen: AddAddressScreen},
+  SearchAddress: {screen: SearchAddressScreen},
+  ModifyPwd: {screen: ModifyPwdScreen},
+  Balance: {screen: BalanceScreen},
+  Point: {screen: PointScreen},
+  ElmVIP: {screen: ElmVIPScreen},
+  PayOnLine: {screen: PayOnLineScreen},
+  ExchangeVIP: {screen: ExchangeVIPScreen},
+  BuyRecord: {screen: BuyRecordScreen},
+  ServiceCenter: {screen: ServiceCenterScreen},
+  Discount: {screen: DiscountScreen},
+  BalanceQuestion: {screen: BalanceQuestionScreen},
   PointQuestion: {screen: PointQuestionScreen},
   PointMall: {screen: PointMallScreen},
   OrderConfirm: {screen: OrderConfirmScreen},
+  VIPDes: {screen: VIPDesScreen}
 };
 
 // 注册导航

@@ -9,9 +9,7 @@ import Row from "../../view/Row";
 import Image from "../../view/Image";
 import Images from "../../app/Images";
 import Divider from "../../view/Divider";
-import PayOnLineScreen from "./PayOnLineScreen";
-import ExchangeVIPScreen from "./ExchangeVIPScreen";
-import BuyRecordScreen from "./BuyRecordScreen";
+import VIPDesScreen from "./VIPDesScreen";
 
 export default class ElmVIPScreen extends BaseScreen {
 
@@ -23,6 +21,10 @@ export default class ElmVIPScreen extends BaseScreen {
 
   _buyClick = () => {
     this.props.navigation.navigate('PayOnLine')
+  };
+
+  _onVipDes = () => {
+    this.props.navigation.navigate('VIPDes')
   };
 
   _onItemClick = (label) => {
@@ -38,17 +40,19 @@ export default class ElmVIPScreen extends BaseScreen {
       <ScrollView>
         <Row verticalCenter>
           <Text gray text={'为账号'} style={{...marginLR(25,0),...marginTB(20)}}/>
-          <Text text={123456} style={{fontWeight: '600'}}/>
+          <Text text={UserInfo.username} style={{fontWeight: '600',...marginLR(6)}}/>
           <Text gray text={'购买会员'}/>
         </Row>
 
         <Column style={{...paddingLR(25,20),...paddingTB(20), backgroundColor: Color.white}}>
           <Row verticalCenter style={{justifyContent: 'space-between'}}>
             <Text largeSize text={'会员特权'}/>
-            <Row verticalCenter>
-              <Text text={'会员说明'}/>
-              <Image source={Images.Common.arrowRight} style={styles.arrowStyle}/>
-            </Row>
+            <TouchableOpacity onPress={this._onVipDes}>
+              <Row verticalCenter>
+                <Text text={'会员说明'}/>
+                <Image source={Images.Common.arrowRight} style={styles.arrowStyle}/>
+              </Row>
+            </TouchableOpacity>
           </Row>
           <Divider style={{marginTop:px2dp(25)}}/>
           {this._renderActivity()}

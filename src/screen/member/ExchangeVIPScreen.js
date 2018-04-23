@@ -23,7 +23,7 @@ export default class ExchangeVIPScreen extends BaseScreen {
       <ScrollView style={styles.container}>
         <Row verticalCenter style={styles.rowStyle}>
           <Text gray text={'成功兑换后将关联到当前账号：'}/>
-          <Text text={123456} style={{fontWeight: '600'}}/>
+          <Text text={UserInfo.username} style={{fontWeight: '600'}}/>
         </Row>
         <Input
           bgViewStyle={[styles.rowStyle,{backgroundColor: Color.white}]}
