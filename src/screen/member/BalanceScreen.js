@@ -10,7 +10,7 @@ import Button from "../../view/Button";
 import {FlatList,StyleSheet} from "react-native";
 import Divider from "../../view/Divider";
 import Images from "../../app/Images";
-import {toDecimal2} from "../../store/ShoppingCartStore";
+import {toDecimal2} from "../../utils/MoneyUtil";
 
 export default class BalanceScreen extends BaseScreen {
 

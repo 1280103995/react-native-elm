@@ -8,17 +8,15 @@ import {px2dp, px2sp, screenW, wh} from "../../utils/ScreenUtil";
 import Color from "../../app/Color";
 import Divider from "../../view/Divider";
 import ShopListItem from "../../view/ShopListItem";
-import ShopAip from "../../api/ShopApi";
 import VisibleView from "../../view/VisibleView";
 import Text from "../../view/Text";
 import Image from "../../view/Image";
 import Images from "../../app/Images";
-import {inject, observer} from "mobx-react";
 import Toast from "../../view/Toast";
+import {connect} from "react-redux";
+import * as FindAction from "../../redux/actions/FindAction";
 
-@inject('findStore')
-@observer
-export default class FindScreen extends BaseScreen {
+class FindScreen extends BaseScreen {
 
   static navigationOptions = {
     header: null,
@@ -29,7 +27,7 @@ export default class FindScreen extends BaseScreen {
     super(props);
     this.setTitle('发现');
     this.setGoBackVisible(false);
-    // 初始状态
+
     this.state = {
       keyWord: '',
       noResult: false
@@ -37,33 +35,37 @@ export default class FindScreen extends BaseScreen {
   }
 
   _onInputChange = (text) => {
-    this.setState({keyWord: text, noResult: text === '' ? !this.state.noResult : this.state.noResult});
+    // this.setState({keyWord: text, noResult: text === '' ? !this.state.noResult : this.state.noResult});
+    this.setState({keyWord: text});
+    if (text.length > 0){
+      this.props.noSearchResult()
+    }
   };
 
   _clear = () => {
-    this.props.findStore.clear()
+    // this.props.findStore.clear()
   };
 
   _deleteHisItem = (item) => {
-    this.props.findStore.deleteItem(item)
+    // this.props.findStore.deleteItem(item)
   };
 
   _onBtnClick = () => {
     if (this.state.keyWord !== '') {
-      this._fetch()
+      this.props.getData(Geohash, this.state.keyWord)
     } else {
       Toast.show('请输入内容')
     }
   };
 
-  _fetch() {
-    ShopAip.fethcSearchRestaurant(Geohash, this.state.keyWord).then((res) => {
-      this.props.findStore.shopAddAll(res);
-      this.setState({noResult: false})
-    }).catch((err) => {
-      this.setState({noResult: true})
-    }).finally(()=> this.props.findStore.addItem(this.state.keyWord))
-  }
+  // _fetch() {
+  //   ShopAip.fethcSearchRestaurant(Geohash, this.state.keyWord).then((res) => {
+  //     this.props.findStore.shopAddAll(res);
+  //     this.setState({noResult: false})
+  //   }).catch((err) => {
+  //     this.setState({noResult: true})
+  //   }).finally(()=> this.props.findStore.addItem(this.state.keyWord))
+  // }
 
   renderView() {
     return (
@@ -82,7 +84,7 @@ export default class FindScreen extends BaseScreen {
           <Button style={styles.searchBtnStyle} title={'提交'} onPress={this._onBtnClick}/>
         </Row>
 
-        <VisibleView visible={this.state.noResult && this.state.keyWord !== ''}>
+        <VisibleView visible={!this.props.hasShop && this.state.keyWord.length > 0}>
           <Row horizontalCenter verticalCenter
                style={{height: px2dp(60), marginTop: px2dp(10), backgroundColor: Color.white}}>
             <Text text={'很抱歉！无搜索结果'}/>
@@ -93,15 +95,15 @@ export default class FindScreen extends BaseScreen {
 
           <FlatList
             style={[styles.contain, {marginTop: px2dp(10)}]}
-            data={this.props.findStore.getShopList}
+            data={this.props.shopList}
             renderItem={this._renderItem}
             keyExtractor={(item, index) => index + ''}
             ItemSeparatorComponent={() => <Divider/>}/>
 
-          <VisibleView visible={this.props.findStore.getList.length > 0 && !this.state.noResult}>
+          <VisibleView visible={this.props.hisList.length > 0 && this.props.hasHistory}>
             <FlatList
               style={[styles.contain, {position: 'absolute'}]}
-              data={this.props.findStore.getList}
+              data={this.props.hisList}
               bounces={false}
               renderItem={({item, index}) =>
                 <Row verticalCenter style={styles.hisItemStyle}>
@@ -172,3 +174,17 @@ const styles = StyleSheet.create({
     backgroundColor: Color.white
   },
 });
+
+const mapStateToProps = state => ({
+  hasHistory: state.findReducer.hasHistory,
+  hasShop: state.findReducer.hasShop,
+  hisList: state.findReducer.hisList,
+  shopList: state.findReducer.shopList,
+});
+
+const mapDispatchToProps = dispatch => ({
+  getData: (geohash, keyWord) => dispatch(FindAction.searchShop(geohash, keyWord)),
+  noSearchResult: ()=>dispatch(FindAction.noSearchResult())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FindScreen);

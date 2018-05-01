@@ -1,23 +1,20 @@
 import React from 'react'
-import {View, Platform, StatusBar, TouchableWithoutFeedback, StyleSheet, SafeAreaView, FlatList,
-  TouchableOpacity, ScrollView
-} from "react-native";
+import {View, Platform, StatusBar, TouchableWithoutFeedback, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView} from "react-native";
 import {isIphoneX, marginLR, marginTB, paddingTB, px2dp, screenW, wh} from "../../utils/ScreenUtil";
 import Color from "../../app/Color";
 import Row from "../../view/Row";
 import Divider from "../../view/Divider";
 import Images from "../../app/Images";
 import BaseScreen from "../BaseScreen";
-import LocationApi from "../../api/LocationApi";
 import Text from "../../view/Text";
 import ShopListItem from "../../view/ShopListItem";
 import Image from "../../view/Image";
 import Column from "../../view/Column";
-import {inject, observer} from "mobx-react";
+import RefreshListView from "../../view/RefreshListView";
+import * as HomeAction from "../../redux/actions/HomeAction";
+import {connect} from "react-redux";
 
-@inject('homeStore')
-@observer
-export default class HomeScreen extends BaseScreen {
+class HomeScreen extends BaseScreen {
 
   static navigationOptions = {
     header: null,
@@ -27,48 +24,33 @@ export default class HomeScreen extends BaseScreen {
   constructor(props) {
     super(props);
     this.setNavBarVisible(false);
-    this.latitude = null;
-    this.longitude = null;
     this.state = {
       curSelectPage: 0
     }
   }
 
   _onCategoryItemClick = (category) => {
-    this.props.navigation.navigate('Category',{data:category,latitude:this.latitude,longitude:this.longitude})
+    this.props.navigation.navigate('Category',{data:category,latitude:this.props.latitude,longitude:this.props.longitude})
   };
 
   componentDidMount() {
-    LocationApi.fetchCityGuess().then((res) => {
-      Geohash = res.geohash;
-      this.props.homeStore.setLocation(res.name);
-      this.latitude = res.latitude;
-      this.longitude = res.longitude;
-
-      LocationApi.fetchFoodTypes(res.geohash).then((res) => {
-        let temp = [];
-        const itemCount = 8;//一页8个分类
-        const pageCount = res.length / itemCount;
-        const last = res.length % 8; //余下的个数，不满一页8个的，如果=0则刚刚被整除
-        for (let i = 0; i < pageCount; i++) {
-          temp.push(res.slice(i * itemCount, (i + 1) * itemCount));
-        }
-        if (last > 0) {
-          temp.push(res.slice(itemCount * pageCount, res.length))
-        }
-        this.props.homeStore.categoryAddAll(temp);
-        temp = null
-      });
-
-      this._fetchShop(res.latitude, res.longitude);
-    })
+    this.props.getData();
   }
 
-  _fetchShop(latitude, longitude) {
-    LocationApi.fetchShopList(latitude, longitude, 0).then((res) => {
-      this.props.homeStore.shopAddAll(res)
-    })
+  componentDidUpdate() {
+    Geohash = this.props.geohash
   }
+
+  /*列表组件回调方法*/
+  _onHeaderRefresh = () => {
+    this.props.getData();
+  };
+
+  /*列表组件加载更多回调方法*/
+  _onFooterRefresh = () => {
+    if (this.props.noMoreData) return;
+    this.props.loadMore(this.props.latitude, this.props.longitude)
+  };
 
   /**2.手动滑动分页实现 */
   _onAnimationEnd(e) {
@@ -83,12 +65,16 @@ export default class HomeScreen extends BaseScreen {
     return (
       <View style={{flex: 1}}>
         {this._renderNavBar()}
-        <FlatList
-          data={this.props.homeStore.getShopList}
+
+        <RefreshListView
+          data={this.props.shopList}
           renderItem={this._renderItem}
           keyExtractor={(item, index) => index + item.name}
           ItemSeparatorComponent={() => <Divider/>}
           ListHeaderComponent={this._renderHeader}
+          refreshState={this.props.refreshState}
+          onHeaderRefresh={this._onHeaderRefresh}
+          onFooterRefresh={this._onFooterRefresh}
         />
       </View>
     )
@@ -103,7 +89,7 @@ export default class HomeScreen extends BaseScreen {
           <Row verticalCenter style={{justifyContent: 'space-between', ...marginLR(20)}}>
             <Row verticalCenter>
               <Image source={Images.Main.location} style={{...wh(30)}}/>
-              <Text white text={this.props.homeStore.getLocation}/>
+              <Text white text={this.props.cityName}/>
               <Image source={Images.Main.arrow} style={{...wh(18, 25)}}/>
             </Row>
             {/*天气*/}
@@ -132,20 +118,22 @@ export default class HomeScreen extends BaseScreen {
    * @private
    */
   _renderHeader = () => {
+    const length = this.props.categoryList.length;
+    if (length === 0) return null;
     return (
       <Column style={{backgroundColor:Color.white}}>
         <ScrollView
-          contentContainerStyle={{width:screenW * this.props.homeStore.getCategoryList.length}}
+          contentContainerStyle={{width:screenW * length}}
           bounces={false}
           pagingEnabled={true}
           horizontal={true}
           //滑动完一贞
           onMomentumScrollEnd={(e)=>{this._onAnimationEnd(e)}}
           showsHorizontalScrollIndicator={false}>
-          {this.props.homeStore.getCategoryList.map((data, index) => this._renderPage(data, index))}
+          {this.props.categoryList.map((data, index) => this._renderPage(data, index))}
         </ScrollView>
         <Row horizontalCenter>
-          {this._renderAllIndicator()}
+          {this._renderAllIndicator(length)}
         </Row>
         <Divider style={{height:px2dp(20),backgroundColor:Color.background}}/>
         <Text text={'附近商家'} style={{margin:px2dp(20)}}/>
@@ -175,10 +163,9 @@ export default class HomeScreen extends BaseScreen {
   }
 
   /**3.页面指针实现 */
-  _renderAllIndicator() {
+  _renderAllIndicator(length) {
     let indicatorArr = [];
     let style;
-    let length = this.props.homeStore.getCategoryList.length;
     for (let i = 0; i < length; i++) {
       style = (i===this.state.curSelectPage)?{backgroundColor:Color.theme}:{backgroundColor:Color.gray3};
       indicatorArr.push(<View key={i} style={[styles.bannerDotStyle,style]}/>);
@@ -215,3 +202,21 @@ const styles = StyleSheet.create({
     flexWrap: "wrap"
   },
 });
+
+const mapStateToProps = state => ({
+  refreshState: state.homeReducer.refreshState,
+  noMoreData: state.homeReducer.noMoreData,
+  latitude: state.homeReducer.latitude,
+  longitude: state.homeReducer.longitude,
+  geohash: state.homeReducer.geohash,
+  cityName: state.homeReducer.name,
+  categoryList: state.homeReducer.categoryList,
+  shopList: state.homeReducer.shopList
+});
+
+const mapDispatchToProps = dispatch => ({
+  getData: () => dispatch(HomeAction.getHomeData()),
+  loadMore: (latitude, longitude) => dispatch(HomeAction.loadMoreShopList(latitude, longitude))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

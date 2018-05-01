@@ -6,7 +6,6 @@ import {
   SectionList,
   Image, TouchableOpacity,
 } from 'react-native';
-import {inject, observer} from 'mobx-react';
 import ParcelData from './ParcelData.json'
 import Color from "../../app/Color";
 import Button from "../../view/Button";
@@ -18,12 +17,12 @@ import Column from "../../view/Column";
 import Text from "../../view/Text";
 import VisibleView from "../../view/VisibleView";
 import CartAnimated from "../../view/CartAnimated";
+import {connect} from "react-redux";
+import * as ShoppingCartAction from "../../redux/actions/ShoppingCartAction";
 
 let Headers = [];
 
-@inject(['cartStore'])
-@observer
-export default class ShopInfoList extends Component {
+class ShopInfoList extends Component {
 
   // 构造
   constructor(props) {
@@ -43,7 +42,7 @@ export default class ShopInfoList extends Component {
   };
 
   _add = (data) => {
-    this.props.cartStore.addFood(data.item);
+    this.props.addItem(data.item);
 
     this.cartElement.measure((x, y, width, height, px, py) => {
       this.endPosition = {x: px, y: py};
@@ -56,7 +55,7 @@ export default class ShopInfoList extends Component {
   };
 
   _sub = (data) => {
-    this.props.cartStore.subFood(data.item)
+    // this.props.cartStore.subFood(data.item)
   };
 
   _measureView(view) {
@@ -111,7 +110,6 @@ export default class ShopInfoList extends Component {
         <ShopBar
           ref={(s) => this.shopBar = s}
           cartElement={(c) => this.cartElement = c}
-          store={this.props.cartStore}
           navigation={this.props.navigation}/>
       </Column>
     );
@@ -147,13 +145,15 @@ export default class ShopInfoList extends Component {
           </Column>
           {/*加减*/}
           <Row verticalCenter style={{position: 'absolute', right: px2dp(20), bottom: px2dp(20)}}>
-            <VisibleView visible={this.props.cartStore.getFoodBuyNum(item.item) > 0}>
+            // todo
+            <VisibleView visible={this.props.list > 0}>
               <Row verticalCenter>
                 <TouchableOpacity style={[styles.itemActionStyle, styles.lItemActionBg]}
                                   onPress={() => this._sub(item)}>
                   <Text largeSize theme text={'-'}/>
                 </TouchableOpacity>
-                <Text text={this.props.cartStore.getFoodBuyNum(item.item)} style={{...marginLR(20)}}/>
+                // todo
+                <Text text={this.props.list} style={{...marginLR(20)}}/>
               </Row>
             </VisibleView>
             <TouchableOpacity
@@ -238,3 +238,13 @@ const styles = StyleSheet.create({
     backgroundColor: Color.theme
   },
 });
+
+const mapStateToProps = state => ({
+  list: state.shoppingCartReducer.list,
+});
+
+const mapDispatchToProps = dispatch => ({
+  addItem: (item)=>dispatch(ShoppingCartAction.cartListAddItem(item))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShopInfoList);

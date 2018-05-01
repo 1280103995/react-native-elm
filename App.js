@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import {Navigator} from "./src/navigation/StackNavigator";
-import {Provider} from 'mobx-react'
-import RootStore from "./src/store/RootStore";
+import { Provider } from 'react-redux';
+import AppWithNavigationState from "./src/navigation/AppWithNavigationState";
+import {ReduxStore} from "./src/redux/stores/ReduxStore";
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
   render() {
     return (
-      <Provider {...RootStore}>
-        <Navigator/>
+      <Provider store={ReduxStore}>
+        <AppWithNavigationState/>
       </Provider>
     );
   }

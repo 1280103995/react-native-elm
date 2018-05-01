@@ -9,8 +9,8 @@ import Text from "../../view/Text";
 import Color from "../../app/Color";
 import Images from "../../app/Images";
 import Divider from "../../view/Divider";
-import {toDecimal2} from "../../store/ShoppingCartStore";
 import AuthApi from "../../api/AuthApi";
+import {toDecimal2} from "../../utils/MoneyUtil";
 
 export default class MyScreen extends BaseScreen {
 

@@ -60,7 +60,7 @@ const nav = {
 };
 
 // 注册导航
-export const Navigator = StackNavigator(
+export default Navigator = StackNavigator(
   nav,
   {
     initialRouteName: initial, // 默认显示界面

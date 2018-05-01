@@ -1,0 +1,1 @@
+export const CART_LIST_ADD = 'cart_list_add';
