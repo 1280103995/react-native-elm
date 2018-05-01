@@ -40,7 +40,7 @@ export default class HomeScreen extends BaseScreen {
 
   componentDidMount() {
     LocationApi.fetchCityGuess().then((res) => {
-      Geohash = res.geohash;
+      Geohash = res.latitude + ',' + res.longitude;
       this.props.homeStore.setLocation(res.name);
       this.latitude = res.latitude;
       this.longitude = res.longitude;
