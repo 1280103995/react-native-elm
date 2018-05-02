@@ -37,7 +37,10 @@ export default class FindScreen extends BaseScreen {
   }
 
   _onInputChange = (text) => {
-    this.setState({keyWord: text, noResult: text === '' ? !this.state.noResult : this.state.noResult});
+    this.setState({keyWord: text});
+    if (text !== ''){
+      this.props.findStore.setSearchState(false);
+    }
   };
 
   _clear = () => {
@@ -59,10 +62,13 @@ export default class FindScreen extends BaseScreen {
   _fetch() {
     ShopAip.fethcSearchRestaurant(Geohash, this.state.keyWord).then((res) => {
       this.props.findStore.shopAddAll(res);
-      this.setState({noResult: false})
+      // this.setState({noResult: false})
     }).catch((err) => {
-      this.setState({noResult: true})
-    }).finally(()=> this.props.findStore.addItem(this.state.keyWord))
+      // this.setState({noResult: true})
+    }).finally(()=> {
+      this.props.findStore.setSearchState(true);
+      this.props.findStore.addItem(this.state.keyWord)
+    })
   }
 
   renderView() {
@@ -82,7 +88,7 @@ export default class FindScreen extends BaseScreen {
           <Button style={styles.searchBtnStyle} title={'提交'} onPress={this._onBtnClick}/>
         </Row>
 
-        <VisibleView visible={this.state.noResult && this.state.keyWord !== ''}>
+        <VisibleView visible={this.props.findStore.showNoResult}>
           <Row horizontalCenter verticalCenter
                style={{height: px2dp(60), marginTop: px2dp(10), backgroundColor: Color.white}}>
             <Text text={'很抱歉！无搜索结果'}/>
@@ -98,9 +104,9 @@ export default class FindScreen extends BaseScreen {
             keyExtractor={(item, index) => index + ''}
             ItemSeparatorComponent={() => <Divider/>}/>
 
-          <VisibleView visible={this.props.findStore.getList.length > 0 && !this.state.noResult}>
+          <VisibleView visible={this.props.findStore.showHistory}>
             <FlatList
-              style={[styles.contain, {position: 'absolute'}]}
+              style={[styles.contain, styles.historyStyle]}
               data={this.props.findStore.getList}
               bounces={false}
               renderItem={({item, index}) =>
@@ -112,14 +118,8 @@ export default class FindScreen extends BaseScreen {
                 </Row>
               }
               keyExtractor={(item, index) => index + ''}
-              ListHeaderComponent={() => <View style={{margin: px2dp(20)}}><Text text={'搜索历史'}/></View>}
-              ListFooterComponent={() =>
-                <Button
-                  title={'清空历史记录'}
-                  style={styles.clearBtnStyle}
-                  titleStyle={{color: Color.theme}}
-                  onPress={this._clear}/>
-              }
+              ListHeaderComponent={this._renderHisHeader }
+              ListFooterComponent={this._renderHisFooter}
               ItemSeparatorComponent={() => <Divider/>}/>
           </VisibleView>
 
@@ -133,6 +133,28 @@ export default class FindScreen extends BaseScreen {
       <ShopListItem data={item} onClick={() => this.props.navigation.navigate('ShopInfo', {id: item.id})}/>
     );
   }
+
+  _renderHisHeader = () => {
+    return(
+      <View>
+        <Text text={'搜索历史'} style={{margin: px2dp(20)}}/>
+        <Divider height={1}/>
+      </View>
+    )
+  };
+
+  _renderHisFooter = () => {
+    return(
+      <Column>
+        <Divider height={1}/>
+        <Button
+          title={'清空历史记录'}
+          style={styles.clearBtnStyle}
+          titleStyle={{color: Color.theme}}
+          onPress={this._clear}/>
+      </Column>
+    )
+  };
 
 }
 
@@ -157,6 +179,14 @@ const styles = StyleSheet.create({
     ...wh(120, 70),
     borderRadius: px2dp(5),
     marginLeft: px2dp(10)
+  },
+  historyStyle:{
+    marginTop: px2dp(10),position: 'absolute', backgroundColor:Color.white,
+    elevation: 5,
+    shadowOffset: {width: 10, height: 10},
+    shadowColor: Color.gray2,
+    shadowOpacity: 1,
+    shadowRadius: 5
   },
   hisItemStyle: {
     width: screenW,

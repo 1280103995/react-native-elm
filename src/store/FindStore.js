@@ -3,6 +3,7 @@ import {observable, action, computed} from "mobx";
 class FindStore {
   @observable list = [];
   @observable shopList = []; //店铺列表
+  @observable searchComplete = false;
 
   @action
   addItem(text){
@@ -34,6 +35,23 @@ class FindStore {
   @computed
   get getShopList(){
     return this.shopList
+  }
+
+  @action
+  setSearchState(isSearchEnd:boolean){
+    this.searchComplete = isSearchEnd
+  }
+
+  /*显示无搜索结果*/
+  @computed
+  get showNoResult(){
+    return this.searchComplete && this.shopList.length === 0
+  }
+
+  /*显示历史记录*/
+  @computed
+  get showHistory(){
+    return !this.searchComplete && this.list.length > 0
   }
 }
 const findStore = new FindStore();
