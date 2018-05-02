@@ -25,6 +25,20 @@
 ---------------
 
 
+项目运行
+ 
+ git clone https://github.com/1280103995/react-native-elm.git
+
+ cd react-native-elm
+
+ npm install
+
+ npm run android / npm run ios<br>
+ or<br>
+ npm run all
+
+-----------------
+
 
 如果对您有帮助，您可以点右上角 "Star" 支持一下 谢谢！ ^_^
 
