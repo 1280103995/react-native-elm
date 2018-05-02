@@ -9,9 +9,7 @@ import Color from "../../../app/Color";
 import Column from "../../../view/Column";
 import Image from "../../../view/Image";
 import Images from "../../../app/Images";
-import AddressApi from "../../../api/AddressApi";
 import {inject, observer} from "mobx-react";
-import Toast from "../../../view/Toast";
 
 @inject('addressListStore')
 @observer
@@ -23,7 +21,7 @@ export default class AddressScreen extends BaseScreen {
   }
 
   componentDidMount() {
-    this._fetchAddressList()
+    this.props.addressListStore.fetchData(UserInfo.user_id)
   }
 
   _isChose(){
@@ -45,21 +43,11 @@ export default class AddressScreen extends BaseScreen {
 
   /*添加地址成功后回调，刷新页面*/
   _handleAddAddressSuccess = (state) => {
-    if (state) this._fetchAddressList()
+    if (state) this.props.addressListStore.fetchData(UserInfo.user_id)
   };
 
-  _fetchAddressList(){
-    AddressApi.fetchGetAddressList(UserInfo.user_id).then((res)=>{
-      this.props.addressListStore.addAll(res)
-    })
-  }
-
   _fetchDeleteAddress(item){
-    AddressApi.fetchDeleteAddress(UserInfo.user_id, item.id).then((res)=>{
-      // this.props.addressListStore.deleteItem(item); //为什么无法删除
-      this._fetchAddressList();
-      Toast.show(res.success)
-    })
+    this.props.addressListStore.deleteItem(UserInfo.user_id, item);
   }
 
   renderMenu(){

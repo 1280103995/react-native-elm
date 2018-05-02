@@ -1,4 +1,5 @@
 import {observable, action, computed} from "mobx";
+import ShopAip from "../api/ShopApi";
 
 class FindStore {
   @observable list = [];
@@ -52,6 +53,17 @@ class FindStore {
   @computed
   get showHistory(){
     return !this.searchComplete && this.list.length > 0
+  }
+
+  @action
+  fetchData(geohash, keyWord: string){
+    ShopAip.fethcSearchRestaurant(geohash, keyWord).then((res) => {
+      this.shopList = res
+    }).catch((err) => {
+    }).finally(()=> {
+      this.setSearchState(true);
+      this.addItem(keyWord)
+    })
   }
 }
 const findStore = new FindStore();

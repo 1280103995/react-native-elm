@@ -8,7 +8,6 @@ import {px2dp, px2sp, screenW, wh} from "../../utils/ScreenUtil";
 import Color from "../../app/Color";
 import Divider from "../../view/Divider";
 import ShopListItem from "../../view/ShopListItem";
-import ShopAip from "../../api/ShopApi";
 import VisibleView from "../../view/VisibleView";
 import Text from "../../view/Text";
 import Image from "../../view/Image";
@@ -29,10 +28,9 @@ export default class FindScreen extends BaseScreen {
     super(props);
     this.setTitle('发现');
     this.setGoBackVisible(false);
-    // 初始状态
+
     this.state = {
-      keyWord: '',
-      noResult: false
+      keyWord: ''
     };
   }
 
@@ -53,23 +51,11 @@ export default class FindScreen extends BaseScreen {
 
   _onBtnClick = () => {
     if (this.state.keyWord !== '') {
-      this._fetch()
+      this.props.findStore.fetchData(Geohash, this.state.keyWord)
     } else {
       Toast.show('请输入内容')
     }
   };
-
-  _fetch() {
-    ShopAip.fethcSearchRestaurant(Geohash, this.state.keyWord).then((res) => {
-      this.props.findStore.shopAddAll(res);
-      // this.setState({noResult: false})
-    }).catch((err) => {
-      // this.setState({noResult: true})
-    }).finally(()=> {
-      this.props.findStore.setSearchState(true);
-      this.props.findStore.addItem(this.state.keyWord)
-    })
-  }
 
   renderView() {
     return (
