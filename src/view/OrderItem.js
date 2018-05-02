@@ -20,7 +20,7 @@ export default class OrderItem extends PureComponent {
   render() {
     const item = this.props.data;
     return (
-      <TouchableOpacity onPress={() => this.props.onItemClick()}>
+      <TouchableOpacity onPress={() => this.props.onItemClick()} style={{marginTop:px2dp(20)}}>
         <Column style={{padding: px2dp(20), backgroundColor: Color.white}}>
           <Row>
             <Image source={item.restaurant_image_url} style={{...wh(80), marginRight: px2dp(10)}}/>
