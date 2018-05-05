@@ -42,8 +42,7 @@ export default class OrderScreen extends BaseScreen {
         renderItem={this._renderItem}
         keyExtractor={(item, index) => index + item.restaurant_name}
         contentContainerStyle={[{flex: 1}, this._contentStyle()]}
-        ListEmptyComponent={()=>  <EmptyView/>}
-        ItemSeparatorComponent={() => <Divider style={{height:px2dp(20),backgroundColor:Color.background}}/>}/>
+        ListEmptyComponent={()=>  <EmptyView/>}/>
     )
   }
 
