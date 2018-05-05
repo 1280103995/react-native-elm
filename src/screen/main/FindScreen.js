@@ -29,25 +29,23 @@ class FindScreen extends BaseScreen {
     this.setGoBackVisible(false);
 
     this.state = {
-      keyWord: '',
-      noResult: false
+      keyWord: ''
     };
   }
 
   _onInputChange = (text) => {
-    // this.setState({keyWord: text, noResult: text === '' ? !this.state.noResult : this.state.noResult});
     this.setState({keyWord: text});
     if (text.length > 0){
-      this.props.noSearchResult()
+      this.props.showHistory()
     }
   };
 
   _clear = () => {
-    // this.props.findStore.clear()
+    this.props.clear()
   };
 
   _deleteHisItem = (item) => {
-    // this.props.findStore.deleteItem(item)
+    this.props.deleteItem(item)
   };
 
   _onBtnClick = () => {
@@ -57,15 +55,6 @@ class FindScreen extends BaseScreen {
       Toast.show('请输入内容')
     }
   };
-
-  // _fetch() {
-  //   ShopAip.fethcSearchRestaurant(Geohash, this.state.keyWord).then((res) => {
-  //     this.props.findStore.shopAddAll(res);
-  //     this.setState({noResult: false})
-  //   }).catch((err) => {
-  //     this.setState({noResult: true})
-  //   }).finally(()=> this.props.findStore.addItem(this.state.keyWord))
-  // }
 
   renderView() {
     return (
@@ -84,7 +73,7 @@ class FindScreen extends BaseScreen {
           <Button style={styles.searchBtnStyle} title={'提交'} onPress={this._onBtnClick}/>
         </Row>
 
-        <VisibleView visible={!this.props.hasShop && this.state.keyWord.length > 0}>
+        <VisibleView visible={!this.props.hasShop}>
           <Row horizontalCenter verticalCenter
                style={{height: px2dp(60), marginTop: px2dp(10), backgroundColor: Color.white}}>
             <Text text={'很抱歉！无搜索结果'}/>
@@ -100,7 +89,7 @@ class FindScreen extends BaseScreen {
             keyExtractor={(item, index) => index + ''}
             ItemSeparatorComponent={() => <Divider/>}/>
 
-          <VisibleView visible={this.props.hisList.length > 0 && this.props.hasHistory}>
+          <VisibleView visible={this.props.hasHistory}>
             <FlatList
               style={[styles.contain, {position: 'absolute'}]}
               data={this.props.hisList}
@@ -184,7 +173,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getData: (geohash, keyWord) => dispatch(FindAction.searchShop(geohash, keyWord)),
-  noSearchResult: ()=>dispatch(FindAction.noSearchResult())
+  showHistory: ()=>dispatch(FindAction.showHistory()),
+  clear: ()=>dispatch(FindAction.clear()),
+  deleteItem:(item)=>dispatch(FindAction.deleteItem(item))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FindScreen);

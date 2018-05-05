@@ -34,11 +34,27 @@ function noResult() {
 }
 
 //显示历史记录
-export function noSearchResult() {
+export function showHistory() {
   return dispatch => {
     dispatch({
-      type: types.FIND_HISTORY,
-      hasHistory: true
+      type: types.FIND_HISTORY
+    })
+  }
+}
+
+export function deleteItem(item) {
+  return dispatch => {
+    dispatch({
+      type: types.FIND_DELETE_ITEM,
+      item
+    })
+  }
+}
+
+export function clear() {
+  return dispatch => {
+    dispatch({
+      type: types.FIND_CLEAR
     })
   }
 }
