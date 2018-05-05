@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import Navigator from "./StackNavigator";
 import { addListener } from '../utils/redux';
 import { addNavigationHelpers, NavigationActions } from "react-navigation";
+import Toast from "../view/Toast";
 
 class AppWithNavigationState extends React.Component {
   static propTypes = {
@@ -23,8 +24,14 @@ class AppWithNavigationState extends React.Component {
   _onBackPress = () => {
     const { dispatch, nav } = this.props;
     if (nav.index === 0) {
-      return false;
+      if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+        //最近2秒内按过back键，可以退出应用。
+        return false;
+      }
+      this.lastBackPressed = Date.now();
+      Toast.show('再按一次退出应用');
     }
+
     dispatch(NavigationActions.back());
     return true;
   };

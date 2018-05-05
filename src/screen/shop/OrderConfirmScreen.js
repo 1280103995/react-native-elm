@@ -20,7 +20,12 @@ export default class OrderConfirmScreen extends BaseScreen {
   }
 
   _chooseAddress = () => {
-    this.props.navigation.navigate('Address',{chose:true, callback:this._handleChoseAddress})
+    if (!isLogin) this.props.navigation.navigate('Login', {callback: this._handleLoginSuccess});
+    else this.props.navigation.navigate('Address',{chose:true, callback:this._handleChoseAddress})
+  };
+
+  _handleLoginSuccess = () => {
+
   };
 
   _handleChoseAddress = (address) => {
