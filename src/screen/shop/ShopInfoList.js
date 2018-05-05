@@ -55,7 +55,7 @@ class ShopInfoList extends Component {
   };
 
   _sub = (data) => {
-    // this.props.cartStore.subFood(data.item)
+    this.props.subItem(data.item)
   };
 
   _measureView(view) {
@@ -80,6 +80,16 @@ class ShopInfoList extends Component {
       }
       this.setState({selectIndex: index});
     }
+  };
+
+  //判断是否显示减号
+  _showSubBtn = (item) => {
+    return item.buyNum && item.buyNum > 0
+  };
+
+  //显示购买数量
+  _showBuyNum = (item) => {
+    return item.buyNum && item.buyNum
   };
 
   render() {
@@ -108,6 +118,9 @@ class ShopInfoList extends Component {
         </Row>
         <CartAnimated ref={'cart'}/>
         <ShopBar
+          list={this.props.list}
+          totalPrice={this.props.totalPrice}
+          totalCount={this.props.totalCount}
           ref={(s) => this.shopBar = s}
           cartElement={(c) => this.cartElement = c}
           navigation={this.props.navigation}/>
@@ -145,15 +158,14 @@ class ShopInfoList extends Component {
           </Column>
           {/*加减*/}
           <Row verticalCenter style={{position: 'absolute', right: px2dp(20), bottom: px2dp(20)}}>
-            // todo
-            <VisibleView visible={this.props.list > 0}>
+            <VisibleView visible={this._showSubBtn(item.item)}>
               <Row verticalCenter>
                 <TouchableOpacity style={[styles.itemActionStyle, styles.lItemActionBg]}
                                   onPress={() => this._sub(item)}>
                   <Text largeSize theme text={'-'}/>
                 </TouchableOpacity>
-                // todo
-                <Text text={this.props.list} style={{...marginLR(20)}}/>
+                {/*当前加入购物车的数量*/}
+                <Text text={this._showBuyNum(item.item)} style={{...marginLR(20)}}/>
               </Row>
             </VisibleView>
             <TouchableOpacity
@@ -240,11 +252,15 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  list: state.shoppingCartReducer.list,
+  totalPrice: state.shoppingCartReducer.totalPrice,
+  totalCount: state.shoppingCartReducer.totalCount,
+  list: state.shoppingCartReducer.list
 });
 
 const mapDispatchToProps = dispatch => ({
-  addItem: (item)=>dispatch(ShoppingCartAction.cartListAddItem(item))
+  addItem: (item)=>dispatch(ShoppingCartAction.cartListAddItem(item)),
+  subItem: (item)=>dispatch(ShoppingCartAction.cartListSubItem(item)),
+  getBuyNum: (id)=>dispatch(ShoppingCartAction.getBuyNum(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopInfoList);

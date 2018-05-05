@@ -8,3 +8,12 @@ export function cartListAddItem(item) {
     })
   }
 }
+
+export function cartListSubItem(item) {
+  return dispatch => {
+    dispatch({
+      type: types.CART_LIST_SUB,
+      item
+    })
+  }
+}

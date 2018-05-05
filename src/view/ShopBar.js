@@ -15,6 +15,7 @@ import Row from "./Row";
 import Color from "../app/Color";
 import Column from "./Column";
 import Button from "./Button";
+import {connect} from "react-redux";
 
 type Props = {
   cartElement: Function
@@ -54,14 +55,13 @@ export default class ShopBar extends Component<Props>{
         </Row>
         <Row verticalCenter style={{height: px2dp(90), justifyContent: 'space-between',backgroundColor: Color.gray3}}>
           <Column style={{height:px2dp(90),marginLeft:px2dp(160),justifyContent:'center'}}>
-            // todo
-            <Text white text={`￥${100}`}/>
+            <Text white text={`￥${this.props.totalPrice}`}/>
             <Text white text={'配送费￥3'} style={{fontSize: px2sp(18)}}/>
           </Column>
-          // todo
+
           <Button
-            style={{...wh(160,90), backgroundColor: 10 > 0 && 100 >= 20 ? Color.reseda : 'transparent'}}
-            activeOpacity={10 > 0 ? 0.8 : 1}
+            style={{...wh(160,90), backgroundColor: 10 > 0 && this.props.totalPrice >= 20 ? Color.reseda : 'transparent'}}
+            activeOpacity={this.props.totalPrice > 0 ? 0.8 : 1}
             onPress={()=>this.props.navigation.navigate('OrderConfirm')}
             title={'￥20起送'}/>
         </Row>
@@ -76,15 +76,14 @@ export default class ShopBar extends Component<Props>{
           ]
         }]}>
           {/*购物车图标*/}
-          <View style={[styles.iconView, 10 > 0 ? {backgroundColor: Color.theme} : null]}>
+          <View style={[styles.iconView, this.props.totalCount > 0 ? {backgroundColor: Color.theme} : null]}>
             <Image  source={Images.Shop.cart} ref={(cart)=>this.props.cartElement(cart)}
-              style={{...wh(50), tintColor: 10 > 0 ? Color.white : Color.gray3}}/>
+              style={{...wh(50), tintColor: this.props.totalCount > 0 ? Color.white : Color.gray3}}/>
           </View>
           {/*数量*/}
-          // todo
-          {100 > 0 ?
+          {this.props.totalCount > 0 ?
             <View style={styles.count}>
-              <Text white text={10} style={{fontSize: px2sp(18)}}/>
+              <Text white text={this.props.totalCount} style={{fontSize: px2sp(18)}}/>
             </View> : null}
         </Animated.View>
       </View>
