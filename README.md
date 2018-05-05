@@ -2,13 +2,16 @@
 
 
 项目还没做完，网络api连的是 https://github.com/bailicangdu/vue2-elm 的服务器。<br>
-由于没有文档，随便玩玩了，毕竟不是商业项目。
+由于没有文档，就当练手了，毕竟不是商业项目。
 
-项目路由使用的是 react-navigation，状态管理使用的是mobx。
+项目路由使用的是 react-navigation，状态管理使用的是mobx。redux分支使用的redux作为状态管理。
 
 --------------
+2018-5-5 更新
+----
+redux分支完成加入购物车相关逻辑，动画待完善。<br>
 
-2018-5-1
+2018-5-1 更新
 ----
 新增redux分支，使用redux做完状态管理器。<br>
 
