@@ -29,7 +29,7 @@ class AppWithNavigationState extends React.Component {
         return false;
       }
       this.lastBackPressed = Date.now();
-      Toast.show('再按一次退出应用');
+      Toast.show('再按一次退出应用',{position: -50});
     }
 
     dispatch(NavigationActions.back());
