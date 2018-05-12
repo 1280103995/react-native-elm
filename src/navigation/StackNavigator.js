@@ -1,5 +1,5 @@
-import {Easing, Animated} from "react-native";
 import {createStackNavigator} from "react-navigation";
+import StackViewStyleInterpolator from "react-navigation/src/views/StackView/StackViewStyleInterpolator";
 import {Tabs} from "./TabNavigator";
 import LoginScreen from "../screen/member/auth/LoginScreen";
 import ShopInfoScreen from "../screen/shop/ShopInfoScreen";
@@ -70,29 +70,7 @@ export const Navigator = createStackNavigator(
       header:null
     },
     transitionConfig: () => ({
-      //让安卓实现push动画(右进右出)
-      transitionSpec: {
-        duration: 300,
-        easing: Easing.out(Easing.poly(4)),
-        timing: Animated.timing,
-      },
-      screenInterpolator: sceneProps => {
-        const { layout, position, scene } = sceneProps;
-        const { index } = scene;
-
-        const width = layout.initWidth;
-        const translateX = position.interpolate({
-          inputRange: [index - 1, index, index + 1],
-          outputRange: [width, 0, 0],
-        });
-
-        const opacity = position.interpolate({
-          inputRange: [index - 1, index - 0.99, index],
-          outputRange: [0, 1, 1],
-        });
-
-        return { opacity, transform: [{ translateX }] };
-      },
+      screenInterpolator: StackViewStyleInterpolator.forHorizontal,//让安卓实现push动画(右进右出)
     })
   }
 );
