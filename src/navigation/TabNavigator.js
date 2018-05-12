@@ -1,5 +1,5 @@
 import React from 'react'
-import {TabBarBottom, TabNavigator} from "react-navigation";
+import { createBottomTabNavigator } from 'react-navigation';
 import TabBarItem from "../view/TabBarItem";
 import HomeScreen from "../screen/main/HomeScreen";
 import Images from "../app/Images";
@@ -8,7 +8,7 @@ import OrderScreen from "../screen/main/OrderScreen";
 import MyScreen from "../screen/main/MyScreen";
 import Color from "../app/Color";
 
-export const Tabs = TabNavigator(
+export const Tabs = createBottomTabNavigator(
   {
     Home: {
       screen: HomeScreen,
@@ -71,7 +71,6 @@ export const Tabs = TabNavigator(
     },
   },
   {
-    tabBarComponent: TabBarBottom, //不用这句，下面的标签栏会很高
     animationEnabled: false, // 切换页面时不显示动画
     tabBarPosition: 'bottom', // 显示在底端，android 默认是显示在页面顶端的
     swipeEnabled: false, // 禁止左右滑动
@@ -88,6 +87,6 @@ export const Tabs = TabNavigator(
       labelStyle: {
         fontSize: 12, // 文字大小
       },
-    },
+    }
   }
 );

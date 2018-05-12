@@ -1,5 +1,5 @@
-import CardStackStyleInterpolator from "react-navigation/src/views/CardStack/CardStackStyleInterpolator";
-import {StackNavigator} from "react-navigation";
+import {Easing, Animated} from "react-native";
+import {createStackNavigator} from "react-navigation";
 import {Tabs} from "./TabNavigator";
 import LoginScreen from "../screen/member/auth/LoginScreen";
 import ShopInfoScreen from "../screen/shop/ShopInfoScreen";
@@ -60,14 +60,39 @@ const nav = {
 };
 
 // 注册导航
-export const Navigator = StackNavigator(
+export const Navigator = createStackNavigator(
   nav,
   {
     initialRouteName: initial, // 默认显示界面
     mode: 'card',  // 页面切换模式, 左右是card(相当于iOS中的push效果), 上下是modal(相当于iOS中的modal效果)
     headerMode: 'screen', // 导航栏的显示模式, screen: 有渐变透明效果, float: 无透明效果, none: 隐藏导航栏
+    navigationOptions:{
+      header:null
+    },
     transitionConfig: () => ({
-      screenInterpolator: CardStackStyleInterpolator.forHorizontal,//让安卓实现push动画(右进右出)
+      //让安卓实现push动画(右进右出)
+      transitionSpec: {
+        duration: 300,
+        easing: Easing.out(Easing.poly(4)),
+        timing: Animated.timing,
+      },
+      screenInterpolator: sceneProps => {
+        const { layout, position, scene } = sceneProps;
+        const { index } = scene;
+
+        const width = layout.initWidth;
+        const translateX = position.interpolate({
+          inputRange: [index - 1, index, index + 1],
+          outputRange: [width, 0, 0],
+        });
+
+        const opacity = position.interpolate({
+          inputRange: [index - 1, index - 0.99, index],
+          outputRange: [0, 1, 1],
+        });
+
+        return { opacity, transform: [{ translateX }] };
+      },
     })
   }
 );
