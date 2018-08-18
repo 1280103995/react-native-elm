@@ -25,13 +25,13 @@ export default class ShopListItem extends PureComponent {
           backgroundColor: Color.white
         }}>
           {/*左边*/}
-          <Row verticalCenter>
+          <Row verticalCenter style={{flex:1}}>
             <Image source={data.image_path} style={{...wh(100)}}/>
-            <Column style={{justifyContent: 'space-between',marginLeft:px2dp(20)}}>
+            <Column style={{justifyContent: 'space-between', marginLeft: px2dp(20)}}>
               {/*标题*/}
               <Row verticalCenter>
                 <Text microSize style={{backgroundColor: Color.yellow}} text={'品牌'}/>
-                <Text style={styles.titleStyle} text={data.name}/>
+                <Text style={styles.titleStyle} text={data.name} numberOfLines={1}/>
               </Row>
               {/*得分，销量*/}
               <Row verticalCenter>
@@ -56,7 +56,7 @@ export default class ShopListItem extends PureComponent {
               <View style={[styles.icon, {borderColor: Color.theme, backgroundColor: Color.theme}]}>
                 <Text microSize white text={'蜂鸟专送'}/>
               </View>
-              <View style={[styles.icon, {borderColor: Color.theme, marginLeft:px2dp(10)}]}>
+              <View style={[styles.icon, {borderColor: Color.theme, marginLeft: px2dp(10)}]}>
                 <Text microSize theme text={'准时达'}/>
               </View>
             </Row>
@@ -70,14 +70,16 @@ export default class ShopListItem extends PureComponent {
     )
   }
 
-  _renderIcon(data){
+  _renderIcon(data) {
     let icon = [];
-    {data.supports.map((item, index) =>
-      icon.push(
-        <View style={[styles.icon,{margin:px2dp(2)}]} key={index}>
-          <Text microSize gray  text={item.icon_name}/>
-        </View>
-      ))}
+    {
+      data.supports.map((item, index) =>
+        icon.push(
+          <View style={[styles.icon, {margin: px2dp(2)}]} key={index}>
+            <Text microSize gray text={item.icon_name}/>
+          </View>
+        ))
+    }
     return icon
   }
 }
@@ -89,8 +91,9 @@ const styles = StyleSheet.create({
     borderWidth: px2dp(1),
     borderColor: Color.divider
   },
-  titleStyle:{
+  titleStyle: {
+    flex:1,
     fontWeight: '600',
-    marginLeft:px2dp(10)
+    marginLeft: px2dp(10)
   },
 });

@@ -14,16 +14,16 @@
     "mobx-react": "^5.0.0",
     "prop-types": "^15.6.1",
     "query-string": "^6.0.0",
-    "react": "^16.2.0",
-    "react-native": "0.55.2",
+    "react": "16.3.2",
+    "react-native": "0.55.4",
     "react-native-blur": "^3.2.2",
     "react-native-keyboard-aware-scroll-view": "^0.5.0",
     "react-native-root-toast": "^3.0.1",
     "react-native-scrollable-tab-view": "^0.8.0",
     "react-native-swiper": "^1.5.13",
-    "react-navigation": "^2.0.4",
+    "react-navigation": "^2.11.2",
     "redux": "^4.0.0",
-    "teaset": "^0.5.6"
+    "teaset": "^0.5.9"
   },
   "devDependencies": {
     "babel-jest": "22.4.3",

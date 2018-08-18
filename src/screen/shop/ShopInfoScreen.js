@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import BaseScreen from "../BaseScreen";
 import Column from "../../view/Column";
-import {BlurView} from "react-native-blur";
+// import {BlurView} from "react-native-blur";
 import {isIphoneX, marginTB, paddingLR, paddingTB, px2dp, px2sp, screenW, wh} from "../../utils/ScreenUtil";
 import Images from "../../app/Images";
 import Image from "../../view/Image";
@@ -89,7 +89,7 @@ export default class ShopInfoScreen extends BaseScreen {
             style={styles.bg}
             ref={'backgroundImage'}
             onLoadEnd={this.imageLoaded.bind(this)}/>
-          <BlurView {...props} style={styles.blur}/>
+          {/*<BlurView {...props} style={styles.blur}/>*/}
         </Animated.View>
 
         <View style={styles.head}>
