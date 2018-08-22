@@ -1,13 +1,12 @@
 import React from 'react'
 import {FlatList} from "react-native";
 import BaseScreen from "../BaseScreen";
-import {px2dp} from "../../utils/ScreenUtil";
-import Divider from "../../view/Divider";
-import Color from "../../app/Color";
 import OrderItem from "../../view/OrderItem";
-import OrderApi from "../../api/OrderApi";
 import EmptyView from "../../view/EmptyView";
+import {inject, observer} from "mobx-react";
 
+@inject('orderViewModel')
+@observer
 export default class OrderScreen extends BaseScreen {
 
   static navigationOptions = {
@@ -18,35 +17,26 @@ export default class OrderScreen extends BaseScreen {
   constructor(props) {
     super(props);
     this.setTitle('订单列表');
-    this.setGoBackVisible(false);
-    this.state = {
-      data:[],
-      refreshState: false
-    };
+    this.setGoBackVisible(false)
   }
 
   componentDidMount() {
-    if (!isLogin) return;
     this._fetchData()
   }
 
   _fetchData = () => {
     if (!isLogin) return;
-    this.setState({refreshState: true});
-    OrderApi.fetchOrderList(UserInfo.user_id, 0).then((res)=>{
-      this.setState({data:res})
-    }).finally(()=>{
-      this.setState({refreshState: false})
-    })
-  }
+    this.props.orderViewModel.setRefreshState(true);
+    this.props.orderViewModel.getOrderData(UserInfo.user_id);
+  };
 
   renderView() {
     return(
       <FlatList
         onRefresh={this._fetchData}
-        refreshing={this.state.refreshState}
+        refreshing={this.props.orderViewModel.getRefreshState}
         style={{flex:1}}
-        data={this.state.data}
+        data={this.props.orderViewModel.getOrderList}
         renderItem={this._renderItem}
         keyExtractor={(item, index) => index + item.restaurant_name}
         contentContainerStyle={[{flex: 1}, this._contentStyle()]}
@@ -65,6 +55,6 @@ export default class OrderScreen extends BaseScreen {
   };
 
   _contentStyle(){
-    return this.state.data.length ? null : {justifyContent: 'center', alignItems:'center'}
+    return this.props.orderViewModel.getRefreshState.length ? null : {justifyContent: 'center', alignItems:'center'}
   }
 }

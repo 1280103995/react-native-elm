@@ -3343,6 +3343,10 @@ jsbn@~0.1.0:
   version "0.1.1"
   resolved "http://registry.npm.taobao.org/jsbn/download/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
 
+jsc-android@224109.x.x:
+  version "224109.1.0"
+  resolved "https://registry.npmjs.org/jsc-android/-/jsc-android-224109.1.0.tgz#9749ec92f1e284b3c09befe7c47cc6e60b1f0cdf"
+
 jsdom@^11.5.1:
   version "11.7.0"
   resolved "http://registry.npm.taobao.org/jsdom/download/jsdom-11.7.0.tgz#8b45b657dae90d6d2d3a5f5d1126bb7102d0a172"
@@ -3909,15 +3913,16 @@ mixin-deep@^1.2.0:
   dependencies:
     minimist "0.0.8"
 
-mobx-react@^5.0.0:
-  version "5.0.0"
-  resolved "http://registry.npm.taobao.org/mobx-react/download/mobx-react-5.0.0.tgz#8d5a33be376fa22b184a6f555d40a6a3a8459a16"
+mobx-react@^5.2.5:
+  version "5.2.5"
+  resolved "https://registry.npmjs.org/mobx-react/-/mobx-react-5.2.5.tgz#fc44ac17e1798f6b590f064b831d8a1d89850ef0"
   dependencies:
-    hoist-non-react-statics "^2.3.1"
+    hoist-non-react-statics "^2.5.0"
+    react-lifecycles-compat "^3.0.2"
 
-mobx@^4.1.1:
-  version "4.2.0"
-  resolved "http://registry.npm.taobao.org/mobx/download/mobx-4.2.0.tgz#ee0b0a4f3da2f4776225046ab208ac329a4841d4"
+mobx@^5.0.4:
+  version "5.0.4"
+  resolved "https://registry.npmjs.org/mobx/-/mobx-5.0.4.tgz#3f0faa74d4214b012d957f6a559e2e3e1aae421e"
 
 morgan@^1.9.0:
   version "1.9.0"
@@ -4469,7 +4474,7 @@ react-is@^16.3.1:
   version "16.3.1"
   resolved "http://registry.npm.taobao.org/react-is/download/react-is-16.3.1.tgz#ee66e6d8283224a83b3030e110056798488359ba"
 
-react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
+react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "http://registry.npm.taobao.org/react-lifecycles-compat/download/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
@@ -4567,6 +4572,12 @@ react-native-tab-view@^1.0.0:
   resolved "https://registry.npmjs.org/react-native-tab-view/-/react-native-tab-view-1.0.2.tgz#66e0bc6d38a227ed2b212e3a256b7902f6ce02ed"
   dependencies:
     prop-types "^15.6.1"
+
+react-native-xfetch@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.npmjs.org/react-native-xfetch/-/react-native-xfetch-0.0.1.tgz#755368c93c031f3122ddb75625bc92d82e0716cc"
+  dependencies:
+    query-string "^6.1.0"
 
 react-native@0.55.4:
   version "0.55.4"

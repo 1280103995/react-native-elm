@@ -15,7 +15,7 @@ import Images from "../../app/Images";
 import {inject, observer} from "mobx-react";
 import Toast from "../../view/Toast";
 
-@inject('findStore')
+@inject('findViewModel')
 @observer
 export default class FindScreen extends BaseScreen {
 
@@ -37,21 +37,21 @@ export default class FindScreen extends BaseScreen {
   _onInputChange = (text) => {
     this.setState({keyWord: text});
     if (text !== ''){
-      this.props.findStore.setSearchState(false);
+      this.props.findViewModel.setSearchState(false);
     }
   };
 
   _clear = () => {
-    this.props.findStore.clear()
+    this.props.findViewModel.clear()
   };
 
   _deleteHisItem = (item) => {
-    this.props.findStore.deleteItem(item)
+    this.props.findViewModel.deleteItem(item)
   };
 
   _onBtnClick = () => {
     if (this.state.keyWord !== '') {
-      this.props.findStore.fetchData(Geohash, this.state.keyWord)
+      this.props.findViewModel.getSearchData(Geohash, this.state.keyWord)
     } else {
       Toast.show('请输入内容')
     }
@@ -74,7 +74,7 @@ export default class FindScreen extends BaseScreen {
           <Button style={styles.searchBtnStyle} title={'提交'} onPress={this._onBtnClick}/>
         </Row>
 
-        <VisibleView visible={this.props.findStore.showNoResult}>
+        <VisibleView visible={this.props.findViewModel.showNoResult}>
           <Row horizontalCenter verticalCenter
                style={{height: px2dp(60), marginTop: px2dp(10), backgroundColor: Color.white}}>
             <Text text={'很抱歉！无搜索结果'}/>
@@ -85,15 +85,15 @@ export default class FindScreen extends BaseScreen {
 
           <FlatList
             style={[styles.contain, {marginTop: px2dp(10)}]}
-            data={this.props.findStore.getShopList}
+            data={this.props.findViewModel.getShopList}
             renderItem={this._renderItem}
             keyExtractor={(item, index) => index + ''}
             ItemSeparatorComponent={() => <Divider/>}/>
 
-          <VisibleView visible={this.props.findStore.showHistory}>
+          <VisibleView visible={this.props.findViewModel.showHistory}>
             <FlatList
               style={[styles.contain, styles.historyStyle]}
-              data={this.props.findStore.getList}
+              data={this.props.findViewModel.getList}
               bounces={false}
               renderItem={({item, index}) =>
                 <Row verticalCenter style={styles.hisItemStyle}>
@@ -118,7 +118,7 @@ export default class FindScreen extends BaseScreen {
     return (
       <ShopListItem data={item} onClick={() => this.props.navigation.navigate('ShopInfo', {id: item.id})}/>
     );
-  }
+  };
 
   _renderHisHeader = () => {
     return(

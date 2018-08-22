@@ -10,8 +10,9 @@
     "all": "npm run android; npm run ios"
   },
   "dependencies": {
-    "mobx": "^4.1.1",
-    "mobx-react": "^5.0.0",
+    "jsc-android": "224109.x.x",
+    "mobx": "^5.0.4",
+    "mobx-react": "^5.2.5",
     "prop-types": "^15.6.1",
     "query-string": "^6.0.0",
     "react": "16.3.2",
@@ -21,6 +22,7 @@
     "react-native-root-toast": "^3.0.1",
     "react-native-scrollable-tab-view": "^0.8.0",
     "react-native-swiper": "^1.5.13",
+    "react-native-xfetch": "^0.0.1",
     "react-navigation": "^2.11.2",
     "redux": "^4.0.0",
     "teaset": "^0.5.9"

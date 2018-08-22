@@ -19,9 +19,7 @@ export default class SplashScreen extends BaseScreen {
 
     render() {
         return (
-            <View>
-                <Image source={Images.Splash.splash} style={{width: '100%',height: '100%', resizeMode:'stretch'}}/>
-            </View>
+            <Image source={Images.Splash.splash} style={{width: '100%',height: '100%', resizeMode:'stretch'}}/>
         );
     }
 
