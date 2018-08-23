@@ -4421,13 +4421,6 @@ qs@~6.5.1:
   version "6.5.1"
   resolved "http://registry.npm.taobao.org/qs/download/qs-6.5.1.tgz#349cdf6eef89ec45c12d7d5eb3fc0c870343a6d8"
 
-query-string@^6.0.0:
-  version "6.0.0"
-  resolved "http://registry.npm.taobao.org/query-string/download/query-string-6.0.0.tgz#8b8f39447b73e8290d6f5e3581779218e9171142"
-  dependencies:
-    decode-uri-component "^0.2.0"
-    strict-uri-encode "^2.0.0"
-
 query-string@^6.1.0:
   version "6.1.0"
   resolved "https://registry.npmjs.org/query-string/-/query-string-6.1.0.tgz#01e7d69f6a0940dac67a937d6c6325647aa4532a"

@@ -14,26 +14,20 @@ import Color from "../app/Color";
 import Image from "../view/Image";
 import Images from "../app/Images";
 import Button from "../view/Button";
+import {inject, observer} from "mobx-react";
 
 const list = ['智能排序','距离最近','销量最高','起送价最低','配送速度最快','评分最高'];
 
+@inject('categoryViewModel')
+@observer
 export default class CategoryScreen extends BaseScreen {
 
-  // 构造
   constructor(props) {
     super(props);
     this.data = this.props.navigation.state.params.data;
     this.setTitle(this.data.title);
     this.latitude = this.props.navigation.state.params.latitude;
     this.longitude = this.props.navigation.state.params.longitude;
-    // 初始状态
-    this.state = {
-      category: [],
-      categoryChild:[],
-      delivery: [],
-      activity: [],
-      shop: [],
-    };
   }
 
   _onItemClick = (item, index) => {
@@ -42,41 +36,11 @@ export default class CategoryScreen extends BaseScreen {
   };
 
   _onCategoryItemClick = (item, index) => {
-    this.state.categoryChild.length = 0;
-    this.setState({
-      categoryChild: this.state.categoryChild.concat(item.sub_categories)
-    })
+    this.props.categoryViewModel.setCategoryChildDate(item.sub_categories)
   };
 
   componentDidMount() {
-    this._fetchCategory();
-    this._fetchDelivery();
-    this._fetchActivity();
-    this._fetchShopList();
-  }
-
-  _fetchCategory() {
-    FoodsApi.fetchFoodCategory(this.latitude, this.longitude).then((res) => {
-      this.setState({category: res, categoryChild:res[0].sub_categories})
-    })
-  }
-
-  _fetchDelivery() {
-    FoodsApi.fetchFoodDelivery(this.latitude, this.longitude).then((res) => {
-      this.setState({delivery: res})
-    })
-  }
-
-  _fetchActivity() {
-    FoodsApi.fetchFoodActivity(this.latitude, this.longitude).then((res) => {
-      this.setState({activity: res})
-    })
-  }
-
-  _fetchShopList() {
-    LocationApi.fetchShopList(this.latitude, this.longitude, 0).then((res) => {
-      this.setState({shop: res})
-    })
+    this.props.categoryViewModel.getData(this.latitude, this.longitude)
   }
 
   renderView() {
@@ -89,13 +53,13 @@ export default class CategoryScreen extends BaseScreen {
           <Row style={{width:screenW,backgroundColor: Color.white}}>
             <FlatList
               style={{width:screenW / 2}}
-              data={this.state.category}
+              data={this.props.categoryViewModel.getCategoryDate}
               bounces={false}
               renderItem={this._renderCategoryItem}
               keyExtractor={(item, index) => index + ''}/>
             <FlatList
               style={{width:screenW / 2}}
-              data={this.state.categoryChild}
+              data={this.props.categoryViewModel.getCategoryChildDate}
               bounces={false}
               renderItem={this._renderCategoryChildItem}
               keyExtractor={(item, index) => index + ''}
@@ -112,14 +76,14 @@ export default class CategoryScreen extends BaseScreen {
           <Column style={{width:screenW,backgroundColor:Color.white}}>
             <Text text={'配送方式'} style={{margin:px2dp(10)}}/>
             <FlatList
-              data={this.state.delivery}
+              data={this.props.categoryViewModel.getDeliveryDate}
               bounces={false}
               numColumn={3}
               renderItem={(item, index)=> <Text microSize text={item.text}/>}
               keyExtractor={(item, index) => index + ''}/>
             <Text text={'商家属性（可以多选）'} style={{margin:px2dp(10)}}/>
             <FlatList
-              data={this.state.activity}
+              data={this.props.categoryViewModel.getActivityDate}
               bounces={false}
               numColumn={3}
               renderItem={(item, index)=>
@@ -145,7 +109,7 @@ export default class CategoryScreen extends BaseScreen {
         </DropdownMenu>
         <FlatList
           style={{flex:1}}
-          data={this.state.shop}
+          data={this.props.categoryViewModel.getShopListDate}
           renderItem={this._renderItem}
           keyExtractor={(item, index) => index + item.name}
           ItemSeparatorComponent={() => <Divider/>}/>
@@ -199,7 +163,7 @@ export default class CategoryScreen extends BaseScreen {
 
   _renderItem = ({item, index}) => {
     return (
-      <ShopListItem data={item} onClick={() => this.props.navigation.navigate('ShopInfo', {id: item.id})}/>
+      <ShopListItem data={item} onClick={() => this.toPage('ShopInfo', {id: item.id})}/>
     );
   }
 

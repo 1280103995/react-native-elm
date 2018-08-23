@@ -178,4 +178,13 @@ export default class BaseScreen extends Component {
   setTitleColor(color: string) {
     this.titleColor = color
   }
+
+  /**
+   * 前往下一个页面
+   * @param routerName
+   * @param option
+   */
+  toPage(routerName: string, option: any){
+    this.props.navigation.navigate(routerName, option)
+  }
 }

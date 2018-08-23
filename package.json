@@ -14,7 +14,6 @@
     "mobx": "^5.0.4",
     "mobx-react": "^5.2.5",
     "prop-types": "^15.6.1",
-    "query-string": "^6.0.0",
     "react": "16.3.2",
     "react-native": "0.55.4",
     "react-native-blur": "^3.2.2",

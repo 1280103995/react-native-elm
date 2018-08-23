@@ -7,6 +7,10 @@ export default {
   },
   Find:{
     search:'/v4/restaurants',
+  },
+  Category:{
+    category: '/shopping/v2/restaurant/category',
+    delivery: '/shopping/v1/restaurants/delivery_modes',//配送方式
+    activity: '/shopping/v1/restaurants/activity_attributes' //活动
   }
-
 }

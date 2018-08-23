@@ -4,6 +4,9 @@ import {XFetch} from "react-native-xfetch";
 
 export default class HomeModel{
 
+  /**
+   * 获取首页默认地址
+   */
   static fetchCityGuess(){
     let params = {'type': 'guess'};
     return new XFetch().get(Url.Home.cityUrl).setParams(params).do()
@@ -21,6 +24,18 @@ export default class HomeModel{
     return new XFetch().get(Url.Home.footType).do()
   }
 
+  /**
+   * 获取首页商家列表
+   * @param latitude
+   * @param longitude
+   * @param offset
+   * @param restaurant_category_id
+   * @param restaurant_category_ids
+   * @param order_by
+   * @param delivery_mode
+   * @param support_ids
+   * @returns {返回Promise}
+   */
   static fetchShopList(latitude,
                        longitude,
                        offset,

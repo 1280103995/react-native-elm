@@ -55,6 +55,6 @@ export default class OrderScreen extends BaseScreen {
   };
 
   _contentStyle(){
-    return this.props.orderViewModel.getRefreshState.length ? null : {justifyContent: 'center', alignItems:'center'}
+    return this.props.orderViewModel.getOrderList.length ? null : {justifyContent: 'center', alignItems:'center'}
   }
 }

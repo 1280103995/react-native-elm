@@ -48,12 +48,12 @@ export default class MyScreen extends BaseScreen {
   }
 
   _userInfoClick = () => {
-    if (isLogin) this.props.navigation.navigate('UserInfo', {callback: this._handleLogoutSuccess});
+    if (isLogin) this.toPage('UserInfo',{callback: this._handleLogoutSuccess});
     else this._toLogin()
   };
 
   _toLogin() {
-    this.props.navigation.navigate('Login', {callback: this._handleLoginSuccess})
+    this.toPage('Login',{callback: this._handleLoginSuccess})
   }
 
   /*登录成功后回来刷新页面*/
@@ -84,13 +84,13 @@ export default class MyScreen extends BaseScreen {
       return
     }
     if (label === '我的订单') {
-      this.props.navigation.navigate('Order')
+      this.toPage('Order')
     } else if (label === '积分商城') {
-      this.props.navigation.navigate('PointMall')
+      this.toPage('PointMall')
     } else if (label === '饿了么会员卡') {
-      this.props.navigation.navigate('ElmVIP')
+      this.toPage('ElmVIP')
     } else if (label === '服务中心') {
-      this.props.navigation.navigate('ServiceCenter')
+      this.toPage('ServiceCenter')
     }
   };
 
@@ -100,11 +100,11 @@ export default class MyScreen extends BaseScreen {
       return
     }
     if (label === '我的余额') {
-      this.props.navigation.navigate('Balance')
+      this.toPage('Balance')
     } else if (label === '我的优惠') {
-      this.props.navigation.navigate('Discount')
+      this.toPage('Discount')
     } else {
-      this.props.navigation.navigate('Point')
+      this.toPage('Point')
     }
   };
 
