@@ -16,8 +16,6 @@ import Images from "../app/Images";
 import Button from "../view/Button";
 import {inject, observer} from "mobx-react";
 
-const list = ['智能排序','距离最近','销量最高','起送价最低','配送速度最快','评分最高'];
-
 @inject('categoryViewModel')
 @observer
 export default class CategoryScreen extends BaseScreen {
@@ -67,7 +65,7 @@ export default class CategoryScreen extends BaseScreen {
           </Row>
           <FlatList
             style={{width:screenW, backgroundColor: Color.white}}
-            data={list}
+            data={this.props.categoryViewModel.sortList}
             bounces={false}
             numColumn={3}
             renderItem={this._renderItem2}

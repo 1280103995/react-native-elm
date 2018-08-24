@@ -1,10 +1,10 @@
-import {action, computed, observable} from "mobx";
+import {computed, observable} from "mobx";
 import HomeModel from "../model/HomeModel";
 
 class HomeViewModel{
-  latitude = null;
-  longitude = null;
-  @observable location = ''; //定位
+  @observable latitude = 0;
+  @observable longitude = 0;
+  @observable location = ''; //当前城市名
   @observable categoryList = []; //分类数组
   @observable shopList = []; //店铺列表
 
@@ -42,29 +42,24 @@ class HomeViewModel{
     })
   }
 
-  @action
-  setLocation(info){
-    this.location = info
-  }
-
   @computed
   get getLocation(){
     return this.location
   }
 
-  @action
-  categoryAddAll(list){
-    this.categoryList = list
+  @computed
+  get getLatitude(){
+    return this.latitude
+  }
+
+  @computed
+  get getLongitude(){
+    return this.longitude
   }
 
   @computed
   get getCategoryList(){
     return this.categoryList
-  }
-
-  @action
-  shopAddAll(list){
-    this.shopList = list
   }
 
   @computed

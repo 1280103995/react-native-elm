@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {FlatList, SafeAreaView, StyleSheet, View} from "react-native";
+import {FlatList, StyleSheet} from "react-native";
 import Row from "../../view/Row";
 import Column from "../../view/Column";
 import Divider from "../../view/Divider";
@@ -7,10 +7,12 @@ import Color from "../../app/Color";
 import {paddingLR, paddingTB, px2dp, wh} from "../../utils/ScreenUtil";
 import Text from "../../view/Text";
 import StarRating from "../../view/StarRating";
-import ShopAip from "../../api/ShopApi";
 import Image from "../../view/Image";
 import Images from "../../app/Images";
+import {inject, observer} from "mobx-react";
 
+@inject('shopInfoEvaluationViewModel')
+@observer
 export default class ShopInfoEvaluation extends Component {
 
   // 构造
@@ -30,29 +32,14 @@ export default class ShopInfoEvaluation extends Component {
 
   componentDidMount() {
     const id = this.props.shopID;
-    ShopAip.fetchShopScores(id).then((res) => {
-      this.setState({
-        overallScore: res.overall_score,
-        compareRating: Math.ceil(res.compare_rating) * 100 + '%',
-        serviceScore: res.service_score,
-        foodScore: res.food_score,
-        deliverTime: res.deliver_time
-      })
-    });
-
-    ShopAip.fetchShopRatingTags(id).then((res) => {
-      this.setState({tags: res})
-    });
-
-    ShopAip.fetchShopRatingList(id).then((res)=>{
-      this.setState({list:res})
-    })
+    this.props.shopInfoEvaluationViewModel.getEvaluationDate(id)
   }
 
   render() {
+    let viewModel = this.props.shopInfoEvaluationViewModel;
     return (
       <FlatList
-        data={this.state.list}
+        data={viewModel.getList}
         renderItem={this._renderItem}
         keyExtractor={(item,index) => index + ''}
         ListHeaderComponent={this._renderHeader}
@@ -62,6 +49,7 @@ export default class ShopInfoEvaluation extends Component {
   }
 
   _renderHeader = () => {
+    let viewModel = this.props.shopInfoEvaluationViewModel;
     return (
       <Column style={{backgroundColor: Color.white}}>
         <Row verticalCenter style={{justifyContent: 'space-between', padding: px2dp(30)}}>
@@ -70,14 +58,14 @@ export default class ShopInfoEvaluation extends Component {
               <StarRating
                 maxStars={5}
                 disabled={true}
-                rating={parseInt(this.state.overallScore)}
+                rating={parseInt(viewModel.getOverallScore)}
                 starSize={15}
               />
               <Text largeSize orange text={4.7} style={{marginBottom: px2dp(10)}}/>
             </Row>
 
             <Text mediumSize text={'综合评价'} style={{marginBottom: px2dp(10)}}/>
-            <Text mediumSize gray text={`高于周边商家${this.state.compareRating}`}/>
+            <Text mediumSize gray text={`高于周边商家${viewModel.getCompareRating}`}/>
           </Column>
           <Column>
             <Row verticalCenter>
@@ -85,7 +73,7 @@ export default class ShopInfoEvaluation extends Component {
               <StarRating
                 maxStars={5}
                 disabled={true}
-                rating={parseInt(this.state.serviceScore)}
+                rating={parseInt(viewModel.getServiceScore)}
                 starSize={15}
               />
               <Text mediumSize orange text={4.7}/>
@@ -95,21 +83,21 @@ export default class ShopInfoEvaluation extends Component {
               <StarRating
                 maxStars={5}
                 disabled={true}
-                rating={parseInt(this.state.foodScore)}
+                rating={parseInt(viewModel.getFoodScore)}
                 starSize={15}
               />
               <Text mediumSize orange text={4.8}/>
             </Row>
             <Row verticalCenter>
               <Text mediumSize text={'送达时间'} style={{marginRight: px2dp(15)}}/>
-              <Text mediumSize gray text={`${this.state.deliverTime}分钟`}/>
+              <Text mediumSize gray text={`${viewModel.getDeliverTime}分钟`}/>
             </Row>
           </Column>
         </Row>
         <Divider color={Color.background} height={20}/>
 
         <Row style={styles.typesView}>
-          {this.state.tags.map((item, index)=> this._renderTypeItem(item, index))}
+          {viewModel.getTags.map((item, index)=> this._renderTypeItem(item, index))}
         </Row>
         <Divider/>
       </Column>

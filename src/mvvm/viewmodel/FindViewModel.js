@@ -39,11 +39,6 @@ class FindViewModel {
     return this.list
   }
 
-  @action
-  shopAddAll(list){
-    this.shopList = list
-  }
-
   @computed
   get getShopList(){
     return this.shopList

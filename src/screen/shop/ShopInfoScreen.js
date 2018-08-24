@@ -12,7 +12,7 @@ import {
 import BaseScreen from "../BaseScreen";
 import Column from "../../view/Column";
 // import {BlurView} from "react-native-blur";
-import {isIphoneX, marginTB, paddingLR, paddingTB, px2dp, px2sp, screenW, wh} from "../../utils/ScreenUtil";
+import {isIphoneX, marginTB, paddingLR, paddingTB, px2dp, screenW, wh} from "../../utils/ScreenUtil";
 import Images from "../../app/Images";
 import Image from "../../view/Image";
 import Text from "../../view/Text";
@@ -21,10 +21,11 @@ import Color from "../../app/Color";
 import ScrollableTabView from "react-native-scrollable-tab-view";
 import ShopInfoList from "./ShopInfoList";
 import ShopInfoEvaluation from "./ShopInfoEvaluation";
-import LocationApi from "../../api/LocationApi";
-import ShopAip from "../../api/ShopApi";
 import TabBar from "../../view/TabBar";
+import {inject, observer} from "mobx-react";
 
+@inject('homeViewModel', 'shopInfoViewModel')
+@observer
 export default class ShopInfoScreen extends BaseScreen {
 
   // 构造
@@ -36,10 +37,6 @@ export default class ShopInfoScreen extends BaseScreen {
       headOpacity: 1,
       bgY: 0,
       bgScale: 1,
-      //店铺信息
-      shopImg: '',
-      shopName: '',
-      shopPromotion: '',
       viewRef: 0
     };
   }
@@ -49,15 +46,9 @@ export default class ShopInfoScreen extends BaseScreen {
   }
 
   componentDidMount() {
-    LocationApi.fetchCityGuess().then((res) => {
-      ShopAip.fetchShopDetails(this._shopID(), res.latitude, res.longitude).then((res) => {
-        this.setState({
-          shopImg: res.image_path,
-          shopName: res.name,
-          shopPromotion: res.promotion_info
-        })
-      });
-    })
+    let latitude = this.props.homeViewModel.getLatitude;
+    let longitude = this.props.homeViewModel.getLongitude;
+    this.props.shopInfoViewModel.getShopData(this._shopID(), latitude, longitude)
   }
 
   imageLoaded() {
@@ -98,10 +89,10 @@ export default class ShopInfoScreen extends BaseScreen {
           </TouchableOpacity>
           {/*模糊层上的*/}
           <Animated.View style={{flexDirection: "row", paddingHorizontal: 16, opacity: this.state.headOpacity}}>
-            <Image source={this.state.shopImg} style={styles.logo}/>
+            <Image source={this.props.shopInfoViewModel.getShopImgPath} style={styles.logo}/>
             <Column style={{marginLeft: 14, flex: 1}}>
               <Column>
-                <Text white text={this.state.shopName}/>
+                <Text white text={this.props.shopInfoViewModel.getShopName}/>
                 <Row verticalCenter>
                   <View style={{...paddingTB(2), ...paddingLR(4), ...marginTB(4), backgroundColor: Color.theme}}>
                     <Text white microSize text={'蜂鸟专送'}/>
@@ -109,7 +100,7 @@ export default class ShopInfoScreen extends BaseScreen {
                   <Text white microSize text={'30分钟送达'}/>
                 </Row>
               </Column>
-              <Text white microSize numberOfLines={1} text={this.state.shopPromotion}/>
+              <Text white microSize numberOfLines={1} text={this.props.shopInfoViewModel.getShopPromotion}/>
             </Column>
           </Animated.View>
           {/*活动*/}

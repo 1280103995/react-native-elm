@@ -1,4 +1,3 @@
-
 import Url from "../../api/Url";
 import {XFetch} from "react-native-xfetch";
 

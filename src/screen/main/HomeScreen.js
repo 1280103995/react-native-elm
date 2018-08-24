@@ -33,9 +33,9 @@ export default class HomeScreen extends BaseScreen {
   }
 
   _onCategoryItemClick = (category) => {
-    const latitude = this.props.homeViewModel.latitude;
-    const longitude = this.props.homeViewModel.longitude;
-    this.props.navigation.navigate('Category',{data:category,latitude,longitude})
+    let latitude = this.props.homeViewModel.getLatitude;
+    let longitude = this.props.homeViewModel.getLongitude;
+    this.toPage('Category',{data:category,latitude,longitude})
   };
 
   componentDidMount() {

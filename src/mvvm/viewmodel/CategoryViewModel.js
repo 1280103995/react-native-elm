@@ -3,6 +3,7 @@ import CategoryModel from "../model/CategoryModel";
 import HomeModel from "../model/HomeModel";
 
 class CategoryViewModel {
+  sortList = ['智能排序','距离最近','销量最高','起送价最低','配送速度最快','评分最高'];
   @observable category = [];
   @observable categoryChild = [];
   @observable delivery = [];
