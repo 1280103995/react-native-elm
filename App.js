@@ -3,6 +3,7 @@ import {Navigator} from "./src/navigation/StackNavigator";
 import {Provider} from 'mobx-react'
 import RootStore from "./src/store/RootStore";
 import {XFetchConfig} from "react-native-xfetch";
+import Toast from "./src/view/Toast";
 
 export default class App extends Component{
 
@@ -24,6 +25,7 @@ export default class App extends Component{
     }else {
       reject(data);
       console.log('XFetch_error-->', `url:${url}\n`, data);
+      Toast.show(data.message)
     }
   };
 

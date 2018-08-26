@@ -1,6 +1,6 @@
-import HttpUtils from "./HttpUtils";
+import {XFetch} from "react-native-xfetch";
 
-export default class AddressApi{
+export default class AddressModel{
 
   /**
    * 获取地址列表
@@ -12,7 +12,7 @@ export default class AddressApi{
     let params = {
       sig
     };
-    return HttpUtils.get(`/v1/carts/${id}/addresses`,params)
+    return new XFetch().get(`/v1/carts/${id}/addresses`).setParams(params).do()
   }
 
   /**
@@ -25,7 +25,7 @@ export default class AddressApi{
       'type': 'nearby',
       keyword
     };
-    return HttpUtils.get('/v1/pois',params)
+    return new XFetch().get('/v1/pois').setParams(params).do()
   }
 
   /**
@@ -57,7 +57,7 @@ export default class AddressApi{
       tag,
       tag_type,
     };
-    return HttpUtils.post(`/v1/users/${userId}/addresses`,params)
+    return new XFetch().post(`/v1/users/${userId}/addresses`).setParams(params).do()
   }
 
   /**
@@ -66,7 +66,7 @@ export default class AddressApi{
    * @returns {返回Promise}
    */
   static fetchGetAddressList(user_id){
-    return HttpUtils.get(`/v1/users/${user_id}/addresses`)
+    return new XFetch().get(`/v1/users/${user_id}/addresses`).do()
   }
 
   /**
@@ -78,7 +78,7 @@ export default class AddressApi{
       keyword:keyword,
       type:'nearby'
     };
-    return HttpUtils.get('v1/pois',params)
+    return new XFetch().get('v1/pois').setParams(params).do()
   }
 
   /**
@@ -88,6 +88,6 @@ export default class AddressApi{
    * @returns {返回Promise}
    */
   static fetchDeleteAddress(userid, addressid){
-    return HttpUtils.delete(`/v1/users/${userid}/addresses/${addressid}`)
+    return new XFetch().delete(`/v1/users/${userid}/addresses/${addressid}`).do()
   }
 }

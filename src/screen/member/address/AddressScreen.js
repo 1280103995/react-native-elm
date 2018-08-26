@@ -29,7 +29,7 @@ export default class AddressScreen extends BaseScreen {
   }
 
   _onMenuClick = () => {
-    this.props.navigation.navigate('AddAddress',{callback:this._handleAddAddressSuccess})
+    this.toPage('AddAddress',{callback:this._handleAddAddressSuccess})
   };
 
   /*下单的时候选择地址，回调*/

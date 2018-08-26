@@ -20,7 +20,7 @@ export default class OrderConfirmScreen extends BaseScreen {
   }
 
   _chooseAddress = () => {
-    this.props.navigation.navigate('Address',{chose:true, callback:this._handleChoseAddress})
+    this.toPage('Address',{chose:true, callback:this._handleChoseAddress})
   };
 
   _handleChoseAddress = (address) => {
@@ -28,7 +28,7 @@ export default class OrderConfirmScreen extends BaseScreen {
   };
 
   _onConfirmBtn = () => {
-    this.props.navigation.navigate('PayOnLine')
+    this.toPage('PayOnLine')
   };
 
   renderView() {

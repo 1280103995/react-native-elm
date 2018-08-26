@@ -10,7 +10,7 @@ import Input from "../../../view/Input";
 import Button from "../../../view/Button";
 import Text from "../../../view/Text";
 import Toast from "../../../view/Toast";
-import AddressApi from "../../../api/AddressApi";
+import AddressModel from "../../../mvvm/model/AddressModel";
 
 export default class SearchAddressScreen extends BaseScreen {
 
@@ -28,7 +28,7 @@ export default class SearchAddressScreen extends BaseScreen {
       Toast.show('请输入内容');
       return
     }
-    AddressApi.fetchSearchNearby(this.keyWord).then((res) => {
+    AddressModel.fetchSearchNearby(this.keyWord).then((res) => {
       this.setState({address: res})
     })
   };

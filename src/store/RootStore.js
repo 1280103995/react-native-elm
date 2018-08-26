@@ -6,6 +6,7 @@ import orderViewModel from "../mvvm/viewmodel/OrderViewModel";
 import categoryViewModel from "../mvvm/viewmodel/CategoryViewModel";
 import shopInfoViewModel from "../mvvm/viewmodel/ShopInfoViewModel";
 import shopInfoEvaluationViewModel from "../mvvm/viewmodel/ShopInfoEvaluationViewModel";
+import addressViewModel from "../mvvm/viewmodel/AddressViewModel";
 
 const store = {
   homeViewModel,
@@ -15,6 +16,7 @@ const store = {
   shopInfoViewModel,
   cartStore,
   shopInfoEvaluationViewModel,
+  addressViewModel,
   addressListStore
 };
 
