@@ -2,7 +2,7 @@ import {action, computed, observable} from "mobx";
 import AddressModel from "../model/AddressModel";
 import Toast from "../../view/Toast";
 
-class AddressViewModel {
+export default class AddAddressViewModel {
   @observable item2HasValue = false;//用来判断小区那一栏是否有值，有则更新字体颜色
   @observable addressName = '小区/写字楼/学校等';
   @observable geohash = '';
@@ -98,6 +98,3 @@ class AddressViewModel {
     this.phone2 = '';
   }
 }
-
-const addressViewModel = new AddressViewModel();
-export default addressViewModel

@@ -1,4 +1,4 @@
-import HttpUtils from "./HttpUtils";
+import {XFetch} from "react-native-xfetch";
 
 export default class FoodsApi{
 
@@ -10,7 +10,7 @@ export default class FoodsApi{
       latitude,
       longitude
     };
-    return HttpUtils.get('/shopping/v2/restaurant/category',params)
+    return new XFetch().get('/shopping/v2/restaurant/category').setParams(params).do()
   }
 
   /**
@@ -22,7 +22,7 @@ export default class FoodsApi{
       longitude,
       kw: ''
     };
-    return HttpUtils.get('/shopping/v1/restaurants/delivery_modes',params)
+    return new XFetch().get('/shopping/v1/restaurants/delivery_modes').setParams(params).do()
   }
 
   /**
@@ -34,6 +34,6 @@ export default class FoodsApi{
       longitude,
       kw: ''
     };
-    return HttpUtils.get('/shopping/v1/restaurants/activity_attributes',params)
+    return new XFetch().get('/shopping/v1/restaurants/activity_attributes').setParams(params).do()
   }
 }

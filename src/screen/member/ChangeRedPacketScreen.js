@@ -6,7 +6,7 @@ import Input from "../../view/Input";
 import Color from "../../app/Color";
 import {StyleSheet, TouchableOpacity} from "react-native";
 import Image from "../../view/Image";
-import AuthApi from "../../api/AuthApi";
+import AuthModel from "../../mvvm/model/AuthModel";
 import Button from "../../view/Button";
 import Toast from "../../view/Toast";
 import RedPacketApi from "../../api/RedPacketApi";
@@ -29,7 +29,7 @@ export default class ChangeRedPacketScreen extends BaseScreen {
   }
 
   _fetchRefreshCaptcha(){
-    AuthApi.fetchCaptcha().then((res)=>{
+    AuthModel.fetchCaptcha().then((res)=>{
       this.setState({captcha: res.code})
     })
   };

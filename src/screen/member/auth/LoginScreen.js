@@ -9,64 +9,36 @@ import Divider from "../../../view/Divider";
 import {StyleSheet, TouchableOpacity} from "react-native";
 import Button from "../../../view/Button";
 import Image from "../../../view/Image";
-import AuthApi from "../../../api/AuthApi";
 import CheckBox from "../../../view/CheckBox";
 import Images from "../../../app/Images";
-import Toast from "../../../view/Toast";
+import LoginViewModel from "../../../mvvm/viewmodel/LoginViewModel";
+import {observer} from "mobx-react";
 
+@observer
 export default class LoginScreen extends BaseScreen {
+
+  loginViewModel = new LoginViewModel();
 
   constructor(props) {
     super(props);
-    this.setTitle('密码登录');
-    this.state = {
-      captcha:null
-    };
-    this.nameText = '';
-    this.pwdText = '';
-    this.codeText = ''
+    this.setTitle('密码登录')
   }
 
   _passwordVisible = (state) => {
     this.pwd.setNativeProps({
       secureTextEntry: !state
-    });
-  };
-
-  _onBtnLoginClick = () => {
-    if(this.nameText === ''){
-      Toast.show('请输入手机号/邮箱/用户名');
-      return
-    }
-    if(this.pwdText === ''){
-      Toast.show('请输入密码');
-      return
-    }
-    if(this.codeText === ''){
-      Toast.show('请输入验证码');
-      return
-    }
-    this._fetchLogin()
+    })
   };
 
   componentDidMount() {
-    this._fetchRefreshCaptcha()
+    //获取验证码
+    this.loginViewModel.fetchRefreshCaptcha()
   }
-  _fetchRefreshCaptcha = () => {
-    AuthApi.fetchCaptcha().then((res)=>{
-      this.setState({captcha: res.code})
-    })
-  };
 
-  _fetchLogin(){
-    AuthApi.fetchAccountLogin(this.nameText,this.pwdText,this.codeText).then((res)=>{
-      isLogin = true;
-      UserInfo = res;
-      const navigation = this.props.navigation;
-      navigation.state.params.callback();
-      navigation.goBack()
-    })
-  }
+  _fetchLogin = () =>{
+    //请求登录
+    this.loginViewModel.fetchAccountLogin(this.props.navigation)
+  };
 
   renderView() {
     return (
@@ -76,7 +48,7 @@ export default class LoginScreen extends BaseScreen {
             bgViewStyle={styles.input}
             label={'账号'}
             placeholder={'请输入账号'}
-            onChangeText={(text) => this.nameText = text}/>
+            onChangeText={(text) => this.loginViewModel.setNameText(text)}/>
           <Divider/>
           <Input
             id={(p)=>this.pwd=p}
@@ -84,7 +56,7 @@ export default class LoginScreen extends BaseScreen {
             label={'密码'}
             placeholder={'请输入密码'}
             secureTextEntry={true}
-            onChangeText={(text) => this.pwdText = text}>
+            onChangeText={(text) => this.loginViewModel.setPwdText(text)}>
             <CheckBox
               tintColorEnable={false}
               checkedIcon={Images.Login.hidePwd}
@@ -96,10 +68,10 @@ export default class LoginScreen extends BaseScreen {
             bgViewStyle={styles.input}
             label={'验证码'}
             placeholder={'请输入验证码'}
-            onChangeText={(text) => this.codeText = text}>
+            onChangeText={(text) => this.loginViewModel.setCaptchaText(text)}>
             <TouchableOpacity onPress={this._fetchRefreshCaptcha}>
               <Image
-                source={decodeURIComponent(this.state.captcha)}
+                source={decodeURIComponent(this.loginViewModel.getCaptcha)}
                 style={styles.captchaImgStyle}
                 needBaseUrl={false}/>
             </TouchableOpacity>
@@ -108,7 +80,7 @@ export default class LoginScreen extends BaseScreen {
         <Button
           style={styles.btnStyle}
           title={'确定'}
-          onPress={this._onBtnLoginClick}/>
+          onPress={this._fetchLogin}/>
       </KeyboardAwareScrollView>
     )
   }

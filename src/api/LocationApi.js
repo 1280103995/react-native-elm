@@ -1,4 +1,4 @@
-import HttpUtils from "./HttpUtils";
+import {XFetch} from "react-native-xfetch";
 
 export default class LocationApi{
 
@@ -6,28 +6,28 @@ export default class LocationApi{
    * 获取首页默认地址
    */
   static fetchCityGuess(){
-    return HttpUtils.get('/v1/cities/',{'type': 'guess'})
+    return new XFetch().get('/v1/cities/').setParams({'type': 'guess'}).do()
   }
 
   /**
    * 获取首页热门城市
    */
   static fetchHotCity(){
-    return HttpUtils.get('/v1/cities/',{'type': 'hot'})
+    return new XFetch().get('/v1/cities/').setParams({'type': 'hot'}).do()
   }
 
   /**
    * 获取首页所有城市
    */
   static fetchAllCtiy(){
-    return HttpUtils.get('/v1/cities/',{'type': 'group'})
+    return new XFetch().get('/v1/cities/').setParams({'type': 'group'}).do()
   }
 
   /**
    * 获取当前所在城市
    */
   static fetchCurCtity(number){
-    return HttpUtils.get(`/v1/cities/${number}`)
+    return new XFetch().get(`/v1/cities/${number}`).do()
   }
 
   /**
@@ -42,7 +42,7 @@ export default class LocationApi{
       'city_id': city_id,
       'keyword': key_str
     };
-    return HttpUtils.get('/v1/pois',params)
+    return new XFetch().get('/v1/pois').setParams(params).do()
   }
 
   /**
@@ -51,7 +51,7 @@ export default class LocationApi{
    * @returns {返回Promise}
    */
   static fetchMSiteAddress(geohash){
-    return HttpUtils.get(`/v2/pois/${geohash}`)
+    return new XFetch().get(`/v2/pois/${geohash}`).do()
   }
 
   /**
@@ -63,7 +63,7 @@ export default class LocationApi{
       'group_type': '1',
       'flags[]': 'F'
     };
-    return HttpUtils.get('/v2/index_entry')
+    return new XFetch().get('/v2/index_entry').setParams(params).do()
   }
 
   /**
@@ -105,6 +105,6 @@ export default class LocationApi{
       order_by,
       'delivery_mode[]': delivery_mode + supportStr
     };
-    return HttpUtils.get('/shopping/restaurants',params)
+    return new XFetch().get('/shopping/restaurants').setParams(params).do()
   }
 }

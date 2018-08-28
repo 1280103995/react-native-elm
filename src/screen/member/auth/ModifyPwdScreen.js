@@ -10,7 +10,7 @@ import Divider from "../../../view/Divider";
 import Image from "../../../view/Image";
 import Button from "../../../view/Button";
 import Toast from "../../../view/Toast";
-import AuthApi from "../../../api/AuthApi";
+import AuthModel from "../../../mvvm/model/AuthModel";
 
 export default class ModifyPwdScreen extends BaseScreen{
 
@@ -57,7 +57,7 @@ export default class ModifyPwdScreen extends BaseScreen{
   };
 
   _fetch = () => {
-    AuthApi.fetchUpdatePwd(this.userName, this.nameText, this.oldPwdText,
+    AuthModel.fetchUpdatePwd(this.userName, this.nameText, this.oldPwdText,
       this.pwdText, this.confirmPwdText, this.codeText).then((res)=>{
       this.props.navigation.goBack();
       alert('修改密码成功')
@@ -65,7 +65,7 @@ export default class ModifyPwdScreen extends BaseScreen{
   };
 
   _fetchRefreshCaptcha = () => {
-    AuthApi.fetchCaptcha().then((res)=>{
+    AuthModel.fetchCaptcha().then((res)=>{
       this.setState({captcha: res.code})
     })
   };

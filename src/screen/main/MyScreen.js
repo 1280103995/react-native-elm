@@ -10,7 +10,7 @@ import Color from "../../app/Color";
 import Images from "../../app/Images";
 import Divider from "../../view/Divider";
 import {toDecimal2} from "../../store/ShoppingCartStore";
-import AuthApi from "../../api/AuthApi";
+import AuthModel from "../../mvvm/model/AuthModel";
 
 export default class MyScreen extends BaseScreen {
 
@@ -109,7 +109,7 @@ export default class MyScreen extends BaseScreen {
   };
 
   _fetchUserInfo() {
-    AuthApi.fetchUserInfo(UserInfo.user_id).then((res) => {
+    AuthModel.fetchUserInfo(UserInfo.user_id).then((res) => {
       UserInfo = res
     })
   }

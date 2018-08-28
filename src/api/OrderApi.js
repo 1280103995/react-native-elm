@@ -1,4 +1,4 @@
-import HttpUtils from "./HttpUtils";
+import {XFetch} from "react-native-xfetch";
 
 export default class OrderApi{
 
@@ -16,7 +16,7 @@ export default class OrderApi{
       entities,
       restaurant_id: shopid,
     };
-    return HttpUtils.post('/v1/carts/checkout',params)
+    return new XFetch().post('/v1/carts/checkout').setParams(params).do()
   }
 
   /**
@@ -24,7 +24,7 @@ export default class OrderApi{
    * @returns {返回Promise}
    */
   static fetchGetRemark(){
-    return HttpUtils.get(`/v1/carts/${id}/remarks`)
+    return new XFetch().get(`/v1/carts/${id}/remarks`).do()
   }
 
   /**
@@ -49,7 +49,7 @@ export default class OrderApi{
       'paymethod_id': 1,
       sig,
     };
-    return HttpUtils.post(`/v1/users/${user_id}/carts/${cart_id}/orders`,params)
+    return new XFetch().get(`/v1/users/${user_id}/carts/${cart_id}/orders`).setParams(params).do()
   }
 
   /**
@@ -64,7 +64,7 @@ export default class OrderApi{
       sig,
       type,
     };
-    return HttpUtils.post(`/v1/carts/${cart_id}/verify_code`,params)
+    return new XFetch().get(`/v1/carts/${cart_id}/verify_code`).setParams(params).do()
   }
 
   /**
@@ -99,9 +99,8 @@ export default class OrderApi{
       sig,
       validation_code,
       validation_token,
-
     };
-    HttpUtils.post(`/v1/users/${user_id}/carts/${cart_id}/orders`,params)
+    return new XFetch().get(`/v1/users/${user_id}/carts/${cart_id}/orders`).setParams(params).do()
   }
 
   /**
@@ -118,7 +117,7 @@ export default class OrderApi{
       userId,
       'version': '1.0.0',
     };
-    return HttpUtils.get('/payapi/payment/queryOrder',params)
+    return new XFetch().get('/payapi/payment/queryOrder').setParams(params).do()
   }
 
   /**
@@ -131,8 +130,8 @@ export default class OrderApi{
     let params = {
       limit: 10,
       offset,
-  };
-    return HttpUtils.get(`/bos/v2/users/${user_id}/orders`,params)
+    };
+    return new XFetch().get(`/bos/v2/users/${user_id}/orders`).setParams(params).do()
   }
 
   /**
@@ -142,7 +141,7 @@ export default class OrderApi{
    * @returns {返回Promise}
    */
   static fetchOrderInfo(user_id, orderid){
-    return HttpUtils.get(`/bos/v1/users/${user_id}/orders/${orderid}/snapshot`)
+    return new XFetch().get(`/bos/v1/users/${user_id}/orders/${orderid}/snapshot`).do()
   }
 
 }

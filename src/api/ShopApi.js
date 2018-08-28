@@ -1,4 +1,4 @@
-import HttpUtils from "./HttpUtils";
+import {XFetch} from "react-native-xfetch";
 
 export default class ShopAip{
 
@@ -14,7 +14,7 @@ export default class ShopAip{
       latitude,
       'longitude':longitude + '&extras[]=activities&extras[]=album&extras[]=license&extras[]=identification&extras[]=statistics',
     };
-    return HttpUtils.get(`/shopping/restaurant/${shopid}`,params)
+    return new XFetch().get(`/shopping/restaurant/${shopid}`).setParams(params).do()
   }
 
   /**
@@ -23,7 +23,7 @@ export default class ShopAip{
    * @returns {返回Promise}
    */
   static fetchShopGoodsList(shopid){
-    return HttpUtils.get('/shopping/v2/menu',{'restaurant_id': shopid})
+    return new XFetch().get('/shopping/v2/menu').setParams({'restaurant_id': shopid}).do()
   }
 
   /**
@@ -37,7 +37,7 @@ export default class ShopAip{
       'limit': 10,
       'tag_name':''
     };
-    return HttpUtils.get(`/ugc/v2/restaurants/${shopid}/ratings`,params)
+    return new XFetch().get(`/ugc/v2/restaurants/${shopid}/ratings`).setParams(params).do()
   }
 
   /**
@@ -46,7 +46,7 @@ export default class ShopAip{
    * @returns {返回Promise}
    */
   static fetchShopScores(shopid){
-    return HttpUtils.get(`/ugc/v2/restaurants/${shopid}/ratings/scores`)
+    return new XFetch().get(`/ugc/v2/restaurants/${shopid}/ratings/scores`).do()
   }
 
   /**
@@ -55,7 +55,7 @@ export default class ShopAip{
    * @returns {返回Promise}
    */
   static fetchShopRatingTags(shopid){
-    return HttpUtils.get(`/ugc/v2/restaurants/${shopid}/ratings/tags`)
+    return new XFetch().get(`/ugc/v2/restaurants/${shopid}/ratings/tags`).do()
   }
 
   /**
@@ -71,6 +71,6 @@ export default class ShopAip{
       keyword,
       type: 'search'
     };
-    return HttpUtils.get('/v4/restaurants',params)
+    return new XFetch().get('/v4/restaurants').setParams(params).do()
   }
 }

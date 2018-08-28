@@ -9,7 +9,7 @@ import Text from "../../../view/Text";
 import Button from "../../../view/Button";
 import Toast from "../../../view/Toast";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
-import AuthApi from "../../../api/AuthApi";
+import AuthModel from "../../../mvvm/model/AuthModel";
 
 export default class ModifyUserNameScreen extends BaseScreen {
 

@@ -9,11 +9,13 @@ import Input from "../../../view/Input";
 import Button from "../../../view/Button";
 import Row from "../../../view/Row";
 import Text from "../../../view/Text";
-import {inject, observer} from "mobx-react";
+import {observer} from "mobx-react";
+import AddAddressViewModel from "../../../mvvm/viewmodel/AddAddressViewModel";
 
-@inject('addressViewModel')
 @observer
 export default class AddAddressScreen extends BaseScreen {
+
+  addressViewModel = new AddAddressViewModel();
 
   constructor(props) {
     super(props);
@@ -25,23 +27,22 @@ export default class AddAddressScreen extends BaseScreen {
   };
 
   _handleAddAddress = (address) => {
-    const addressViewModel = this.props.addressViewModel;
     // address:"地铁1号线(罗宝线),地铁5号线(环中线)等2条线路"
     // geohash:"22.554628,113.887171"
     // latitude:22.554628
     // longitude:113.887171
     // name:"宝安中心[地铁站]"
-    addressViewModel.setItem2Value(true);
-    addressViewModel.setGeohash(address.geohash);
-    addressViewModel.setAddressName(address.name)
+    this.addressViewModel.setItem2Value(true);
+    this.addressViewModel.setGeohash(address.geohash);
+    this.addressViewModel.setAddressName(address.name)
   };
 
   _onBtnClick = () => {
-    this.props.addressViewModel.submitAddress(this.props.navigation, UserInfo.user_id)
+    this.addressViewModel.submitAddress(this.props.navigation, UserInfo.user_id)
   };
 
   renderView() {
-    let addressViewModel = this.props.addressViewModel;
+    let addressViewModel = this.addressViewModel;
     return (
       <KeyboardAwareScrollView>
         <Column style={styles.contentStyle}>
@@ -76,9 +77,6 @@ export default class AddAddressScreen extends BaseScreen {
     )
   }
 
-  componentWillUnmount() {
-    this.props.addressViewModel.reset()
-  }
 }
 
 const styles = StyleSheet.create({

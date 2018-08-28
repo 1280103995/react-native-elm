@@ -1,13 +1,13 @@
-import HttpUtils from "./HttpUtils";
+import {XFetch} from "react-native-xfetch";
 
-export default class AuthApi{
+export default class AuthModel{
 
   /**
    * 获取图片验证码
    * @returns {返回Promise}
    */
   static fetchCaptcha(){
-    return HttpUtils.post('/v1/captchas')
+    return new XFetch().post('/v1/captchas').do()
   }
 
   /**
@@ -21,7 +21,7 @@ export default class AuthApi{
       scene: 'login',
       type: 'sms'
     };
-    return HttpUtils.post('/v4/mobile/verify_code/send',params)
+    return new XFetch().post('/v4/mobile/verify_code/send').setParams(params).do()
   }
 
   /**
@@ -35,7 +35,7 @@ export default class AuthApi{
       [type]: checkNumber,
       type
     };
-    return HttpUtils.get('/v1/users/exists',params)
+    return new XFetch().post('/v1/users/exists').setParams(params).do()
   }
 
   /**
@@ -55,7 +55,7 @@ export default class AuthApi{
       way: type,
       password,
     };
-    return HttpUtils.post('/v1/mobile/verify_code/send',params)
+    return new XFetch().post('/v1/mobile/verify_code/send').setParams(params).do()
   }
 
   /**
@@ -67,7 +67,7 @@ export default class AuthApi{
     let params = {
       user_id
     };
-    return HttpUtils.get('/v1/user',params)
+    return new XFetch().get('/v1/user').setParams(params).do()
   }
 
   /**
@@ -83,7 +83,7 @@ export default class AuthApi{
       mobile,
       validate_token
     };
-    return HttpUtils.post('/v1/login/app_mobile',params)
+    return new XFetch().post('/v1/login/app_mobile').setParams(params).do()
   }
 
   /**
@@ -98,7 +98,7 @@ export default class AuthApi{
     formData.append("username",username);
     formData.append("password",password);
     formData.append("captcha_code",captcha_code);
-    return HttpUtils.post('/v2/login',formData, true)
+    return new XFetch().post('/v2/login').setParams(formData, true).do()
   }
 
   /**
@@ -106,7 +106,7 @@ export default class AuthApi{
    * @returns {返回Promise}
    */
   static fetchLogout(){
-    return HttpUtils.get('/v2/signout')
+    return new XFetch().get('/v2/signout').do()
   }
 
   /**
@@ -126,6 +126,6 @@ export default class AuthApi{
       confirmpassword,
       captcha_code
     };
-    return HttpUtils.post('/v2/changepassword',params)
+    return new XFetch().post('/v2/changepassword').setParams(params).do()
   }
 }
