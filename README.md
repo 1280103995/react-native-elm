@@ -2,7 +2,7 @@
 
 
 项目服务器地址为 https://github.com/bailicangdu/vue2-elm <br>
-http库换到 
+http库换到 https://github.com/1280103995/react-native-xfetch
 
 
 ## 现阶段开始重构，目标：
