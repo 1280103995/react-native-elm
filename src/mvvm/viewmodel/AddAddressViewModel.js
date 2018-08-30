@@ -87,14 +87,4 @@ export default class AddAddressViewModel {
     this.phone2 = phone2
   }
 
-  @action
-  reset() {
-    this.item2HasValue = false;
-    this.addressName = '小区/写字楼/学校等';
-    this.geohash = '';
-    this.name = '';
-    this.detailAddress = '';
-    this.phone = '';
-    this.phone2 = '';
-  }
 }

@@ -1,6 +1,5 @@
 import cartStore from "./ShoppingCartStore";
 import findViewModel from "../mvvm/viewmodel/FindViewModel";
-import addressListStore from "./MemberAddressListStore";
 import homeViewModel from "../mvvm/viewmodel/HomeViewModel";
 import orderViewModel from "../mvvm/viewmodel/OrderViewModel";
 import categoryViewModel from "../mvvm/viewmodel/CategoryViewModel";
@@ -14,8 +13,7 @@ const store = {
   categoryViewModel,
   shopInfoViewModel,
   cartStore,
-  shopInfoEvaluationViewModel,
-  addressListStore
+  shopInfoEvaluationViewModel
 };
 
 export default store;

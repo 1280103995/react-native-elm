@@ -9,11 +9,13 @@ import Color from "../../../app/Color";
 import Column from "../../../view/Column";
 import Image from "../../../view/Image";
 import Images from "../../../app/Images";
-import {inject, observer} from "mobx-react";
+import {observer} from "mobx-react";
+import AddressListViewModel from "../../../mvvm/viewmodel/AddressListViewModel";
 
-@inject('addressListStore')
 @observer
 export default class AddressScreen extends BaseScreen {
+
+  addressListViewModel = new AddressListViewModel();
 
   constructor(props) {
     super(props);
@@ -21,7 +23,7 @@ export default class AddressScreen extends BaseScreen {
   }
 
   componentDidMount() {
-    this.props.addressListStore.fetchData(UserInfo.user_id)
+    this.addressListViewModel.fetchData(UserInfo.user_id)
   }
 
   _isChose(){
@@ -43,11 +45,11 @@ export default class AddressScreen extends BaseScreen {
 
   /*添加地址成功后回调，刷新页面*/
   _handleAddAddressSuccess = (state) => {
-    if (state) this.props.addressListStore.fetchData(UserInfo.user_id)
+    if (state) this.addressListViewModel.fetchData(UserInfo.user_id)
   };
 
   _fetchDeleteAddress(item){
-    this.props.addressListStore.deleteItem(UserInfo.user_id, item);
+    this.addressListViewModel.deleteItem(UserInfo.user_id, item);
   }
 
   renderMenu(){
@@ -61,10 +63,12 @@ export default class AddressScreen extends BaseScreen {
   renderView() {
     return (
       <FlatList
-        data={this.props.addressListStore.getList}
+        data={this.addressListViewModel.getList}
         renderItem={this._renderItem}
         keyExtractor={(item, index) => index + ''}
+        ListEmptyComponent={()=><Text text={'您还没有收货地址哦!'}/>}
         ItemSeparatorComponent={() => <Divider style={{height:px2dp(20)}}/>}
+        contentContainerStyle={[{flex: 1}, this._contentStyle()]}
       />
     )
   }
@@ -84,6 +88,10 @@ export default class AddressScreen extends BaseScreen {
       </TouchableOpacity>
     )
   };
+
+  _contentStyle(){
+    return this.addressListViewModel.getList.length ? null : {justifyContent: 'center', alignItems:'center'}
+  }
 }
 
 const styles = StyleSheet.create({

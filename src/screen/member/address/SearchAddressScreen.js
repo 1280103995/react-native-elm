@@ -12,6 +12,8 @@ import Text from "../../../view/Text";
 import Toast from "../../../view/Toast";
 import AddressModel from "../../../mvvm/model/AddressModel";
 
+//TODO 使用SearchAddressViewModel 无法更新页面
+
 export default class SearchAddressScreen extends BaseScreen {
 
   constructor(props) {

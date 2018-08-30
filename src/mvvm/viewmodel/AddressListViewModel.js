@@ -1,8 +1,8 @@
 import {observable, action, computed} from 'mobx';
-import AddressModel from "../mvvm/model/AddressModel";
-import Toast from "../view/Toast";
+import AddressModel from "../model/AddressModel";
+import Toast from "../../view/Toast";
 
-class MemberAddressListStore {
+export default class AddressListViewModel {
   @observable list = [];
 
   fetchData(user_id){
@@ -10,18 +10,17 @@ class MemberAddressListStore {
       this.list = res
     })
   }
+
   @action
-  addAll(list){
-    this.list = list
+  removeItem(item){
+    this.list.remove(item)
   }
 
   @action
   deleteItem(user_id, item){
     AddressModel.fetchDeleteAddress(user_id, item.id).then((res)=>{
-      this.fetchData(user_id); //请求数据更新页面
-      // this.list.remove(item); //todo 数据变化后mobx为什么没更新页面
+      this.removeItem(item);
       Toast.show(res.success)
-
     })
   }
 
@@ -30,5 +29,3 @@ class MemberAddressListStore {
     return this.list
   }
 }
-const addressListStore = new MemberAddressListStore();
-export default addressListStore
