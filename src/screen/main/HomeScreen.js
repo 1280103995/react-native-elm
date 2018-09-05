@@ -1,6 +1,13 @@
 import React from 'react'
-import {View, Platform, StatusBar, TouchableWithoutFeedback, StyleSheet, SafeAreaView, FlatList,
-  TouchableOpacity, ScrollView
+import {
+  FlatList,
+  Platform,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View
 } from "react-native";
 import {isIphoneX, marginLR, marginTB, paddingTB, px2dp, screenW, wh} from "../../utils/ScreenUtil";
 import Color from "../../app/Color";
@@ -13,7 +20,7 @@ import ShopListItem from "../../view/ShopListItem";
 import Image from "../../view/Image";
 import Column from "../../view/Column";
 import {inject, observer} from "mobx-react";
-import homeViewModel from "../../mvvm/viewmodel/HomeViewModel";
+import Carousel from "../../view/Carousel";
 
 @inject('homeViewModel')
 @observer
@@ -26,10 +33,7 @@ export default class HomeScreen extends BaseScreen {
 
   constructor(props) {
     super(props);
-    this.setNavBarVisible(false);
-    this.state = {
-      curSelectPage: 0
-    }
+    this.setNavBarVisible(false)
   }
 
   _onCategoryItemClick = (category) => {
@@ -40,15 +44,6 @@ export default class HomeScreen extends BaseScreen {
 
   componentDidMount() {
     this.props.homeViewModel.getHomeData()
-  }
-
-  /**2.手动滑动分页实现 */
-  _onAnimationEnd(e) {
-    //求出偏移量
-    let offsetX = e.nativeEvent.contentOffset.x;
-    //求出当前页数
-    let pageIndex = Math.floor(offsetX / screenW);
-    this.setState({curSelectPage: pageIndex})
   }
 
   renderView() {
@@ -106,19 +101,12 @@ export default class HomeScreen extends BaseScreen {
   _renderHeader = () => {
     return (
       <Column style={{backgroundColor:Color.white}}>
-        <ScrollView
-          contentContainerStyle={{width:screenW * this.props.homeViewModel.getCategoryList.length}}
-          bounces={false}
-          pagingEnabled={true}
-          horizontal={true}
-          //滑动完一贞
-          onMomentumScrollEnd={(e)=>{this._onAnimationEnd(e)}}
-          showsHorizontalScrollIndicator={false}>
+        <Carousel
+          pageSize={screenW}
+          loop={false}
+          autoplay={false}>
           {this.props.homeViewModel.getCategoryList.map((data, index) => this._renderPage(data, index))}
-        </ScrollView>
-        <Row horizontalCenter>
-          {this._renderAllIndicator()}
-        </Row>
+        </Carousel>
         <Divider style={{height:px2dp(20),backgroundColor:Color.background}}/>
         <Text text={'附近商家'} style={{margin:px2dp(20)}}/>
       </Column>
@@ -144,18 +132,6 @@ export default class HomeScreen extends BaseScreen {
         )}
       </View>
     )
-  }
-
-  /**3.页面指针实现 */
-  _renderAllIndicator() {
-    let indicatorArr = [];
-    let style;
-    let length = this.props.homeViewModel.getCategoryList.length;
-    for (let i = 0; i < length; i++) {
-      style = (i===this.state.curSelectPage)?{backgroundColor:Color.theme}:{backgroundColor:Color.gray3};
-      indicatorArr.push(<View key={i} style={[styles.bannerDotStyle,style]}/>);
-    }
-    return indicatorArr;
   }
 
   _renderItem = ({item, index}) => {
@@ -184,6 +160,7 @@ const styles = StyleSheet.create({
   typesView: {
     flex: 1,
     flexDirection: "row",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    paddingBottom:10
   },
 });
