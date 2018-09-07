@@ -34,6 +34,8 @@ http库换到 https://github.com/1280103995/react-native-xfetch
  or<br>
  npm run all
 
+## License
+The MIT License.
 -----------------
 
 如果对您有帮助，您可以点右上角 "Star" 支持一下 谢谢！ ^_^
