@@ -66,7 +66,12 @@ export const Tabs = createBottomTabNavigator(
             normalImage={Images.Main.myTabNormal}
             selectedImage={Images.Main.myTabClick}
           />
-        )
+        ),
+        //登录了才能到'我的'页面，否则先去登录
+        // tabBarOnPress: (({navigation, defaultHandler}) => {
+        //   if (isLogin) defaultHandler();
+        //   else navigation.navigate('Login')
+        // })
       }),
     },
   },

@@ -7,8 +7,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View
+  View,
+  BackHandler
 } from "react-native";
+import { NavigationActions } from "react-navigation";
 import {isIphoneX, marginLR, marginTB, paddingTB, px2dp, screenW, wh} from "../../utils/ScreenUtil";
 import Color from "../../app/Color";
 import Row from "../../view/Row";
@@ -21,10 +23,14 @@ import Image from "../../view/Image";
 import Column from "../../view/Column";
 import {inject, observer} from "mobx-react";
 import Carousel from "../../view/Carousel";
+import Toast from "../../view/Toast";
 
 @inject('homeViewModel')
 @observer
 export default class HomeScreen extends BaseScreen {
+
+  _didFocusSubscription;
+  _willBlurSubscription;
 
   static navigationOptions = {
     header: null,
@@ -33,7 +39,11 @@ export default class HomeScreen extends BaseScreen {
 
   constructor(props) {
     super(props);
-    this.setNavBarVisible(false)
+    this.setNavBarVisible(false);
+
+    this._didFocusSubscription = props.navigation.addListener('didFocus', payload =>
+      BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid)
+    );
   }
 
   _onCategoryItemClick = (category) => {
@@ -43,8 +53,30 @@ export default class HomeScreen extends BaseScreen {
   };
 
   componentDidMount() {
-    this.props.homeViewModel.getHomeData()
+    this.props.homeViewModel.getHomeData();
+
+    this._willBlurSubscription = this.props.navigation.addListener('willBlur', payload =>
+      BackHandler.removeEventListener('hardwareBackPress', this._onBackButtonPressAndroid)
+    );
   }
+
+  componentWillUnmount() {
+    this._didFocusSubscription && this._didFocusSubscription.remove();
+    this._willBlurSubscription && this._willBlurSubscription.remove();
+  }
+
+  _onBackButtonPressAndroid = () => {
+    if (this.props.navigation.state.routeName === 'Home') {
+      if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+        //最近2秒内按过back键，可以退出应用。
+        return false;
+      }
+      this.lastBackPressed = Date.now();
+      Toast.show('再按一次退出应用',{position: -50});
+    }
+    this.props.navigation.dispatch(NavigationActions.back());
+    return true;
+  };
 
   renderView() {
     return (
