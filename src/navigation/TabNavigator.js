@@ -47,7 +47,6 @@ export const Tabs = createBottomTabNavigator(
         tabBarIcon: ({focused, tintColor}) => (
           <TabBarItem
             // tintColor={tintColor}
-            isShoppingCar={true}
             focused={focused}
             normalImage={Images.Main.orderTabNormal}
             selectedImage={Images.Main.orderTabClick}

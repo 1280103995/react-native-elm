@@ -42,7 +42,7 @@ export default class HomeScreen extends BaseScreen {
     this.setNavBarVisible(false);
 
     this._didFocusSubscription = props.navigation.addListener('didFocus', payload =>
-      BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid)
+      BackHandler.addEventListener('hardwareBackPress', this._onBackButtonPressAndroid)
     );
   }
 

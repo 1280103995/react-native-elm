@@ -1,7 +1,7 @@
 //自定义底下标签栏
 import React, {PureComponent} from 'react';
-import {Image, View} from 'react-native';
-import {px2dp, wh} from "../utils/ScreenUtil";
+import {Image} from 'react-native';
+import {wh} from "../utils/ScreenUtil";
 
 type Props = {
   size:number,
@@ -18,7 +18,6 @@ export default class TabBarItem extends PureComponent<Props> {
   render() {
     let selectedImage = this.props.selectedImage ? this.props.selectedImage : this.props.normalImage;
     return (
-      <View style={{flexDirection: 'row', justifyContent: 'center', width: px2dp(75)}}>
         <Image
           source={this.props.focused ? selectedImage : this.props.normalImage}
           style={{
@@ -26,7 +25,6 @@ export default class TabBarItem extends PureComponent<Props> {
             ...wh(this.props.size)
           }}
         />
-      </View>
     );
   }
 }

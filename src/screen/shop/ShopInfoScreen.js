@@ -56,14 +56,18 @@ export default class ShopInfoScreen extends BaseScreen {
   }
 
   renderView() {
-    let props = Platform.OS === 'ios' ? {
-      blurType: "light",
-      blurAmount: 25
-    } : {
-      viewRef: this.state.viewRef,
-      downsampleFactor: 10,
-      overlayColor: 'rgba(255,255,255,.1)'
-    };
+    const props = Platform.select({
+      ios:{
+        blurType: "light",
+        blurAmount: 25
+      },
+      android:{
+        viewRef: this.state.viewRef,
+        downsampleFactor: 10,
+        overlayColor: 'rgba(255,255,255,.1)'
+      }
+    });
+
     return (
       <Column style={{flex: 1}}>
         {/*模糊层*/}
@@ -147,8 +151,7 @@ const styles = StyleSheet.create({
   },
   bg: {
     width: screenW,
-    height: screenW / 2,
-    resizeMode: "stretch"
+    height: screenW / 2
   },
   blur: {
     position: "absolute",
