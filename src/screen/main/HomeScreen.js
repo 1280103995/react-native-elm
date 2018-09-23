@@ -69,13 +69,13 @@ export default class HomeScreen extends BaseScreen {
     if (this.props.navigation.state.routeName === 'Home') {
       if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
         //最近2秒内按过back键，可以退出应用。
+        BackHandler.exitApp();
         return false;
       }
       this.lastBackPressed = Date.now();
       Toast.show('再按一次退出应用',{position: -50});
+      return true;
     }
-    this.props.navigation.dispatch(NavigationActions.back());
-    return true;
   };
 
   renderView() {
