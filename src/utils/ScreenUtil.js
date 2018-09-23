@@ -17,41 +17,41 @@ const fontScale = PixelRatio.getFontScale();
 export let pixelRatio = PixelRatio.get();
 //像素密度
 export const DEFAULT_DENSITY = 2;
+//以iphone6为基准,如果以其他尺寸为基准的话,请修改下面的 defaultWidth 和 defaultHeight 为对应尺寸即可.
+const defaultWidth = 750;
+const defaultHeight = 1334;
+const w2 = defaultWidth / DEFAULT_DENSITY;
+const h2 = defaultHeight / DEFAULT_DENSITY;
 
-//px转换成dp
-//以iphone6为基准,如果以其他尺寸为基准的话,请修改下面的750和1334为对应尺寸即可.
-const w2 = 750 / DEFAULT_DENSITY;
-//px转换成dp
-const h2 = 1334 / DEFAULT_DENSITY;
+//缩放比例
+const _scaleWidth = screenW / defaultWidth;
+const _scaleHeight = screenH / defaultHeight;
 
 // iPhoneX
 const X_WIDTH = 375;
 const X_HEIGHT = 812;
 
 /**
- * 设置字体的size（单位px）
- * @param size 传入设计稿上的px
- * @returns {Number} 返回实际sp
+ * 屏幕适配,缩放size
+ * @param size 设计图的尺寸
+ * @returns {number}
  */
-export function px2sp(size: number) {
-  let scaleWidth = screenW / w2;
-  let scaleHeight = screenH / h2;
-  let scale = Math.min(scaleWidth, scaleHeight);
-  size = Math.round((size * scale + 0.5));
-  return size / DEFAULT_DENSITY;
+export function px2dp(size: Number) {
+    let scaleWidth = screenW / w2;
+    let scaleHeight = screenH / h2;
+    let scale = Math.min(scaleWidth, scaleHeight);
+    size = Math.round((size * scale + 0.5));
+    return size / DEFAULT_DENSITY;
 }
 
 /**
- * 屏幕适配,缩放size
- * @param size
- * @returns {number}
+ * 设置字体的size（单位px）
+ * @param size 传入设计稿上的px
+ * @returns {Number} 返回实际sp ,会随系统缩放比例改变，如不需要请去掉 * fontScale
  */
-export function px2dp(size: number) {
-  let scaleWidth = screenW / w2;
-  let scaleHeight = screenH / h2;
-  let scale = Math.min(scaleWidth, scaleHeight);
-  size = Math.round((size * scale + 0.5));
-  return size / DEFAULT_DENSITY;
+export function px2sp(size: Number) {
+  const scale = Math.min(_scaleWidth, _scaleHeight);
+  return size * scale * fontScale;
 }
 
 /**
@@ -60,10 +60,10 @@ export function px2dp(size: number) {
  * @param height
  * @returns {{width: Number, height: Number}}
  */
-export function wh(width: number, height: number = width) {
+export function wh(width: Number, height: Number = width) {
   return {
-    width: px2sp(width),
-    height: px2sp(height)
+    width: px2dp(width),
+    height: px2dp(height)
   }
 }
 
@@ -73,10 +73,10 @@ export function wh(width: number, height: number = width) {
  * @param bottom
  * @returns {{paddingTop: Number, paddingBottom: Number}}
  */
-export function paddingTB(top: number, bottom: number = top) {
+export function paddingTB(top: Number, bottom: Number = top) {
   return {
-    paddingTop: px2sp(top),
-    paddingBottom: px2sp(bottom)
+    paddingTop: px2dp(top),
+    paddingBottom: px2dp(bottom)
   }
 }
 
@@ -86,10 +86,10 @@ export function paddingTB(top: number, bottom: number = top) {
  * @param right
  * @returns {{paddingLeft: Number, paddingRight: Number}}
  */
-export function paddingLR(left: number, right: number = left) {
+export function paddingLR(left: Number, right: Number = left) {
   return {
-    paddingLeft: px2sp(left),
-    paddingRight: px2sp(right)
+    paddingLeft: px2dp(left),
+    paddingRight: px2dp(right)
   }
 }
 
@@ -99,10 +99,10 @@ export function paddingLR(left: number, right: number = left) {
  * @param bottom
  * @returns {{marginTop: Number, marginBottom: Number}}
  */
-export function marginTB(top: number, bottom: number = top) {
+export function marginTB(top: Number, bottom: Number = top) {
   return {
-    marginTop: px2sp(top),
-    marginBottom: px2sp(bottom)
+    marginTop: px2dp(top),
+    marginBottom: px2dp(bottom)
   }
 }
 
@@ -112,10 +112,10 @@ export function marginTB(top: number, bottom: number = top) {
  * @param right
  * @returns {{paddingLeft: Number, paddingRight: Number}}
  */
-export function marginLR(left: number, right: number = left) {
+export function marginLR(left: Number, right: Number = left) {
   return {
-    marginLeft: px2sp(left),
-    marginRight: px2sp(right)
+    marginLeft: px2dp(left),
+    marginRight: px2dp(right)
   }
 }
 
@@ -125,7 +125,7 @@ export function marginLR(left: number, right: number = left) {
  * @param bottom
  * @returns {{borderTopWidth: number, borderBottomWidth: number}}
  */
-export function borderWidthTB(top: number, bottom: number = top) {
+export function borderWidthTB(top: Number, bottom: Number = top) {
   return {
     borderTopWidth: px2dp(top),
     borderBottomWidth: px2dp(bottom)
@@ -138,7 +138,7 @@ export function borderWidthTB(top: number, bottom: number = top) {
  * @param right
  * @returns {{borderLeftWidth: number, borderRightWidth: number}}
  */
-export function borderWidthLR(left: number, right: number = left) {
+export function borderWidthLR(left: Number, right: Number = left) {
   return {
     borderLeftWidth: px2dp(left),
     borderRightWidth: px2dp(right)
