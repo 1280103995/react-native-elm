@@ -10,7 +10,7 @@
     "all": "npm run android; npm run ios"
   },
   "dependencies": {
-    "jsc-android": "224109.x.x",
+    "jsc-android": "236355.x.x",
     "mobx": "^5.0.4",
     "mobx-react": "^5.2.5",
     "prop-types": "^15.6.1",

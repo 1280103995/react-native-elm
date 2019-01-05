@@ -95,7 +95,7 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.elm"
@@ -138,7 +138,7 @@ android {
 
 configurations.all {
     resolutionStrategy {
-        force 'org.webkit:android-jsc:r224109'
+        force 'org.webkit:android-jsc:r236355'
     }
 }
 

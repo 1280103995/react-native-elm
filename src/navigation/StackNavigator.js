@@ -1,5 +1,5 @@
 import {createStackNavigator} from "react-navigation";
-import StackViewStyleInterpolator from "react-navigation/src/views/StackView/StackViewStyleInterpolator";
+// import StackViewStyleInterpolator from "react-navigation/src/views/StackView/StackViewStyleInterpolator";
 import {Tabs} from "./TabNavigator";
 import LoginScreen from "../screen/member/auth/LoginScreen";
 import ShopInfoScreen from "../screen/shop/ShopInfoScreen";
@@ -71,7 +71,7 @@ export const Navigator = createStackNavigator(
       header:null
     },
     transitionConfig: () => ({
-      screenInterpolator: StackViewStyleInterpolator.forHorizontal,//让安卓实现push动画(右进右出)
+      // screenInterpolator: StackViewStyleInterpolator.forHorizontal,//让安卓实现push动画(右进右出)
     })
   }
 );
