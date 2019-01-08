@@ -143,9 +143,11 @@ configurations.all {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    compile "com.facebook.react:react-native:+"  // From node_modules
+    implementation 'com.facebook.react:react-native:+'
+    // From node_modules
+    implementation project(':react-native-gesture-handler')
 }
 
 // Run this once to be able to run the application with BUCK

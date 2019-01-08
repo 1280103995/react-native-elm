@@ -18,12 +18,10 @@
     "react-native": "0.55.4",
     "react-native-blur": "^3.2.2",
     "react-native-keyboard-aware-scroll-view": "^0.5.0",
-    "react-native-root-toast": "^3.0.1",
+    "react-native-root-toast": "^3.0.2",
     "react-native-scrollable-tab-view": "^0.8.0",
-    "react-native-swiper": "^1.5.13",
     "react-native-xfetch": "^0.0.1",
-    "react-navigation": "^2.11.2",
-    "redux": "^4.0.0",
+    "react-navigation": "^3.0.9",
     "teaset": "^0.5.9"
   },
   "devDependencies": {

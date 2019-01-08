@@ -10,7 +10,6 @@ import {
   View,
   BackHandler
 } from "react-native";
-import { NavigationActions } from "react-navigation";
 import {isIphoneX, marginLR, marginTB, paddingTB, px2dp, screenW, wh} from "../../utils/ScreenUtil";
 import Color from "../../app/Color";
 import Row from "../../view/Row";

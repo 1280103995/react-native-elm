@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import {Navigator} from "./src/navigation/StackNavigator";
 import {Provider} from 'mobx-react'
 import RootStore from "./src/store/RootStore";
 import {XFetchConfig} from "react-native-xfetch";
 import Toast from "./src/view/Toast";
+import {AppNavigator} from "./src/navigation/AppNavigator";
+import {createAppContainer} from "react-navigation";
+
+const AppContainer = createAppContainer(AppNavigator);
 
 export default class App extends Component{
 
@@ -32,7 +35,7 @@ export default class App extends Component{
   render() {
     return (
       <Provider {...RootStore}>
-        <Navigator/>
+        <AppContainer/>
       </Provider>
     );
   }

@@ -421,6 +421,26 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@react-navigation/core@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-3.0.2.tgz#8631801533a27d034a3b8421dfd0510a9f27dcf3"
+  dependencies:
+    create-react-context "0.2.2"
+    hoist-non-react-statics "^3.0.1"
+    path-to-regexp "^1.7.0"
+    query-string "^6.2.0"
+    react-is "^16.5.2"
+    react-lifecycles-compat "^3.0.4"
+
+"@react-navigation/native@3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@react-navigation/native/-/native-3.0.3.tgz#6b1a6e15cde719e6c932bd78b23fa1417f6c0cab"
+  dependencies:
+    hoist-non-react-statics "^3.0.1"
+    react-native-gesture-handler "^1.0.0"
+    react-native-safe-area-view "^0.11.0"
+    react-native-screens "^1.0.0 || ^1.0.0-alpha"
+
 abab@^1.0.4:
   version "1.0.4"
   resolved "http://registry.npm.taobao.org/abab/download/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -1582,10 +1602,6 @@ ci-info@^1.0.0:
   version "1.1.3"
   resolved "http://registry.npm.taobao.org/ci-info/download/ci-info-1.1.3.tgz#710193264bb05c77b8c90d02f5aaf22216a667b2"
 
-clamp@^1.0.1:
-  version "1.0.1"
-  resolved "http://registry.npm.taobao.org/clamp/download/clamp-1.0.1.tgz#66a0e64011816e37196828fdc8c8c147312c8634"
-
 class-utils@^0.3.5:
   version "0.3.6"
   resolved "http://registry.npm.taobao.org/class-utils/download/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
@@ -1783,9 +1799,9 @@ create-react-class@^15.6.2, create-react-class@^15.6.3:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
-create-react-context@^0.2.1:
+create-react-context@0.2.2:
   version "0.2.2"
-  resolved "http://registry.npm.taobao.org/create-react-context/download/create-react-context-0.2.2.tgz#9836542f9aaa22868cd7d4a6f82667df38019dca"
+  resolved "https://registry.yarnpkg.com/create-react-context/-/create-react-context-0.2.2.tgz#9836542f9aaa22868cd7d4a6f82667df38019dca"
   dependencies:
     fbjs "^0.8.0"
     gud "^1.0.0"
@@ -2637,9 +2653,15 @@ hoek@4.x.x:
   version "4.2.1"
   resolved "http://registry.npm.taobao.org/hoek/download/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
 
-hoist-non-react-statics@^2.2.0, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
+hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.0"
   resolved "http://registry.npm.taobao.org/hoist-non-react-statics/download/hoist-non-react-statics-2.5.0.tgz#d2ca2dfc19c5a91c5a6615ce8e564ef0347e2a40"
+
+hoist-non-react-statics@^3.0.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.2.1.tgz#c09c0555c84b38a7ede6912b61efddafd6e75e1e"
+  dependencies:
+    react-is "^16.3.2"
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -3346,7 +3368,6 @@ jsbn@~0.1.0:
 jsc-android@236355.x.x:
   version "236355.1.1"
   resolved "http://registry.npm.taobao.org/jsc-android/download/jsc-android-236355.1.1.tgz#43e153b722e3c60dd0595be4e7430baf65e67c9c"
-  integrity sha1-Q+FTtyLjxg3QWVvk50MLr2XmfJw=
 
 jsdom@^11.5.1:
   version "11.7.0"
@@ -4429,6 +4450,13 @@ query-string@^6.1.0:
     decode-uri-component "^0.2.0"
     strict-uri-encode "^2.0.0"
 
+query-string@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.2.0.tgz#468edeb542b7e0538f9f9b1aeb26f034f19c86e1"
+  dependencies:
+    decode-uri-component "^0.2.0"
+    strict-uri-encode "^2.0.0"
+
 randomatic@^1.1.3:
   version "1.1.7"
   resolved "http://registry.npm.taobao.org/randomatic/download/randomatic-1.1.7.tgz#c7abe9cc8b87c0baa876b19fde83fd464797e38c"
@@ -4468,7 +4496,11 @@ react-is@^16.3.1:
   version "16.3.1"
   resolved "http://registry.npm.taobao.org/react-is/download/react-is-16.3.1.tgz#ee66e6d8283224a83b3030e110056798488359ba"
 
-react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
+react-is@^16.3.2, react-is@^16.5.2:
+  version "16.7.0"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.7.0.tgz#c1bd21c64f1f1364c6f70695ec02d69392f41bfa"
+
+react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "http://registry.npm.taobao.org/react-lifecycles-compat/download/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
@@ -4489,21 +4521,13 @@ react-native-blur@^3.2.2:
     react-timer-mixin "^0.13.2"
     rebound "^0.0.13"
 
-react-native-dismiss-keyboard@1.0.0:
-  version "1.0.0"
-  resolved "http://registry.npm.taobao.org/react-native-dismiss-keyboard/download/react-native-dismiss-keyboard-1.0.0.tgz#32886242b3f2317e121f3aeb9b0a585e2b879b49"
-
-react-native-drawer-layout-polyfill@^1.3.2:
-  version "1.3.2"
-  resolved "http://registry.npm.taobao.org/react-native-drawer-layout-polyfill/download/react-native-drawer-layout-polyfill-1.3.2.tgz#192c84d7a5a6b8a6d2be2c7daa5e4164518d0cc7"
+react-native-gesture-handler@^1.0.0:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.0.12.tgz#99a22f90212df299245357dbd3a9a01c788f310b"
   dependencies:
-    react-native-drawer-layout "1.3.2"
-
-react-native-drawer-layout@1.3.2:
-  version "1.3.2"
-  resolved "http://registry.npm.taobao.org/react-native-drawer-layout/download/react-native-drawer-layout-1.3.2.tgz#b9740d7663a1dc4f88a61b9c6d93d2d948ea426e"
-  dependencies:
-    react-native-dismiss-keyboard "1.0.0"
+    hoist-non-react-statics "^2.3.1"
+    invariant "^2.2.2"
+    prop-types "^15.5.10"
 
 react-native-iphone-x-helper@^1.0.1:
   version "1.0.2"
@@ -4522,24 +4546,22 @@ react-native-root-siblings@^3.0.0:
   dependencies:
     static-container "^1.0.0"
 
-react-native-root-toast@^3.0.1:
-  version "3.0.1"
-  resolved "http://registry.npm.taobao.org/react-native-root-toast/download/react-native-root-toast-3.0.1.tgz#ad0a37c46bc72971a229c7784df25147004e5538"
+react-native-root-toast@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-root-toast/-/react-native-root-toast-3.0.2.tgz#85c0c50d300c895a35ea98587b4ad4c9540297ee"
   dependencies:
     prop-types "^15.5.10"
     react-native-root-siblings "^3.0.0"
 
-react-native-safe-area-view@^0.7.0:
-  version "0.7.0"
-  resolved "http://registry.npm.taobao.org/react-native-safe-area-view/download/react-native-safe-area-view-0.7.0.tgz#38f5ab9368d6ef9e5d18ab64212938af3ec39421"
+react-native-safe-area-view@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.11.0.tgz#4f3dda43c2bace37965e7c6aef5fc83d4f19d174"
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
-react-native-safe-area-view@^0.8.0:
-  version "0.8.0"
-  resolved "http://registry.npm.taobao.org/react-native-safe-area-view/download/react-native-safe-area-view-0.8.0.tgz#22d78cb8e8658d04a10cd53c1546e0bc86cb7aea"
-  dependencies:
-    hoist-non-react-statics "^2.3.1"
+"react-native-screens@^1.0.0 || ^1.0.0-alpha":
+  version "1.0.0-alpha.21"
+  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-1.0.0-alpha.21.tgz#ba8d401e82fa3d0f30e7922dbb6446a8c000d7ef"
 
 react-native-scrollable-tab-view@^0.8.0:
   version "0.8.0"
@@ -4549,21 +4571,15 @@ react-native-scrollable-tab-view@^0.8.0:
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.3"
 
-react-native-swiper@^1.5.13:
-  version "1.5.13"
-  resolved "http://registry.npm.taobao.org/react-native-swiper/download/react-native-swiper-1.5.13.tgz#fa695cd4ab77b9a9df2d2bfee38ea7274dd07a2e"
-  dependencies:
-    prop-types "^15.5.10"
-
-react-native-tab-view@^0.0.77:
-  version "0.0.77"
-  resolved "http://registry.npm.taobao.org/react-native-tab-view/download/react-native-tab-view-0.0.77.tgz#11ceb8e7c23100d07e628dc151b57797524d00d4"
-  dependencies:
-    prop-types "^15.6.0"
-
 react-native-tab-view@^1.0.0:
   version "1.0.2"
   resolved "https://registry.npmjs.org/react-native-tab-view/-/react-native-tab-view-1.0.2.tgz#66e0bc6d38a227ed2b212e3a256b7902f6ce02ed"
+  dependencies:
+    prop-types "^15.6.1"
+
+react-native-tab-view@^1.2.0:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-1.3.1.tgz#f9932d6bd5ba7dad75ef9335a68f13d85ba5bd56"
   dependencies:
     prop-types "^15.6.1"
 
@@ -4637,42 +4653,34 @@ react-native@0.55.4:
     xmldoc "^0.4.0"
     yargs "^9.0.0"
 
-react-navigation-deprecated-tab-navigator@1.3.0:
-  version "1.3.0"
-  resolved "http://registry.npm.taobao.org/react-navigation-deprecated-tab-navigator/download/react-navigation-deprecated-tab-navigator-1.3.0.tgz#015dcae1e977b984ca7e99245261c15439026bb7"
+react-navigation-drawer@1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-navigation-drawer/-/react-navigation-drawer-1.0.5.tgz#d8cc71bd1779186261f3c3754b11f29aa98bd4f5"
   dependencies:
-    react-native-tab-view "^0.0.77"
+    react-native-tab-view "^1.2.0"
 
-react-navigation-drawer@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.npmjs.org/react-navigation-drawer/-/react-navigation-drawer-0.5.0.tgz#d91b6a6ec65c34ba78c00f814b1e6508922cc9ec"
-  dependencies:
-    react-native-drawer-layout-polyfill "^1.3.2"
+react-navigation-stack@1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-navigation-stack/-/react-navigation-stack-1.0.6.tgz#5c2b6617dccc1de6001b387cd967baa6b205132d"
 
-react-navigation-tabs@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.npmjs.org/react-navigation-tabs/-/react-navigation-tabs-0.6.0.tgz#2f526194f4360e56c2702e736887449acc2080dc"
+react-navigation-tabs@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-navigation-tabs/-/react-navigation-tabs-1.0.2.tgz#cc6c61db0c61054388ef6f726a8ffc183d6095b5"
   dependencies:
     hoist-non-react-statics "^2.5.0"
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
-    react-native-safe-area-view "^0.7.0"
     react-native-tab-view "^1.0.0"
 
-react-navigation@^2.11.2:
-  version "2.11.2"
-  resolved "https://registry.npmjs.org/react-navigation/-/react-navigation-2.11.2.tgz#cd099f6d7d09efe48ef8463614a3abb113d45c01"
+react-navigation@^3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-3.0.9.tgz#1c82f8ec2f87e2728816e79fb43d7b11ed265415"
   dependencies:
-    clamp "^1.0.1"
-    create-react-context "^0.2.1"
-    hoist-non-react-statics "^2.2.0"
-    path-to-regexp "^1.7.0"
-    query-string "^6.1.0"
-    react-lifecycles-compat "^3"
-    react-native-safe-area-view "^0.8.0"
-    react-navigation-deprecated-tab-navigator "1.3.0"
-    react-navigation-drawer "0.5.0"
-    react-navigation-tabs "0.6.0"
+    "@react-navigation/core" "3.0.2"
+    "@react-navigation/native" "3.0.3"
+    react-navigation-drawer "1.0.5"
+    react-navigation-stack "1.0.6"
+    react-navigation-tabs "1.0.2"
 
 react-proxy@^1.1.7:
   version "1.1.8"
@@ -4770,13 +4778,6 @@ realpath-native@^1.0.0:
 rebound@^0.0.13:
   version "0.0.13"
   resolved "http://registry.npm.taobao.org/rebound/download/rebound-0.0.13.tgz#4a225254caf7da756797b19c5817bf7a7941fac1"
-
-redux@^4.0.0:
-  version "4.0.0"
-  resolved "http://registry.npm.taobao.org/redux/download/redux-4.0.0.tgz#aa698a92b729315d22b34a0553d7e6533555cc03"
-  dependencies:
-    loose-envify "^1.1.0"
-    symbol-observable "^1.2.0"
 
 regenerate@^1.2.1:
   version "1.3.3"
@@ -5393,10 +5394,6 @@ supports-color@^5.3.0:
   resolved "http://registry.npm.taobao.org/supports-color/download/supports-color-5.3.0.tgz#5b24ac15db80fa927cf5227a4a33fd3c4c7676c0"
   dependencies:
     has-flag "^3.0.0"
-
-symbol-observable@^1.2.0:
-  version "1.2.0"
-  resolved "http://registry.npm.taobao.org/symbol-observable/download/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
 
 symbol-tree@^3.2.2:
   version "3.2.2"
