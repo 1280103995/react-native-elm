@@ -1,11 +1,11 @@
 'use strict';
 import React from 'react'
-import {Image} from 'react-native'
+import {Image as RNImage} from 'react-native'
 import PropTypes from 'prop-types'
 
-export default class ImageView extends Image {
+export default class Image extends React.Component {
 
-  static cdn = 'https://fuss10.elemecdn.com'; //分类的图片用这个域名，搞不到原作为什么用两个图片基础域名
+  static cdn = 'https://fuss10.elemecdn.com'; //分类的图片用这个域名，搞不懂原作为什么用两个图片基础域名
 
   constructor(props) {
     super(props);
@@ -13,7 +13,7 @@ export default class ImageView extends Image {
   }
 
   static propTypes = {
-    ...Image.propTypes,
+    ...RNImage.propTypes,
     needBaseUrl: PropTypes.bool,
     source: PropTypes.oneOfType([
       PropTypes.string,
@@ -21,7 +21,7 @@ export default class ImageView extends Image {
     ]),
   };
   static defaultProps = {
-    ...Image.defaultProps,
+    ...RNImage.defaultProps,
     needBaseUrl: true
   };
 
@@ -35,6 +35,8 @@ export default class ImageView extends Image {
     }
     this.props = {source, ...others};
 
-    return super.render();
+    return (
+      <RNImage {...this.props}/>
+    );
   }
 }

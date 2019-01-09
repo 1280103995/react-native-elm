@@ -1,14 +1,14 @@
 'use strict';
 import React from 'react';
-import {Text} from 'react-native';
+import {Text as RNText} from 'react-native';
 import PropTypes from "prop-types";
 import Color from "../app/Color";
 import {px2sp} from "../utils/ScreenUtil";
 
-export default class TextView extends Text {
+export default class Text extends React.Component {
 
   static propTypes = {
-    ...Text.propTypes,
+    ...RNText.propTypes,
     // 字体大小
     largeSize: PropTypes.bool, // 30
     normalSize: PropTypes.bool, // 28 default
@@ -27,7 +27,7 @@ export default class TextView extends Text {
   };
 
   static defaultTypes = {
-    ...Text.defaultProps
+    ...RNText.defaultProps
   };
 
   _buildProps(){
@@ -71,6 +71,8 @@ export default class TextView extends Text {
 
   render() {
     this._buildProps();
-    return super.render();
+    return (
+      <RNText {...this.props}/>
+    );
   }
 }
