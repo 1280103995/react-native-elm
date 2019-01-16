@@ -4,6 +4,8 @@ import {
   View,
   FlatList,
   SectionList,
+  UIManager,
+  findNodeHandle,
   Image, TouchableOpacity,
 } from 'react-native';
 import {inject, observer} from 'mobx-react';
@@ -45,8 +47,9 @@ export default class ShopInfoList extends Component {
   _add = (data) => {
     this.props.cartStore.addFood(data.item);
 
-    this.cartElement.measure((x, y, width, height, px, py) => {
-      this.endPosition = {x: px, y: py};
+    const handle = findNodeHandle(this.cartElement);
+    UIManager.measure(handle, (x, y, width, height, pageX, pageY) => {
+      this.endPosition = {x: pageX, y: pageY};
       this.refs.cart.startAnim(this.startPosition,this.endPosition,this._doAnim)
     });
   };

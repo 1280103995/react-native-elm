@@ -106,6 +106,10 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+
+        // Add these lines below the existing config
+        renderscriptTargetApi 23
+        renderscriptSupportModeEnabled true
     }
     splits {
         abi {
@@ -143,6 +147,7 @@ configurations.all {
 }
 
 dependencies {
+    implementation project(':react-native-blur')
     implementation project(':react-native-gesture-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"

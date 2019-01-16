@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import BaseScreen from "../BaseScreen";
 import Column from "../../view/Column";
-// import {BlurView} from "react-native-blur";
+import {BlurView} from "react-native-blur";
 import {isIphoneX, marginTB, paddingLR, paddingTB, px2dp, screenW, wh} from "../../utils/ScreenUtil";
 import Images from "../../app/Images";
 import Image from "../../view/Image";
@@ -28,11 +28,9 @@ import {inject, observer} from "mobx-react";
 @observer
 export default class ShopInfoScreen extends BaseScreen {
 
-  // 构造
   constructor(props) {
     super(props);
     this.setNavBarVisible(false);
-    // 初始状态
     this.state = {
       headOpacity: 1,
       bgY: 0,
@@ -52,7 +50,7 @@ export default class ShopInfoScreen extends BaseScreen {
   }
 
   imageLoaded() {
-    this.setState({viewRef: findNodeHandle(this.refs.backgroundImage)});
+    this.setState({viewRef: findNodeHandle(this.backgroundImage)});
   }
 
   renderView() {
@@ -79,12 +77,12 @@ export default class ShopInfoScreen extends BaseScreen {
           }
           ]
         }}>
-          <ImageBackground
+          <Image
             source={Images.Common.shopBg}
             style={styles.bg}
-            ref={'backgroundImage'}
+            ref={(r)=>this.backgroundImage=r}
             onLoadEnd={this.imageLoaded.bind(this)}/>
-          {/*<BlurView {...props} style={styles.blur}/>*/}
+          <BlurView {...props} style={styles.blur}/>
         </Animated.View>
 
         <View style={styles.head}>
@@ -159,7 +157,7 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     width: screenW,
-    height: screenW / 2,
+    height: screenW / 2
   },
   logo: {
     ...wh(100),
