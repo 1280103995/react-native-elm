@@ -31,9 +31,13 @@ export default class LoginScreen extends BaseScreen {
   };
 
   componentDidMount() {
+    this._fetchCaptcha()
+  }
+
+  _fetchCaptcha = () => {
     //获取验证码
     this.loginViewModel.fetchRefreshCaptcha()
-  }
+  };
 
   _fetchLogin = () =>{
     //请求登录
@@ -69,7 +73,7 @@ export default class LoginScreen extends BaseScreen {
             label={'验证码'}
             placeholder={'请输入验证码'}
             onChangeText={(text) => this.loginViewModel.setCaptchaText(text)}>
-            <TouchableOpacity onPress={this._fetchRefreshCaptcha}>
+            <TouchableOpacity onPress={this._fetchCaptcha}>
               <Image
                 source={decodeURIComponent(this.loginViewModel.getCaptcha)}
                 style={styles.captchaImgStyle}

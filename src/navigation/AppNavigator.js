@@ -1,6 +1,6 @@
 import {createStackNavigator} from "react-navigation";
 import StackNavigator from "./StackNavigator";
-// import StackViewStyleInterpolator from "react-navigation/src/views/StackView/StackViewStyleInterpolator";
+import StackViewStyleInterpolator from "react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator";
 
 const initial = __DEV__
   ? "Splash" // 调试用
@@ -19,7 +19,7 @@ export const AppNavigator = createStackNavigator(
       gesturesEnabled: true
     },
     transitionConfig: () => ({
-      // screenInterpolator: StackViewStyleInterpolator.forHorizontal,//让安卓实现push动画(右进右出)
+      screenInterpolator: StackViewStyleInterpolator.forHorizontal,//让安卓实现push动画(右进右出)
     })
   }
 );

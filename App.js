@@ -13,7 +13,7 @@ export default class App extends Component{
   constructor(props) {
     super(props);
     XFetchConfig.getInstance()
-      .setBaseUrl('http://cangdu.org:8001')
+      .setBaseUrl('https://elm.cangdu.org')
       .setResponseConfig(this.handleResponse)
   }
 

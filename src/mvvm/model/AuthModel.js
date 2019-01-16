@@ -94,11 +94,9 @@ export default class AuthModel{
    * @returns {返回Promise}
    */
   static fetchAccountLogin(username, password, captcha_code){
-    let formData = new FormData();
-    formData.append("username",username);
-    formData.append("password",password);
-    formData.append("captcha_code",captcha_code);
-    return new XFetch().post('/v2/login').setParams(formData, true).do()
+    let formData = {username,password,captcha_code};
+    let header = {'Accept': 'application/json'};
+    return new XFetch().post('/v2/login').setHeaders(header).setParams(formData).do()
   }
 
   /**
