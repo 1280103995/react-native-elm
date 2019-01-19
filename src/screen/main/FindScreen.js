@@ -19,7 +19,7 @@ import Toast from "../../view/Toast";
 @observer
 export default class FindScreen extends BaseScreen {
 
-  static navigationOptions = {
+  static defaultNavigationOptions = {
     header: null,
     gesturesEnabled: false
   };

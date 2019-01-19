@@ -14,7 +14,7 @@ import AuthModel from "../../mvvm/model/AuthModel";
 
 export default class MyScreen extends BaseScreen {
 
-  static navigationOptions = {
+  static defaultNavigationOptions = {
     header: null,
     gesturesEnabled: false
   };

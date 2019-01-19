@@ -9,7 +9,7 @@ import {inject, observer} from "mobx-react";
 @observer
 export default class OrderScreen extends BaseScreen {
 
-  static navigationOptions = {
+  static defaultNavigationOptions = {
     header: null,
     gesturesEnabled: false
   };

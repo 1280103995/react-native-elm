@@ -31,7 +31,7 @@ export default class HomeScreen extends BaseScreen {
   _didFocusSubscription;
   _willBlurSubscription;
 
-  static navigationOptions = {
+  static defaultNavigationOptions = {
     header: null,
     gesturesEnabled: false
   };
