@@ -15,8 +15,12 @@ class HomeViewModel{
       this.latitude = res.latitude;
       this.longitude = res.longitude;
       this._getFootType(res.geohash);
-      this._fetchShop(res.latitude, res.longitude)
+      this.getFootList()
     })
+  }
+
+  getFootList(){
+    this._fetchShop(this.latitude, this.longitude)
   }
 
   _getFootType(geohash){

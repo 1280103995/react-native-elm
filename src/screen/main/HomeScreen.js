@@ -31,7 +31,7 @@ export default class HomeScreen extends BaseScreen {
   _didFocusSubscription;
   _willBlurSubscription;
 
-  static defaultNavigationOptions = {
+  static navigationOptions = {
     header: null,
     gesturesEnabled: false
   };
@@ -44,6 +44,10 @@ export default class HomeScreen extends BaseScreen {
       BackHandler.addEventListener('hardwareBackPress', this._onBackButtonPressAndroid)
     );
   }
+
+  _onLocationChange = (changed) =>{
+    if (changed) this.props.homeViewModel.getFootList()
+  };
 
   _onCategoryItemClick = (category) => {
     let latitude = this.props.homeViewModel.getLatitude;
@@ -99,11 +103,14 @@ export default class HomeScreen extends BaseScreen {
       <SafeAreaView style={{backgroundColor: Color.theme}}>
         <View style={{height: px2dp(navHeight), backgroundColor: Color.theme, paddingTop: px2dp(30) + top}}>
           <Row verticalCenter style={{justifyContent: 'space-between', ...marginLR(20)}}>
-            <Row verticalCenter>
-              <Image source={Images.Main.location} style={{...wh(30)}}/>
-              <Text white text={this.props.homeViewModel.getLocation}/>
-              <Image source={Images.Main.arrow} style={{...wh(18, 25)}}/>
-            </Row>
+            {/*定位城市*/}
+            <TouchableOpacity activeOpacity={0.6} onPress={()=>this.toPage('LocationCity',{callback: this._onLocationChange})}>
+              <Row verticalCenter>
+                <Image source={Images.Main.location} style={{...wh(30)}}/>
+                <Text white text={this.props.homeViewModel.getLocation}/>
+                <Image source={Images.Main.arrow} style={{...wh(18, 25)}}/>
+              </Row>
+            </TouchableOpacity>
             {/*天气*/}
             <Row verticalCenter>
               <View style={{marginRight: 5}}>
@@ -114,7 +121,7 @@ export default class HomeScreen extends BaseScreen {
             </Row>
           </Row>
           {/*搜索*/}
-          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Find')}>
+          <TouchableWithoutFeedback onPress={() => this.toPage('Find')}>
             <View style={[styles.searchBtn, {backgroundColor: "#fff"}]}>
               <Image source={Images.Main.search} style={{...wh(30)}}/>
               <Text gray style={{marginLeft: 5}} text={'输入商家，商品名称'}/>
@@ -167,7 +174,7 @@ export default class HomeScreen extends BaseScreen {
 
   _renderItem = ({item, index}) => {
     return (
-      <ShopListItem data={item} onClick={() => this.props.navigation.navigate('ShopInfo', {id: item.id})}/>
+      <ShopListItem data={item} onClick={() => this.toPage('ShopInfo', {id: item.id})}/>
     );
   }
 }

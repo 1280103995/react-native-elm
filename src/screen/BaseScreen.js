@@ -9,7 +9,7 @@ import Images from "../app/Images";
 export default class BaseScreen extends Component {
 
   /*支持手势返回，如果有页面不需要手势返回，则重写该方法，禁止掉手势 gesturesEnabled: false */
-  static defaultNavigationOptions = {
+  static navigationOptions = {
     header: null,
     gesturesEnabled: true
   };
