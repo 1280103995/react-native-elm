@@ -37,7 +37,12 @@ export default class LocationCityViewModel {
 
   @computed
   get getCityList() {
-    return this.cityList
+    return this.cityList.map((v)=>{
+      return {
+        key: v.key,
+        data: v.data.slice(),
+      }
+    }).slice();
   }
 
 }
