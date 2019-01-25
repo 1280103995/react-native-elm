@@ -5,18 +5,19 @@ class ShoppingCarStore {
 
   @action
   addFood(food){
-    let g = this.list.find(item => item.id === food.id);
+    let g = this.list.find(item => item.item_id === food.item_id);
     if (g === undefined){
-      food.buyNum = 1;
       this.list.push(food)
-    } else {
-      this.list.forEach(item => item.id === food.id && (++item.buyNum))
     }
   }
 
   @action
   subFood(food){
-    this.list.forEach(item => item.id === food.id && item.buyNum > 0 && (--item.buyNum))
+    let g = this.list.find(item => item.buyNum === 0);
+    if (g === undefined){
+      this.list.remove(food)
+    }
+    // this.list.forEach(item => item.item_id === food.item_id && item.buyNum > 0 && (--item.buyNum))
   }
 
   @action
@@ -26,7 +27,7 @@ class ShoppingCarStore {
 
   @action
   getFoodBuyNum(food){
-    let g = this.list.find(item => item.id === food.id);
+    let g = this.list.find(item => item.item_id === food.item_id);
     return g === undefined ? 0 : g.buyNum
   }
 
@@ -49,7 +50,11 @@ class ShoppingCarStore {
     let totalPrice = 0;
     // 遍历表中所有数据
     for (let food of this.list) {
-      totalPrice = totalPrice + food.buyNum * food.money;
+      let price = 0;
+      if (food.specfoods !== undefined && food.specfoods.length > 0	) {
+        price = food.specfoods[0].price
+      }
+      totalPrice = totalPrice + food.buyNum * price;
     }
     return toDecimal2(totalPrice);
   }

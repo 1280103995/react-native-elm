@@ -77,7 +77,9 @@ export default class ShopBar extends Component<Props>{
         }]}>
           {/*购物车图标*/}
           <View style={[styles.iconView, this.CartStore.totalCount > 0 ? {backgroundColor: Color.theme} : null]}>
-            <Image  source={Images.Shop.cart} ref={(cart)=>this.props.cartElement(cart)}
+            <Image
+              ref={(cart)=>this.props.cartElement(cart)}
+              source={Images.Shop.cart}
               style={{...wh(50), tintColor: this.CartStore.totalCount > 0 ? Color.white : Color.gray3}}/>
           </View>
           {/*数量*/}

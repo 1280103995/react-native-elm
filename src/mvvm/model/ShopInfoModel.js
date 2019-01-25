@@ -19,12 +19,12 @@ export default class ShopInfoModel{
 
   /**
    * 获取shop页面菜单列表
-   * @param shopid
+   * @param shopId
    * @returns {返回Promise}
    */
-  static fetchShopGoodsList(shopid){
+  static fetchShopGoodsList(shopId){
     let params = {
-      'restaurant_id': shopid
+      'restaurant_id': shopId
     };
     return new XFetch().get('/shopping/v2/menu').setParams(params).do()
   }

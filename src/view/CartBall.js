@@ -3,7 +3,7 @@ import {Animated, Easing, View} from "react-native";
 import {px2dp, wh} from "../utils/ScreenUtil";
 import Color from "../app/Color";
 
-export default class CartAnimated extends Component {
+export default class CartBall extends Component {
 
   constructor(props) {
     super(props);
