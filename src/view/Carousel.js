@@ -267,7 +267,7 @@ export default class Carousel extends React.Component {
       return this.props.renderPageIndicator(config);
     }
     const {childrenNum, pageNum, loop, scrollValue} = config;
-    if (pageNum === 0) {
+    if (pageNum <= 1) {
       return null;
     }
     const indicators = [];
