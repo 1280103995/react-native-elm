@@ -25,6 +25,8 @@ import Image from "../../view/Image";
 @observer
 export default class ShopInfoList extends Component {
 
+  refAddList = [];
+
   constructor(props) {
     super(props);
     this.startPosition = null;
@@ -35,11 +37,11 @@ export default class ShopInfoList extends Component {
     this.props.shopInfoViewModel.fetchFootList(this.props.shopID);
   };
 
-  _add = (food) => {
+  _add = (food, index) => {
     this.props.shopInfoViewModel.addFoodBuyNum(food);
     this.props.cartStore.addFood(food);
 
-    this._measurePosition()
+    this._measurePosition(index)
   };
 
   _sub = (food) => {
@@ -47,14 +49,13 @@ export default class ShopInfoList extends Component {
     this.props.cartStore.subFood(food)
   };
 
-  async _measurePosition() {
-    await this._measure();
-    console.log('开始', this.startPosition, '结束', this.endPosition)
+  async _measurePosition(index) {
+    await this._measure(index);
     this.cartBall.startAnim(this.startPosition, this.endPosition, this._doAnim);
   }
 
-  _measure() {
-    this._measureStart();
+  _measure(index) {
+    this._measureStart(index);
     if (this.endPosition === null) {
       this._measureEndPosition();
     }
@@ -63,8 +64,8 @@ export default class ShopInfoList extends Component {
   /*
   * 测量按钮位置
   * */
-  _measureStart() {
-    const handle = findNodeHandle(this.addAction);
+  _measureStart(index) {
+    const handle = findNodeHandle(this.refAddList[index]);
     UIManager.measure(handle, (x, y, width, height, pageX, pageY) => {
       this.startPosition = {x: parseInt(pageX), y: parseInt(pageY)};
     });
@@ -169,7 +170,6 @@ export default class ShopInfoList extends Component {
     if (info.item.specfoods !== undefined && info.item.specfoods.length > 0) {
       price = info.item.specfoods[0].price
     }
-    console.log('buyNum', info.item.buyNum)
     let buyNum = 0;
     let index = this.props.cartStore.allFoods.indexOf(info.item);
     if (index >= 0) {
@@ -201,9 +201,9 @@ export default class ShopInfoList extends Component {
             </VisibleView>
             {/*加*/}
             <TouchableOpacity
-              ref={r => this.addAction = r}
+              ref={r => {this.refAddList.push(r)}}
               style={[styles.itemActionStyle, styles.rItemActionBg]}
-              onPress={() => this._add(info.item)}>
+              onPress={() => this._add(info.item, info.index)}>
               <Text largeSize white text={'+'}/>
             </TouchableOpacity>
           </Row>
