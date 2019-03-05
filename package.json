@@ -25,8 +25,8 @@
     "react-native-keyboard-aware-scroll-view": "^0.5.0",
     "react-native-root-toast": "^3.0.2",
     "react-native-scrollable-tab-view": "^0.10.0",
-    "react-native-xfetch": "^0.0.1",
-    "react-navigation": "^3.0.9",
+    "react-native-xfetch": "^0.2.1",
+    "react-navigation": "^3.3.2",
     "teaset": "^0.5.9"
   },
   "devDependencies": {

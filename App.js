@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {Provider} from 'mobx-react'
 import RootStore from "./src/store/RootStore";
 import {XFetchConfig} from "react-native-xfetch";
@@ -8,7 +8,7 @@ import {createAppContainer} from "react-navigation";
 
 const AppContainer = createAppContainer(AppNavigator);
 
-export default class App extends Component{
+export default class App extends Component {
 
   constructor(props) {
     super(props);
@@ -17,18 +17,25 @@ export default class App extends Component{
       .setResponseConfig(this.handleResponse)
   }
 
-  handleResponse = (isResponseSuccess, url, resolve, reject, data) =>{
+  handleResponse = (isResponseSuccess, response, resolve, reject, data) => {
     if (isResponseSuccess) {
       if (data.status === 0) {
         throw new Error(JSON.stringify(data))
       } else {
         resolve(data);
-        console.log('XFetch_success-->', `url:${url}\n`, data);
+        console.log('XFetch_success-->', response.url, data);
+
+        let headers = response.headers.get("set-cookie");
+        if (headers && headers.indexOf('SID=') !== -1) {
+          let header = headers.split(";");
+          cookie = header[0]
+        }
+
       }
-    }else {
+    } else {
       reject(data);
-      console.log('XFetch_error-->', `url:${url}\n`, data);
-      Toast.show(data.message)
+      Toast.show(data.message);
+      console.log('XFetch_error-->', response.url, data);
     }
   };
 
@@ -43,4 +50,5 @@ export default class App extends Component{
 global.isLogin = false;
 global.UserInfo = {}; //用户信息
 global.Geohash = null;
+global.cookie = null;
 

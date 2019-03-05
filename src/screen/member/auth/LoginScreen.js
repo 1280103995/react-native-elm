@@ -51,6 +51,7 @@ export default class LoginScreen extends BaseScreen {
           <Input
             bgViewStyle={styles.input}
             label={'账号'}
+            value={'ganba'}
             placeholder={'请输入账号'}
             onChangeText={(text) => this.loginViewModel.setNameText(text)}/>
           <Divider/>
@@ -58,6 +59,7 @@ export default class LoginScreen extends BaseScreen {
             id={(p)=>this.pwd=p}
             bgViewStyle={styles.input}
             label={'密码'}
+            value={'123456'}
             placeholder={'请输入密码'}
             secureTextEntry={true}
             onChangeText={(text) => this.loginViewModel.setPwdText(text)}>
@@ -72,6 +74,7 @@ export default class LoginScreen extends BaseScreen {
             bgViewStyle={styles.input}
             label={'验证码'}
             placeholder={'请输入验证码'}
+            keyboardType={'numeric'}
             onChangeText={(text) => this.loginViewModel.setCaptchaText(text)}>
             <TouchableOpacity onPress={this._fetchCaptcha}>
               <Image
