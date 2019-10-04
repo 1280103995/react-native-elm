@@ -1,6 +1,6 @@
-import {createStackNavigator} from "react-navigation";
+import {createStackNavigator} from "react-navigation-stack";
 import StackNavigator from "./StackNavigator";
-import StackViewStyleInterpolator from "react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator";
+import StackViewStyleInterpolator from "react-navigation-stack/src/views/StackView/StackViewStyleInterpolator";
 
 const initial = __DEV__
   ? "Splash" // 调试用

@@ -1,20 +1,18 @@
 import React from 'react'
-import BaseScreen from "./BaseScreen";
-import Column from "../view/Column";
-import Text from "../view/Text";
 import {FlatList, TouchableOpacity, StyleSheet, View} from "react-native";
-import Divider from "../view/Divider";
-import LocationApi from "../api/LocationApi";
-import FoodsApi from "../api/FoodsApi";
-import ShopListItem from "../view/ShopListItem";
-import Row from "../view/Row";
-import {marginLR, marginTB, paddingTB, px2dp, px2sp, screenW, wh} from "../utils/ScreenUtil";
-import DropdownMenu from "../view/DropdownMenu";
-import Color from "../app/Color";
-import Image from "../view/Image";
-import Images from "../app/Images";
-import Button from "../view/Button";
 import {inject, observer} from "mobx-react";
+import BaseScreen from './BaseScreen';
+import Column from '../view/Column';
+import DropdownMenu from '../view/DropdownMenu';
+import Row from '../view/Row';
+import Color from '../app/Color';
+import {marginLR, marginTB, px2dp, screenW, wh} from '../utils/ScreenUtil';
+import Divider from '../view/Divider';
+import Text from '../view/Text';
+import Button from '../view/Button';
+import Image from '../view/Image';
+import Images from '../app/Images';
+import ShopListItem from '../view/ShopListItem';
 
 @inject('categoryViewModel')
 @observer

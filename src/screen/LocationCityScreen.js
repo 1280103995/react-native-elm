@@ -1,12 +1,12 @@
 import React from "react";
-import BaseScreen from "./BaseScreen";
 import {SectionList, FlatList, View} from "react-native";
-import Text from "../view/Text";
-import {paddingLR, paddingTB, px2dp, px2sp} from "../utils/ScreenUtil";
-import Divider from "../view/Divider";
 import {inject, observer} from "mobx-react";
-import LocationCityViewModel from "../mvvm/viewmodel/LocationCityViewModel";
-import Color from "../app/Color";
+import BaseScreen from './BaseScreen';
+import LocationCityViewModel from '../mvvm/viewmodel/LocationCityViewModel';
+import {paddingTB, px2dp, px2sp} from '../utils/ScreenUtil';
+import Color from '../app/Color';
+import Text from '../view/Text';
+import Divider from '../view/Divider';
 
 @inject('homeViewModel')
 @observer

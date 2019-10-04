@@ -10,19 +10,19 @@ import {
   View,
   BackHandler
 } from "react-native";
-import {isIphoneX, marginLR, marginTB, paddingTB, px2dp, screenW, wh} from "../../utils/ScreenUtil";
-import Color from "../../app/Color";
-import Row from "../../view/Row";
-import Divider from "../../view/Divider";
-import Images from "../../app/Images";
-import BaseScreen from "../BaseScreen";
-import Text from "../../view/Text";
-import ShopListItem from "../../view/ShopListItem";
-import Image from "../../view/Image";
-import Column from "../../view/Column";
 import {inject, observer} from "mobx-react";
-import Carousel from "../../view/Carousel";
-import Toast from "../../view/Toast";
+import BaseScreen from '../BaseScreen';
+import Toast from '../../view/Toast';
+import Divider from '../../view/Divider';
+import {getStatusBarHeight, isIphoneX, marginLR, marginTB, paddingTB, px2dp, screenW, wh} from '../../utils/ScreenUtil';
+import Color from '../../app/Color';
+import Row from '../../view/Row';
+import Image from '../../view/Image';
+import Text from '../../view/Text';
+import Images from '../../app/Images';
+import Column from '../../view/Column';
+import Carousel from '../../view/Carousel';
+import ShopListItem from '../../view/ShopListItem';
 
 @inject('homeViewModel')
 @observer
@@ -44,6 +44,10 @@ export default class HomeScreen extends BaseScreen {
       BackHandler.addEventListener('hardwareBackPress', this._onBackButtonPressAndroid)
     );
   }
+
+  _toLocationCity = () =>{
+    this.toPage('LocationCity',{callback: this._onLocationChange})
+  };
 
   _onLocationChange = (changed) =>{
     if (changed) this.props.homeViewModel.getFootList()
@@ -97,14 +101,20 @@ export default class HomeScreen extends BaseScreen {
   }
 
   _renderNavBar() {
-    const top = Platform.OS === 'ios' ? 10 : StatusBar.currentHeight;
-    const navHeight = isIphoneX() || Platform.OS === 'ios' ? 210 : 240;
+    //让天气组件离状态栏20
+    const paddingTop = getStatusBarHeight() + 20;
+    //50：地址、天气的父组件高度；60：搜索框的高度；40：搜索框的margin值
+    const navHeight = px2dp(50 + 60 + 40) + paddingTop;
+    const navStyle = {
+      height:navHeight,
+      paddingTop: paddingTop,
+      backgroundColor: Color.theme
+    };
     return (
-      <SafeAreaView style={{backgroundColor: Color.theme}}>
-        <View style={{height: px2dp(navHeight), backgroundColor: Color.theme, paddingTop: px2dp(30) + top}}>
-          <Row verticalCenter style={{justifyContent: 'space-between', ...marginLR(20)}}>
+        <View style={navStyle}>
+          <Row verticalCenter style={{height:px2dp(50),justifyContent: 'space-between', ...marginLR(20)}}>
             {/*定位城市*/}
-            <TouchableOpacity activeOpacity={0.6} onPress={()=>this.toPage('LocationCity',{callback: this._onLocationChange})}>
+            <TouchableOpacity activeOpacity={0.6} onPress={this._toLocationCity}>
               <Row verticalCenter>
                 <Image source={Images.Main.location} style={{...wh(30)}}/>
                 <Text white text={this.props.homeViewModel.getLocation}/>
@@ -114,8 +124,8 @@ export default class HomeScreen extends BaseScreen {
             {/*天气*/}
             <Row verticalCenter>
               <View style={{marginRight: 5}}>
-                <Text microSize white style={{textAlign: "center"}} text={'3°'}/>
-                <Text microSize white style={{textAlign: "center"}} text={'多云'}/>
+                <Text microSize white style={{textAlign: "center"}} text={`${this.props.homeViewModel.weather.wendu}°`}/>
+                <Text microSize white style={{textAlign: "center"}} text={this.props.homeViewModel.weather.type}/>
               </View>
               <Image source={Images.Main.weather} style={{...wh(25)}}/>
             </Row>
@@ -128,7 +138,6 @@ export default class HomeScreen extends BaseScreen {
             </View>
           </TouchableWithoutFeedback>
         </View>
-      </SafeAreaView>
     )
   }
 

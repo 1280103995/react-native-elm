@@ -1,12 +1,12 @@
 import React from 'react'
-import { createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import TabBarItem from "../view/TabBarItem";
-import HomeScreen from "../screen/main/HomeScreen";
 import Images from "../app/Images";
-import FindScreen from "../screen/main/FindScreen";
 import OrderScreen from "../screen/main/OrderScreen";
 import MyScreen from "../screen/main/MyScreen";
 import Color from "../app/Color";
+import HomeScreen from '../screen/main/HomeScreen';
+import FindScreen from '../screen/main/FindScreen';
 
 export const Tabs = createBottomTabNavigator(
   {

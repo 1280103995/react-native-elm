@@ -30,9 +30,7 @@ export default class Text extends React.Component {
     ...RNText.defaultProps
   };
 
-  _buildProps(){
-    let {style, text, children, ...others} = this.props;
-
+  _buildStyle(){
     let color = Color.black;
     if (this.props.theme) {
       color = Color.theme
@@ -57,22 +55,20 @@ export default class Text extends React.Component {
       fontSize = px2sp(22)
     }
 
-    style = [{
+    return {
       color: color,
       fontSize: fontSize,
       overflow: 'hidden',
       backgroundColor: 'transparent',
-    }].concat(style);
-
-    if (text || text === '' || text === 0) children = text;
-
-    this.props = {style, text, children, ...others};
+    };
   }
 
   render() {
-    this._buildProps();
+    let {style, text, children, ...others} = this.props;
     return (
-      <RNText {...this.props}/>
+        <RNText style={[this._buildStyle(), style]} {...others}>
+          {(text || text === '' || text === 0) ? text : children}
+        </RNText>
     );
   }
 }

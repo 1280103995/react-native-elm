@@ -64,4 +64,11 @@ export default class HomeModel{
     };
     return new XFetch().get(Url.Home.shopList).setParams(params).do()
   }
+
+  static getWeather(cityName: string){
+    let param = {
+        'city': cityName
+    };
+    return new XFetch().get('http://wthrcdn.etouch.cn/weather_mini').setParams(param).do()
+  }
 }

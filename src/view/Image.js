@@ -33,10 +33,9 @@ export default class Image extends React.Component {
     } else if (typeof source !== 'number' && !needBaseUrl) {
       source = {uri: source}
     }
-    this.props = {source, ...others};
 
     return (
-      <RNImage {...this.props}/>
+      <RNImage source={source} {...others}/>
     );
   }
 }

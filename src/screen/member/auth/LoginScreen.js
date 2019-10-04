@@ -21,7 +21,10 @@ export default class LoginScreen extends BaseScreen {
 
   constructor(props) {
     super(props);
-    this.setTitle('密码登录')
+    this.setTitle('密码登录');
+    //写死账号信息，不用填写了
+    this.loginViewModel.setNameText('ganba');
+    this.loginViewModel.setPwdText('123456');
   }
 
   _passwordVisible = (state) => {

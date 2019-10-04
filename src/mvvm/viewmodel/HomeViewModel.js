@@ -5,6 +5,10 @@ class HomeViewModel{
   @observable latitude = 0;
   @observable longitude = 0;
   @observable location = ''; //当前城市名
+  @observable weather = {
+    wendu: 0,
+    type: ''
+  };//天气信息
   @observable categoryList = []; //分类数组
   @observable shopList = []; //店铺列表
 
@@ -15,7 +19,8 @@ class HomeViewModel{
       this.latitude = res.latitude;
       this.longitude = res.longitude;
       this._getFootType(res.geohash);
-      this.getFootList()
+      this.getFootList();
+      this._getWeather(this.location);
     })
   }
 
@@ -46,6 +51,15 @@ class HomeViewModel{
     })
   }
 
+  _getWeather(cityName: string){
+    HomeModel.getWeather(cityName).then((res)=>{
+      this.weather = {
+        wendu: res.data.wendu,
+        type: res.data.forecast[0].type
+      }
+    })
+  }
+
   @computed
   get getLocation(){
     return this.location
@@ -69,6 +83,11 @@ class HomeViewModel{
   @computed
   get getShopList(){
     return this.shopList
+  }
+
+  @computed
+  get getWeather(){
+    return this.weather
   }
 
 }

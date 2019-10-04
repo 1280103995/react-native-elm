@@ -9,6 +9,7 @@ import {
   PixelRatio,
   Dimensions,
   Platform,
+  StatusBar
 } from 'react-native';
 
 export let screenW = Dimensions.get('window').width;
@@ -30,6 +31,9 @@ const _scaleHeight = screenH / defaultHeight;
 // iPhoneX
 const X_WIDTH = 375;
 const X_HEIGHT = 812;
+// iPhoneXMAX
+const X_MAX_WIDTH = 414;
+const X_MAX_HEIGHT = 896;
 
 /**
  * 屏幕适配,缩放size
@@ -173,6 +177,25 @@ export function ifIphoneX(iphoneXStyle, iosStyle = {}, androidStyle) {
     if (androidStyle) return androidStyle;
     return iosStyle
   }
+}
+
+export function isIphoneMAX() {
+  return (
+      Platform.OS === 'ios' &&
+      (screenH === X_MAX_HEIGHT && screenW === X_MAX_WIDTH)
+  )
+}
+
+export function getStatusBarHeight() {
+  let height = 0;
+  if (isIphoneMAX()) {
+    height = px2dp(35)
+  }else if(isIphoneX())  {
+    height = px2dp(44)
+  }else  {
+    height = Platform.OS === 'ios' ? px2dp(18) : StatusBar.currentHeight
+  }
+  return height;
 }
 
 

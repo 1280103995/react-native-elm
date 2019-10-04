@@ -9,7 +9,6 @@ import PointQuestionScreen from "../screen/member/PointQuestionScreen";
 import OrderConfirmScreen from "../screen/shop/OrderConfirmScreen";
 import ChangeRedPacketScreen from "../screen/member/ChangeRedPacketScreen";
 import AddressScreen from "../screen/member/address/AddressScreen";
-import CategoryScreen from "../screen/CategoryScreen";
 import ExchangeVIPScreen from "../screen/member/ExchangeVIPScreen";
 import ModifyUserNameScreen from "../screen/member/auth/ModifyUserNameScreen";
 import ServiceCenterScreen from "../screen/member/ServiceCenterScreen";
@@ -23,7 +22,8 @@ import AddAddressScreen from "../screen/member/address/AddAddressScreen";
 import ModifyPwdScreen from "../screen/member/auth/ModifyPwdScreen";
 import BalanceScreen from "../screen/member/BalanceScreen";
 import SearchAddressScreen from "../screen/member/address/SearchAddressScreen";
-import LocationCityScreen from "../screen/LocationCityScreen";
+import CategoryScreen from '../screen/CategoryScreen';
+import LocationCityScreen from '../screen/LocationCityScreen';
 
 /*需要注册的页面*/
 export default {

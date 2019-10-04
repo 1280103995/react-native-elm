@@ -13,12 +13,12 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     XFetchConfig.getInstance()
-      .setBaseUrl('https://elm.cangdu.org')
+      .setBaseUrl('http://elm.cangdu.org')
       .setResponseConfig(this.handleResponse)
   }
 
-  handleResponse = (isResponseSuccess, response, resolve, reject, data) => {
-    if (isResponseSuccess) {
+  handleResponse = async(response, resolve, reject, data, xfetch) => {
+    if (response.ok) {
       if (data.status === 0) {
         throw new Error(JSON.stringify(data))
       } else {
@@ -27,8 +27,9 @@ export default class App extends Component {
 
         let headers = response.headers.get("set-cookie");
         if (headers && headers.indexOf('SID=') !== -1) {
-          let header = headers.split(";");
-          cookie = header[0]
+          // let header = headers.split(";");
+          // global.cookie = header[0]
+          global.cookie = headers;
         }
 
       }
@@ -50,5 +51,5 @@ export default class App extends Component {
 global.isLogin = false;
 global.UserInfo = {}; //用户信息
 global.Geohash = null;
-global.cookie = null;
+// global.cookie = null;
 
