@@ -21,15 +21,16 @@
     "react-native": "0.61.1",
     "react-native-gesture-handler": "^1.4.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.1",
-    "react-native-reanimated": "^1.2.0",
+    "react-native-modals": "^0.19.8",
+    "react-native-reanimated": "^1.3.0",
     "react-native-root-toast": "^3.1.2",
     "react-native-scrollable-tab-view": "^0.10.0",
     "react-native-tab-view": "^2.10.0",
+    "react-native-webview": "^7.4.1",
     "react-native-xfetch": "^0.3.3",
     "react-navigation": "^4.0.5",
     "react-navigation-stack": "^1.9.1",
-    "react-navigation-tabs": "^2.5.5",
-    "teaset": "^0.7.0"
+    "react-navigation-tabs": "^2.5.5"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

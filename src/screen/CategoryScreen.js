@@ -6,7 +6,7 @@ import Column from '../view/Column';
 import DropdownMenu from '../view/DropdownMenu';
 import Row from '../view/Row';
 import Color from '../app/Color';
-import {marginLR, marginTB, px2dp, screenW, wh} from '../utils/ScreenUtil';
+import {marginLR, marginTB, px2dp, px2sp, screenW, wh} from '../utils/ScreenUtil';
 import Divider from '../view/Divider';
 import Text from '../view/Text';
 import Button from '../view/Button';

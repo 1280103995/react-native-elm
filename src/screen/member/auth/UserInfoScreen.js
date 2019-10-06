@@ -9,7 +9,7 @@ import Image from "../../../view/Image";
 import Images from "../../../app/Images";
 import Divider from "../../../view/Divider";
 import Button from "../../../view/Button";
-import DialogLogout from "../../../dialog/DialogLogout";
+import LogoutDialog from '../../../dialog/LogoutDialog';
 
 export default class UserInfoScreen extends BaseScreen {
 
@@ -64,7 +64,7 @@ export default class UserInfoScreen extends BaseScreen {
         {this._renderItemType2('安全设置')}
         {this._renderItem(null, '登录密码', <Text gray text={'修改'}/>)}
         <Button style={styles.logoutBtnStyle} title={'退出登录'} onPress={this._logoutBtnClick}/>
-        <DialogLogout ref={(d)=>this.dialog=d} handleRightBth={this._handleRightBth}/>
+        <LogoutDialog ref={(d)=>this.dialog=d} handleRightBth={this._handleRightBth}/>
       </ScrollView>
     )
   }

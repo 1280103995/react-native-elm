@@ -14,6 +14,10 @@ export default class App extends Component {
     super(props);
     XFetchConfig.getInstance()
       .setBaseUrl('http://elm.cangdu.org')
+      .setCommonHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      })
       .setResponseConfig(this.handleResponse)
   }
 
@@ -24,14 +28,6 @@ export default class App extends Component {
       } else {
         resolve(data);
         console.log('XFetch_success-->', response.url, data);
-
-        let headers = response.headers.get("set-cookie");
-        if (headers && headers.indexOf('SID=') !== -1) {
-          // let header = headers.split(";");
-          // global.cookie = header[0]
-          global.cookie = headers;
-        }
-
       }
     } else {
       reject(data);
@@ -51,5 +47,4 @@ export default class App extends Component {
 global.isLogin = false;
 global.UserInfo = {}; //用户信息
 global.Geohash = null;
-// global.cookie = null;
 

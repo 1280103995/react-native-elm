@@ -7,7 +7,7 @@ export default class AuthModel{
    * @returns {返回Promise}
    */
   static fetchCaptcha(){
-    return new XFetch().post('/v1/captchas').do()
+    return new XFetch().post('/v1/captchas').useCookie(true).do()
   }
 
   /**
@@ -95,11 +95,7 @@ export default class AuthModel{
    */
   static fetchAccountLogin(username, password, captcha_code){
     let formData = {username,password,captcha_code};
-    let header = {
-      'Accept': 'application/json',
-      'Cookie': global.cookie !== null ? `${global.cookie}; cap=${captcha_code}` : 'cap=' + captcha_code
-    };
-    return new XFetch().post('/v2/login').setHeaders(header).setParams(formData).do()
+    return new XFetch().post('/v2/login').setParams(formData).useCookie(true).do()
   }
 
   /**

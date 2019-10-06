@@ -3,23 +3,23 @@ import React, { Component } from 'react'
 import {
   Text,
   View,
-  WebView,
   Animated,
   Dimensions,
   StyleSheet
 } from 'react-native'
-const { width } = Dimensions.get('window')
+import { WebView } from 'react-native-webview';
+const { width } = Dimensions.get('window');
 
-export default class MyWebView extends Component {
+export default class RNWebView extends Component {
   constructor(props){
       super(props)
       this.state = {
         progress: new Animated.Value(10),
         error: false
-      }
-      let noop = () => {}
-      this.__onLoad = this.props.onLoad || noop
-      this.__onLoadStart = this.props.onLoadStart || noop
+      };
+      let noop = () => {};
+      this.__onLoad = this.props.onLoad || noop;
+      this.__onLoadStart = this.props.onLoadStart || noop;
       this.__onError = this.props.onError || noop
   }
   _onLoad(){
