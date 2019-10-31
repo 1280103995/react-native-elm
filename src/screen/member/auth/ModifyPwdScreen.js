@@ -72,7 +72,7 @@ export default class ModifyPwdScreen extends BaseScreen{
 
   renderView(){
     return(
-      <KeyboardAwareScrollView style={styles.container}>
+      <KeyboardAwareScrollView style={styles.container} keyboardShouldPersistTaps="handled">
         <Column style={styles.content}>
           <Input
             bgViewStyle={styles.input}

@@ -946,10 +946,10 @@
     eslint-plugin-react-native "3.6.0"
     prettier "1.16.4"
 
-"@react-native-community/viewpager@^1.1.7":
-  version "1.1.7"
-  resolved "https://registry.npm.taobao.org/@react-native-community/viewpager/download/@react-native-community/viewpager-1.1.7.tgz#7d3b1631f1ec91145db92a8e25c80d53027e96ba"
-  integrity sha1-fTsWMfHskRRduSqOJcgNUwJ+lro=
+"@react-native-community/viewpager@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.npm.taobao.org/@react-native-community/viewpager/download/@react-native-community/viewpager-2.0.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40react-native-community%2Fviewpager%2Fdownload%2F%40react-native-community%2Fviewpager-2.0.1.tgz#892e2148c8bca4ff157280e4be81d88be3264efc"
+  integrity sha1-iS4hSMi8pP8VcoDkvoHYi+MmTvw=
 
 "@react-navigation/core@^3.5.1":
   version "3.5.1"
@@ -5476,16 +5476,17 @@ react-native-safe-area-view@^0.14.1, react-native-safe-area-view@^0.14.6:
   dependencies:
     debounce "^1.2.0"
 
-react-native-scrollable-tab-view@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.npm.taobao.org/react-native-scrollable-tab-view/download/react-native-scrollable-tab-view-0.10.0.tgz#8ce7908254685ee37d35df7d849676eaa1e81132"
-  integrity sha1-jOeQglRoXuN9Nd99hJZ26qHoETI=
+react-native-scrollable-tab-view@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/react-native-scrollable-tab-view/download/react-native-scrollable-tab-view-1.0.0.tgz#87319896067f7bb643ecd7fba2cba4d6d8f9e18b"
+  integrity sha1-hzGYlgZ/e7ZD7Nf7osuk1tj54Ys=
   dependencies:
+    "@react-native-community/viewpager" "^2.0.1"
     create-react-class "^15.6.2"
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.3"
 
-react-native-tab-view@^2.10.0, react-native-tab-view@^2.9.0:
+react-native-tab-view@^2.9.0:
   version "2.10.0"
   resolved "https://registry.npm.taobao.org/react-native-tab-view/download/react-native-tab-view-2.10.0.tgz#5e249e5650502010013449ffd4e5edc18a95364b"
   integrity sha1-XiSeVlBQIBABNEn/1OXtwYqVNks=
@@ -5557,9 +5558,9 @@ react-navigation-tabs@^2.5.5:
     react-native-safe-area-view "^0.14.6"
     react-native-tab-view "^2.9.0"
 
-react-navigation@^4.0.5:
+react-navigation@^4.0.10:
   version "4.0.10"
-  resolved "https://registry.npm.taobao.org/react-navigation/download/react-navigation-4.0.10.tgz?cache=0&sync_timestamp=1569460492909&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-navigation%2Fdownload%2Freact-navigation-4.0.10.tgz#ddf41134600689d6ba99e35dd22ba1f664f91e5c"
+  resolved "https://registry.npm.taobao.org/react-navigation/download/react-navigation-4.0.10.tgz#ddf41134600689d6ba99e35dd22ba1f664f91e5c"
   integrity sha1-3fQRNGAGida6meNd0iuh9mT5Hlw=
   dependencies:
     "@react-navigation/core" "^3.5.1"

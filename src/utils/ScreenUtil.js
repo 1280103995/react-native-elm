@@ -19,8 +19,8 @@ export let pixelRatio = PixelRatio.get();
 //像素密度
 export const DEFAULT_DENSITY = 2;
 //以iphone6为基准,如果以其他尺寸为基准的话,请修改下面的 defaultWidth 和 defaultHeight 为对应尺寸即可.
-const defaultWidth = 750;
-const defaultHeight = 1334;
+const defaultWidth = 750;//px
+const defaultHeight = 1334;//px
 const w2 = defaultWidth / DEFAULT_DENSITY;
 const h2 = defaultHeight / DEFAULT_DENSITY;
 
@@ -28,10 +28,10 @@ const h2 = defaultHeight / DEFAULT_DENSITY;
 const _scaleWidth = screenW / defaultWidth;
 const _scaleHeight = screenH / defaultHeight;
 
-// iPhoneX
+// iPhone X，iPhone XS，iPhone 11 Pro
 const X_WIDTH = 375;
 const X_HEIGHT = 812;
-// iPhoneXMAX
+// iPhone XR，iPhone XS Max，iPhone 11，iPhone 11 Pro Max
 const X_MAX_WIDTH = 414;
 const X_MAX_HEIGHT = 896;
 
@@ -189,11 +189,11 @@ export function isIphoneMAX() {
 export function getStatusBarHeight() {
   let height = 0;
   if (isIphoneMAX()) {
-    height = px2dp(35)
+    height = px2dp(54);//刘海高度
   }else if(isIphoneX())  {
-    height = px2dp(44)
+    height = px2dp(58);//刘海高度
   }else  {
-    height = Platform.OS === 'ios' ? px2dp(18) : StatusBar.currentHeight
+    height = Platform.OS === 'ios' ? px2dp(40) : StatusBar.currentHeight
   }
   return height;
 }

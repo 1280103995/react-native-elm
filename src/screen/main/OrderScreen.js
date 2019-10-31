@@ -17,8 +17,9 @@ export default class OrderScreen extends BaseScreen {
   constructor(props) {
     super(props);
     this.setTitle('订单列表');
-    this.setGoBackVisible(false)
   }
+
+  renderNavLeftView = () => null;
 
   componentDidMount() {
     this._fetchData()

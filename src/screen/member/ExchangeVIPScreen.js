@@ -27,11 +27,13 @@ export default class ExchangeVIPScreen extends BaseScreen {
         </Row>
         <Input
           bgViewStyle={[styles.rowStyle,{backgroundColor: Color.white}]}
+          keyboardType={'numeric'}
           placeholder={'请输入与10位卡号'}
           onChangeText={(text) => null}/>
         <Divider/>
         <Input
           bgViewStyle={[styles.rowStyle,{backgroundColor: Color.white}]}
+          keyboardType={'numeric'}
           placeholder={'请输入与6位卡密'}
           onChange={(text) => null}/>
 

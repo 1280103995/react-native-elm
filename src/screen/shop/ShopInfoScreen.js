@@ -30,7 +30,6 @@ export default class ShopInfoScreen extends BaseScreen {
 
   constructor(props) {
     super(props);
-    this.setNavBarVisible(false);
     this.state = {
       headOpacity: 1,
       bgY: 0,
@@ -38,6 +37,8 @@ export default class ShopInfoScreen extends BaseScreen {
       viewRef: 0
     };
   }
+
+  renderNavBar = () => null;
 
   _shopID() {
     return this.props.navigation.state.params.id

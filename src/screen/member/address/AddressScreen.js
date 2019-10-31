@@ -52,13 +52,13 @@ export default class AddressScreen extends BaseScreen {
     this.addressListViewModel.deleteItem(UserInfo.user_id, item);
   }
 
-  renderMenu(){
+  renderNavRightView = () => {
     return(
       <TouchableOpacity onPress={this._onMenuClick}>
         <Text white text={'新增'} style={{margin:px2dp(10)}}/>
       </TouchableOpacity>
     )
-  }
+  };
 
   renderView() {
     return (

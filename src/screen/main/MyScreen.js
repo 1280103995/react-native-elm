@@ -35,17 +35,17 @@ export default class MyScreen extends BaseScreen {
     if (isLogin) this._fetchUserInfo()
   }
 
-  renderGoBack() {
+  renderNavLeftView = () => {
     return (
       <Image source={Images.My.notice} style={{...wh(40), marginLeft: px2dp(20)}}/>
     )
-  }
+  };
 
-  renderMenu() {
+  renderNavRightView = () => {
     return (
       <Image source={Images.My.setting} style={{...wh(40), marginRight: px2dp(20)}}/>
     )
-  }
+  };
 
   _userInfoClick = () => {
     if (isLogin) this.toPage('UserInfo',{callback: this._handleLogoutSuccess});

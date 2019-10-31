@@ -44,7 +44,7 @@ export default class AddAddressScreen extends BaseScreen {
   renderView() {
     let addressViewModel = this.addressViewModel;
     return (
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
         <Column style={styles.contentStyle}>
           <Input
             style={styles.inputStyle}
@@ -63,11 +63,13 @@ export default class AddAddressScreen extends BaseScreen {
           />
           <Input
             style={styles.inputStyle}
+            keyboardType={'numeric'}
             placeholder={'请填写能够联系到您的手机号'}
             onChangeText={(text) => addressViewModel.setPhone(text)}
           />
           <Input
             style={[styles.inputStyle, {marginBottom: 0}]}
+            keyboardType={'numeric'}
             placeholder={'备用联系电话（选填）'}
             onChangeText={(text) => addressViewModel.setPhone2(text)}
           />

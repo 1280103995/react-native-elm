@@ -23,7 +23,7 @@ export default class LoginScreen extends BaseScreen {
     super(props);
     this.setTitle('密码登录');
     //写死账号信息，不用填写了
-    this.loginViewModel.setNameText('ganba');
+    this.loginViewModel.setNameText('布丁');
     this.loginViewModel.setPwdText('123456');
   }
 
@@ -49,12 +49,12 @@ export default class LoginScreen extends BaseScreen {
 
   renderView() {
     return (
-      <KeyboardAwareScrollView style={styles.container}>
+      <KeyboardAwareScrollView style={styles.container} keyboardShouldPersistTaps="handled">
         <Column style={styles.content}>
           <Input
             bgViewStyle={styles.input}
             label={'账号'}
-            value={'ganba'}
+            value={'布丁'}
             placeholder={'请输入账号'}
             onChangeText={(text) => this.loginViewModel.setNameText(text)}/>
           <Divider/>

@@ -55,15 +55,17 @@ export default class ChangeRedPacketScreen extends BaseScreen {
 
   renderView() {
     return (
-      <KeyboardAwareScrollView style={styles.container}>
+      <KeyboardAwareScrollView style={styles.container} keyboardShouldPersistTaps="handled">
         <Column>
           <Input
             bgViewStyle={styles.input}
+            keyboardType={'numeric'}
             placeholder={'请输入兑换码'}
             onChangeText={(text) => this.codeText = text}
           />
           <Input
             bgViewStyle={[styles.input,{...marginTB(20)}]}
+            keyboardType={'numeric'}
             placeholder={'请输入验证码'}
             onChangeText={(text) => this.captchaText = text}>
             <TouchableOpacity onPress={this._fetchRefreshCaptcha}>

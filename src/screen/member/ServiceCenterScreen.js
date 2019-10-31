@@ -36,14 +36,11 @@ export default class ServiceCenterScreen extends BaseScreen {
   }
 
   _onHeaderItemClick = (index) => {
-    if (index !== 1) return;
-    Linking.canOpenURL(url).then(supported => {
-      if (!supported) {
-        alert('该设备不支持拨号功能')
-      } else {
-        return Linking.openURL('tel: 10086');
-      }
-    }).catch(err => console.error('An error occurred', err));
+    if (index !== 1){
+      alert('客服下班了');
+      return;
+    }
+    Linking.openURL('tel: 10086')
   };
 
   renderView() {

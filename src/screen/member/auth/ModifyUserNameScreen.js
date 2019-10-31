@@ -32,7 +32,7 @@ export default class ModifyUserNameScreen extends BaseScreen {
 
   renderView() {
     return (
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
         <Column style={styles.container}>
           <Input
             style={styles.inputStyle}
