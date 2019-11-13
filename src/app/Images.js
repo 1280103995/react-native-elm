@@ -2,7 +2,6 @@ export default {
   Common:{
     goBack:require('../img/icon_back_white.png'),
     arrowRight:require('../img/icon_arrow_right_white.png'),
-    shopBg:require('../img/bg.jpg'),
     close:require('../img/icon_close_gray.png'),
     empty:require('../img/icon_empty.png'),
   },
@@ -32,6 +31,7 @@ export default {
   },
   Shop:{
     cart:require('../img/icon_shopping_cart.png'),
+    shopBg:require('../img/bg.jpg'),
   },
   Splash:{
     splash:require('../img/splash.png'),

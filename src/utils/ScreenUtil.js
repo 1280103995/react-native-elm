@@ -193,7 +193,11 @@ export function getStatusBarHeight() {
   }else if(isIphoneX())  {
     height = px2dp(58);//刘海高度
   }else  {
-    height = Platform.OS === 'ios' ? px2dp(40) : StatusBar.currentHeight
+    if (Platform.OS === 'ios') {
+      height = px2dp(40);
+    } else {
+      height = Platform.OS === 'android' && Platform.Version >= 19 ? StatusBar.currentHeight : 0;
+    }
   }
   return height;
 }

@@ -5,18 +5,18 @@ class ShoppingCarStore {
 
   @action
   addFood(food){
-    let g = this.list.find(item => item.id === food.id);
+    let g = this.list.find(item => item.item_id === food.item_id);
     if (g === undefined){
       food.buyNum = 1;
       this.list.push(food)
     } else {
-      this.list.forEach(item => item.id === food.id && (++item.buyNum))
+      this.list.forEach(item => item.item_id === food.item_id && (++item.buyNum))
     }
   }
 
   @action
   subFood(food){
-    this.list.forEach(item => item.id === food.id && item.buyNum > 0 && (--item.buyNum))
+    this.list.forEach(item => item.item_id === food.item_id && item.buyNum > 0 && (--item.buyNum))
   }
 
   @action
@@ -24,10 +24,8 @@ class ShoppingCarStore {
     this.list.clear()
   }
 
-  @action
-  getFoodBuyNum(food){
-    let g = this.list.find(item => item.id === food.id);
-    return g === undefined ? 0 : g.buyNum
+  getFood(food) {
+    return this.list.find(item => item.item_id === food.item_id)
   }
 
   @computed
@@ -57,11 +55,11 @@ class ShoppingCarStore {
 const cartStore = new ShoppingCarStore();
 export default cartStore
 
-//制保留2位小数，如：2，会在2后面补上00.即2.00
+//只保留2位小数，如：2，会在2后面补上.00即2.00
 export function toDecimal2(x) {
   let ff = parseFloat(x);
   if (isNaN(ff)) {
-    return false;
+    return 0.00;
   }
   let f = Math.round(x * 100) / 100;
   let s = f.toString();

@@ -6,83 +6,73 @@ import {
   SectionList,
   UIManager,
   findNodeHandle,
-  Image, TouchableOpacity,
 } from 'react-native';
 import {inject, observer} from 'mobx-react';
-import ParcelData from './ParcelData.json'
 import Color from "../../app/Color";
 import Button from "../../view/Button";
-import {marginLR, px2dp, px2sp, screenW, wh} from "../../utils/ScreenUtil";
+import {px2dp, px2sp, screenW} from "../../utils/ScreenUtil";
 import Divider from "../../view/Divider";
 import ShopBar from "../../view/ShopBar";
 import Row from "../../view/Row";
 import Column from "../../view/Column";
 import Text from "../../view/Text";
-import VisibleView from "../../view/VisibleView";
-import CartAnimated from "../../view/CartAnimated";
+import ShopFoodItem from '../../view/ShopFoodItem';
 
-let Headers = [];
-
-@inject(['cartStore'])
+@inject('cartStore')
 @observer
 export default class ShopInfoList extends Component {
 
-  // 构造
   constructor(props) {
     super(props);
-    // 初始状态
-    this.state = {
-      selectIndex: 0, //左边列表选中的位置
-    };
-    this.startPosition = {x: 200, y:200};
+    this.isManualSelect = false;
+    this.startPosition = {x:0,y:0};
     this.endPosition = null
   }
 
   componentDidMount() {
-    ParcelData.map((item, i) => {
-      Headers.push(item.section);
-    });
+    this.props.shopInfoViewModel.fetchFootList(this.props.shopID);
   };
 
-  _add = (data) => {
-    this.props.cartStore.addFood(data.item);
+  _measurePosition = async(pressEvent) => {
+    this.startPosition.x = pressEvent.nativeEvent.pageX;
+    this.startPosition.y = pressEvent.nativeEvent.pageY;
 
-    const handle = findNodeHandle(this.cartElement);
-    UIManager.measure(handle, (x, y, width, height, pageX, pageY) => {
-      this.endPosition = {x: pageX, y: pageY};
-      this.refs.cart.startAnim(this.startPosition,this.endPosition,this._doAnim)
-    });
+    if (this.endPosition === null) {
+      this.endPosition = await this._measureEndPosition();
+    }
+    this.props.shopInfoViewModel.cartBall.startAnim(this.startPosition, this.endPosition, this._doAnim);
   };
 
   _doAnim = () => {
     this.shopBar.runAnimate()
   };
 
-  _sub = (data) => {
-    this.props.cartStore.subFood(data.item)
-  };
-
-  _measureView(view) {
+  _measureEndPosition() {
+    const handle = findNodeHandle(this.cartElement);
     return new Promise((resolve) => {
-      view.measure((x, y, width, height, px, py) => resolve({x, y, width, height, px, py}))
+      UIManager.measure(handle, (x, y, width, height, pageX, pageY) => resolve({x: pageX, y: pageY + height / 2}))
     });
   }
 
-  _cellAction = (item) => {
-    if (item.index <= ParcelData.length) {
-      // this.setState({selectIndex: item.index});
-      this.section.scrollToLocation({animated: false, itemIndex: item.index})
-    }
+  _chooseFoodType = (index) => {
+    //表示是手动选择
+    this.isManualSelect = true;
+    this.sectionlist.scrollToLocation({animated: false, sectionIndex: index, itemIndex: 0, viewOffset: 0});
+    //直接点击左边第一项，_itemChange()不进判断，所以在这里设置选中第一项
+    if (index === 0) this.props.shopInfoViewModel.setSelectIndex(index);
   };
 
-  itemChange = (info) => {
-    let section = info.viewableItems[0].item.section;
-    if (section) {
-      let index = Headers.indexOf(section);
-      if (index < 0) {
-        index = 0;
+  _itemChange = (info) => {
+    const item = info.viewableItems[0].item;
+    if (!item) return;
+    let index = item.category_index;
+    //没有滑动顶部时，item是商品对象，滑动到顶部时，item是section对象
+    if (!item.key && this.props.shopInfoViewModel.categoryIndex !== index) {
+      if (this.isManualSelect){
+        index++;
+        this.isManualSelect= false
       }
-      this.setState({selectIndex: index});
+      this.props.shopInfoViewModel.setSelectIndex(index);
     }
   };
 
@@ -91,93 +81,73 @@ export default class ShopInfoList extends Component {
       <Column style={styles.container}>
         <Row style={{flex: 1}}>
           <FlatList
-            ref={(flat) => this.flat = flat}
             style={styles.leftList}
-            data={ParcelData}
-            renderItem={(item) => this.renderLRow(item)}
+            data={this.props.shopInfoViewModel.getFootList}
+            renderItem={this._renderLeftItem}
+            keyExtractor={(item, index) => item.id + item.index + item.key + item.restaurant_id}
+            getItemLayout={(data, index) => (
+              {length: px2dp(81), offset: px2dp(81) * index, index}
+            )}
             ItemSeparatorComponent={() => <Divider/>}
-            keyExtractor={(item) => item.section}
           />
           <SectionList
-            ref={(section) => this.section = section}
+            ref={(section) => this.sectionlist = section}
             style={styles.rightList}
+            sections={this.props.shopInfoViewModel.getFootList}
+            extraData={this.props.cartStore.allFoods}
             stickySectionHeadersEnabled={true}
-            renderSectionHeader={(section) => this.sectionComp(section)}
-            renderItem={(item) => this.renderRRow(item)}
-            sections={ParcelData}
-            keyExtractor={(item) => item.name}
+            renderSectionHeader={this._renderSectionHeader}
+            renderItem={this._renderRightItem}
+            keyExtractor={(item, index) => {
+              return item.category_index +'，'+ item.item_id
+            }}
+            getItemLayout={(data, index) => (
+              {length: 81, offset: 81 * index, index}
+            )}
             ItemSeparatorComponent={() => <Divider/>}
-            onViewableItemsChanged={(info) => this.itemChange(info)}
+            onViewableItemsChanged={this._itemChange}
           />
         </Row>
-        <CartAnimated ref={'cart'}/>
         <ShopBar
           ref={(s) => this.shopBar = s}
           cartElement={(c) => this.cartElement = c}
           store={this.props.cartStore}
           navigation={this.props.navigation}/>
+
       </Column>
     );
   }
 
-  renderLRow = (item) => {
+  _renderLeftItem = ({item, index}) => {
+    const length = this.props.shopInfoViewModel.getFootList.length;
+    const isSelect = item.isSelect;
     return (
       <Button
         style={[styles.lItem,
           {
-            borderBottomColor: item.index + 1 === ParcelData.length ? Color.divider : 'transparent',
-            borderBottomWidth: item.index + 1 === ParcelData.length ? px2dp(1) : 0
+            borderBottomColor: index + 1 === length ? Color.divider : 'transparent',
+            borderBottomWidth: index + 1 === length ? px2dp(1) : 0
           }]}
-        title={item.item.section}
-        titleStyle={{fontSize: px2sp(26), color: item.index === this.state.selectIndex ? Color.theme : Color.black}}
-        onPress={() => this._cellAction(item)}
+        title={item.key}
+        titleStyle={{fontSize: px2sp(26), color: isSelect ? Color.theme : Color.black}}
+        onPress={() => this._chooseFoodType(index)}
       />
     )
   };
 
-  renderRRow = (item) => {
+  _renderSectionHeader = (info) => {
     return (
-      <View style={styles.rItem}>
-        <Row style={{flex: 1}}>
-          <Image style={styles.icon} source={{uri: item.item.img}}/>
-          <Column style={styles.rItemDetail}>
-            <Text mediumSize text={item.item.name} style={{fontWeight: '600'}}/>
-            <Row verticalCenter>
-              <Text microSize text={item.item.sale}/>
-              <Text microSize text={item.item.favorite} style={{marginLeft: 15}}/>
-            </Row>
-            <Text microSize orange text={`￥${item.item.money}`}/>
-          </Column>
-          {/*加减*/}
-          <Row verticalCenter style={{position: 'absolute', right: px2dp(20), bottom: px2dp(20)}}>
-            <VisibleView visible={this.props.cartStore.getFoodBuyNum(item.item) > 0}>
-              <Row verticalCenter>
-                <TouchableOpacity style={[styles.itemActionStyle, styles.lItemActionBg]}
-                                  onPress={() => this._sub(item)}>
-                  <Text largeSize theme text={'-'}/>
-                </TouchableOpacity>
-                <Text text={this.props.cartStore.getFoodBuyNum(item.item)} style={{...marginLR(20)}}/>
-              </Row>
-            </VisibleView>
-            <TouchableOpacity
-              ref={(t) => this.addAction = t}
-              style={[styles.itemActionStyle, styles.rItemActionBg]} onPress={() => this._add(item)}>
-              <Text largeSize white text={'+'}/>
-            </TouchableOpacity>
-          </Row>
-        </Row>
+      <View style={styles.sectionHeader}>
+        <Text>{info.section.key}</Text>
       </View>
     )
   };
 
-  sectionComp = (section) => {
-    return (
-      <View style={{height: 30, backgroundColor: '#DEDEDE', justifyContent: 'center', alignItems: 'center'}}>
-        <Text>{section.section.section}</Text>
-      </View>
-    )
-  };
-
+  _renderRightItem = ({item}) =>
+    <ShopFoodItem
+      item={item}
+      addActionCallback={this._measurePosition}
+      shopInfoViewModel={this.props.shopInfoViewModel}/>;
 }
 
 const styles = StyleSheet.create({
@@ -201,43 +171,15 @@ const styles = StyleSheet.create({
   rightList: {
     width: 3 * screenW / 4
   },
-  rItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: Color.white
-  },
-  rItemDetail: {
-    flex: 1,
-    marginVertical: 10,
-    marginLeft: 5, justifyContent: 'space-between'
-  },
-  icon: {
-    height: 60,
-    width: 60,
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 8,
-    borderWidth: 1,
-    borderColor: '#999999'
+  sectionHeader:{
+    height: 30,
+    backgroundColor: '#DEDEDE',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   saleFavorite: {
     flexDirection: 'row',
     marginTop: 5,
     marginBottom: 5,
-  },
-  itemActionStyle: {
-    ...wh(40),
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  lItemActionBg: {
-    borderRadius: px2dp(20),
-    borderWidth: px2dp(1),
-    borderColor: Color.theme,
-    backgroundColor: Color.white
-  },
-  rItemActionBg: {
-    borderRadius: px2dp(20),
-    backgroundColor: Color.theme
-  },
+  }
 });

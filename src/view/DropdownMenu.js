@@ -52,7 +52,13 @@ export default class DropdownMenu extends PureComponent {
   async _onTabSelect(index) {
     if (this.tabTop === 0) {
       const location = await this._measureView(this.tab);
-      this.tabTop = location.py + location.height - (Platform.OS === 'ios' ? 0 : StatusBar.currentHeight);
+
+      let statusBarHeightOffset = 0;
+      if (Platform.OS === 'android' && Platform.Version >= 19) {
+        statusBarHeightOffset = StatusBar.currentHeight
+      }
+
+      this.tabTop = location.py + location.height - statusBarHeightOffset;
     }
 
     if (this.state.contentVisible) {

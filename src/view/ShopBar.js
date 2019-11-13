@@ -8,6 +8,7 @@ import {
   SafeAreaView,
 } from 'react-native'
 import {observer} from 'mobx-react';
+import PropTypes from 'prop-types';
 import {isIphoneX, px2dp, px2sp, screenW, wh} from "../utils/ScreenUtil";
 import Text from "./Text";
 import Image from "./Image";
@@ -17,12 +18,13 @@ import Color from "../app/Color";
 import Column from "./Column";
 import Button from "./Button";
 
-type Props = {
-  cartElement: Function
-}
-
 @observer
-export default class ShopBar extends Component<Props>{
+export default class ShopBar extends Component{
+
+  static propTypes = {
+    cartElement: PropTypes.func
+  };
+
   constructor(props) {
     super(props);
     this.CartStore = props.store;
@@ -66,7 +68,9 @@ export default class ShopBar extends Component<Props>{
             title={'￥20起送'}/>
         </Row>
 
-        <Animated.View style={[styles.iconWrap, {
+        <Animated.View
+          ref={(cart)=>this.props.cartElement(cart)}
+          style={[styles.iconWrap, {
           transform: [
             {
               scale: this.state.scale.interpolate({
@@ -77,7 +81,7 @@ export default class ShopBar extends Component<Props>{
         }]}>
           {/*购物车图标*/}
           <View style={[styles.iconView, this.CartStore.totalCount > 0 ? {backgroundColor: Color.theme} : null]}>
-            <Image  source={Images.Shop.cart} ref={(cart)=>this.props.cartElement(cart)}
+            <Image source={Images.Shop.cart}
               style={{...wh(50), tintColor: this.CartStore.totalCount > 0 ? Color.white : Color.gray3}}/>
           </View>
           {/*数量*/}

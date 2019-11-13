@@ -1,15 +1,16 @@
 //自定义底下标签栏
 import React, {PureComponent} from 'react';
 import {Image} from 'react-native';
+import PropTypes from 'prop-types';
 import {wh} from "../utils/ScreenUtil";
 
-type Props = {
-  size:number,
-  normalImage: number,
-  selectedImage: number
-}
+export default class TabBarItem extends PureComponent{
 
-export default class TabBarItem extends PureComponent<Props> {
+  static propTypes = {
+    size: PropTypes.number,
+    normalImage: PropTypes.number,
+    selectedImage: PropTypes.number
+  };
 
   static defaultProps = {
     size:42
