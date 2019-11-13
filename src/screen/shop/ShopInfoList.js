@@ -1,3 +1,9 @@
+/**
+ *
+ * TODO 数据重复问题未解决，造成key值重复，引发列表滚动异常，选择分类展示异常
+ *
+ */
+
 import React, {Component} from 'react'
 import {
   StyleSheet,
@@ -63,6 +69,7 @@ export default class ShopInfoList extends Component {
   };
 
   _itemChange = (info) => {
+    if (info.viewableItems.length < 1) return;
     const item = info.viewableItems[0].item;
     if (!item) return;
     let index = item.category_index;

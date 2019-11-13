@@ -37,7 +37,7 @@ class ShoppingCarStore {
   get totalCount(){
     let count = 0;
     for (let food of this.list) {
-      count = count + food.buyNum
+      count += food.buyNum
     }
     return count
   }
@@ -47,7 +47,11 @@ class ShoppingCarStore {
     let totalPrice = 0;
     // 遍历表中所有数据
     for (let food of this.list) {
-      totalPrice = totalPrice + food.buyNum * food.money;
+      let price = 0;
+      if (food.specfoods && food.specfoods.length > 0) {
+        price = food.specfoods[0].price;
+      }
+      totalPrice = totalPrice + food.buyNum * price;
     }
     return toDecimal2(totalPrice);
   }
