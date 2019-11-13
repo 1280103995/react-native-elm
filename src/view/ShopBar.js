@@ -43,6 +43,11 @@ export default class ShopBar extends Component{
     }).start()
   }
 
+  _buy = () => {
+    if (isLogin) this.props.navigation.navigate('OrderConfirm')
+    else this.props.navigation.navigate('Login')
+  };
+
   render() {
     return isIphoneX() ? <SafeAreaView>{this._renderUI()}</SafeAreaView>: this._renderUI()
   }
@@ -64,7 +69,7 @@ export default class ShopBar extends Component{
           <Button
             style={{...wh(160,90), backgroundColor: this.CartStore.totalCount > 0 && this.CartStore.totalPrice >= 20 ? Color.reseda : 'transparent'}}
             activeOpacity={this.CartStore.totalCount > 0 ? 0.8 : 1}
-            onPress={()=>this.props.navigation.navigate('OrderConfirm')}
+            onPress={this._buy}
             title={'￥20起送'}/>
         </Row>
 

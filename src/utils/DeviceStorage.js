@@ -1,21 +1,15 @@
-/*
-*
-* 存储数据
-*
-*/
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class DeviceStorage {
 
   /**
    * 获取
    * @param key
-   * @returns {Promise<T>|*|Promise.<TResult>}
+   * @returns {Promise<string | null | never>}
    */
   static get(key) {
     return AsyncStorage.getItem(key).then((value) => {
-      const jsonValue = JSON.parse(value);
-      return jsonValue;
+      return JSON.parse(value);
     });
   }
 
@@ -35,7 +29,7 @@ export default class DeviceStorage {
    * 更新
    * @param key
    * @param value
-   * @returns {Promise<T>|Promise.<TResult>}
+   * @returns {Promise<void>|Promise<void | never>}
    */
   static update(key, value) {
     return DeviceStorage.get(key).then((item) => {
