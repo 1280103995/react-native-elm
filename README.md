@@ -26,16 +26,15 @@ http库换到 https://github.com/1280103995/react-native-xfetch
 ---------------
 
 项目运行
- 
+
  git clone https://github.com/1280103995/react-native-elm.git
 
  cd react-native-elm
 
  npm install
 
- npm run android / npm run ios<br>
- or<br>
- npm run all
+ react-native run-ios / react-native run-android
+
 
 ## License
 The MIT License.
