@@ -1,16 +1,16 @@
 import React, {Component} from 'react'
-import {Animated, Easing, View} from "react-native";
-import {px2dp, wh} from "../utils/ScreenUtil";
+import {StyleSheet, View} from 'react-native';
+import {px2dp, wh} from '../utils/ScreenUtil';
 import Color from "../app/Color";
 
 export default class CartBall extends Component {
 
   constructor(props) {
     super(props);
-    this.translate = new Animated.ValueXY(0, 0);
     this.state = {
-      child: null,
-      hide: true,
+      x: 0,
+      y: 0,
+      isVisible: false
     }
   }
 
@@ -21,34 +21,76 @@ export default class CartBall extends Component {
    * @param callBack
    */
   startAnim(startPosition, endPosition, callBack) {
-    this.setState({hide: false});
 
-    this.translate.setValue(startPosition);
+    const config = {
+      startX:startPosition.x,
+      startY:startPosition.y,
+      endX:endPosition.x,
+      endY:endPosition.y,
+      handleAnimated: (x, y) => {
+        this.setState({
+          x,
+          y,
+          isVisible: true,
+        })
+      },
+      finish: () => {
+        callBack();
+        this.setState({
+          isVisible: false
+        })
+      }
+    };
 
-    Animated.timing(this.translate, {
-      toValue: endPosition,
-      duration: 350,
-      easing: Easing.linear,
-    }).start(() => {
-      callBack();
-      this.setState({
-        hide: true,
-      })
-    })
+    this._parabola(config);
+  }
+
+  _parabola(config) {
+    const {
+      startX,
+      startY,
+      endX,
+      endY,
+      time = 600,
+      a = 0.006,//如果开始和结束点的差值为正：0.008，否则：0.02，不准确，慢慢调试
+      handleAnimated,
+      finish,
+    } =
+    config || {};
+
+    const diffX = endX - startX;
+    const diffY = endY - startY;
+    const speed = diffX / time;
+
+    const b = (diffY - a * diffX * diffX) / diffX;
+
+    const startTime = new Date().getTime();
+
+    const timer = setInterval(() => {
+      if (new Date().getTime() - startTime > time) {
+        finish && finish();
+        clearInterval(timer);
+        return;
+      }
+
+      const x = speed * (new Date().getTime() - startTime);
+      const y = a * x * x + b * x;//抛物线 y=ax^2+bx
+
+      handleAnimated && handleAnimated(startX + x, startY + y);
+    }, 14);
   }
 
   render() {
-    return !this.state.hide ? <Animated.View
-      style={{
-        position: 'absolute',
-        transform: [
-          {
-            translateY: this.translate.y,
-          }, {
-            translateX: this.translate.x,
-          }]
-      }}>
-      <View style={{...wh(40), borderRadius: px2dp(20), backgroundColor: Color.theme}}/>
-    </Animated.View> : null
+    return <View style={[styles.ball,{left: this.state.x, top: this.state.y,opacity: this.state.isVisible ? 1 : 0}]}/>
   }
+
 }
+
+const styles = StyleSheet.create({
+  ball: {
+    ...wh(40),
+    borderRadius: px2dp(20),
+    position: 'absolute',
+    backgroundColor: Color.theme
+  }
+});

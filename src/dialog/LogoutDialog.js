@@ -39,6 +39,7 @@ export default class LogoutDialog extends React.PureComponent<Props> {
       <Modal
         visible={this.state.visible}
         onTouchOutside={this.hide}
+        onHardwareBackPress={() => { this.hide(); return true }}
         modalAnimation={new ScaleAnimation({
           initialValue: 0, // optional
           useNativeDriver: true, // optional

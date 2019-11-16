@@ -194,7 +194,6 @@
 				24B971790F909E424CA87704 /* Pods-elmTests.debug.xcconfig */,
 				93C1E3B9BFA5AB01AB3B7F80 /* Pods-elmTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -308,6 +307,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
