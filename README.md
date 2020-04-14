@@ -38,8 +38,8 @@ http库换到 https://github.com/1280103995/react-native-xfetch
  1) react-native run-android
  
  2)
-  1. cd ios && pod install && cd ..
-  2. react-native run-ios
+   1、cd ios && pod install && cd .. <br>
+   2、react-native run-ios
 
 
 ## License
