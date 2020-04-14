@@ -32,8 +32,14 @@ http库换到 https://github.com/1280103995/react-native-xfetch
  cd react-native-elm
 
  npm install
-
- react-native run-ios / react-native run-android
+ 
+ ## Run
+ 
+ 1) react-native run-android
+ 
+ 2)
+  1. cd ios && pod install && cd ..
+  2. react-native run-ios
 
 
 ## License
