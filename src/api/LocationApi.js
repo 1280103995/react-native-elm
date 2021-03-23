@@ -1,4 +1,6 @@
-import {XFetch} from "react-native-xfetch";
+import {CreateApi} from './CreateApi';
+
+const API = CreateApi();
 
 export default class LocationApi{
 
@@ -6,28 +8,28 @@ export default class LocationApi{
    * 获取首页默认地址
    */
   static fetchCityGuess(){
-    return new XFetch().get('/v1/cities/').setParams({'type': 'guess'}).do()
+    return API.get('/v1/cities/', {'type': 'guess'})
   }
 
   /**
    * 获取首页热门城市
    */
   static fetchHotCity(){
-    return new XFetch().get('/v1/cities/').setParams({'type': 'hot'}).do()
+    return API.get('/v1/cities/', {'type': 'hot'})
   }
 
   /**
    * 获取首页所有城市
    */
   static fetchAllCtiy(){
-    return new XFetch().get('/v1/cities/').setParams({'type': 'group'}).do()
+    return API.get('/v1/cities/', {'type': 'group'})
   }
 
   /**
    * 获取当前所在城市
    */
   static fetchCurCtity(number){
-    return new XFetch().get(`/v1/cities/${number}`).do()
+    return API.get(`/v1/cities/${number}`)
   }
 
   /**
@@ -37,12 +39,12 @@ export default class LocationApi{
    * @returns {返回Promise}
    */
   static fetchSearchPlace(city_id, key_str){
-    let params = {
+    const params = {
       'type': 'search',
       'city_id': city_id,
       'keyword': key_str
     };
-    return new XFetch().get('/v1/pois').setParams(params).do()
+    return API.get('/v1/pois', params)
   }
 
   /**
@@ -51,19 +53,19 @@ export default class LocationApi{
    * @returns {返回Promise}
    */
   static fetchMSiteAddress(geohash){
-    return new XFetch().get(`/v2/pois/${geohash}`).do()
+    return API.get(`/v2/pois/${geohash}`)
   }
 
   /**
    * 获取msite页面食品分类列表
    */
   static fetchFoodTypes(geohash){
-    let params = {
+    const params = {
       'geohash': geohash,
       'group_type': '1',
       'flags[]': 'F'
     };
-    return new XFetch().get('/v2/index_entry').setParams(params).do()
+    return API.get('/v2/index_entry', params)
   }
 
   /**
@@ -93,7 +95,7 @@ export default class LocationApi{
       }
     });
 
-    let params = {
+    const params = {
       latitude,
       longitude,
       offset,
@@ -105,6 +107,6 @@ export default class LocationApi{
       order_by,
       'delivery_mode[]': delivery_mode + supportStr
     };
-    return new XFetch().get('/shopping/restaurants').setParams(params).do()
+    return API.get('/shopping/restaurants', params)
   }
 }

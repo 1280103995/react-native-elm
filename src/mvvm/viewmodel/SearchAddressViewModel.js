@@ -9,7 +9,7 @@ export default class SearchAddressViewModel{
   searchAddress(){
     if (this._checkNull()) {
       AddressModel.fetchSearchNearby(this.keyWord).then((res) => {
-        this.address = res
+        this.address = res.data
       })
     }
   }

@@ -1,4 +1,6 @@
-import {XFetch} from "react-native-xfetch";
+import {CreateApi} from "../../api/CreateApi";
+
+const API = CreateApi();
 
 export default class AddressModel{
 
@@ -9,10 +11,10 @@ export default class AddressModel{
    * @returns {返回Promise}
    */
   static fetchGetAddress(id, sig){
-    let params = {
+    const params = {
       sig
     };
-    return new XFetch().get(`/v1/carts/${id}/addresses`).setParams(params).do()
+    return API.get(`/v1/carts/${id}/addresses`, params)
   }
 
   /**
@@ -21,11 +23,11 @@ export default class AddressModel{
    * @returns {返回Promise}
    */
   static fetchSearchNearby(keyword){
-    let params = {
+    const params = {
       'type': 'nearby',
       keyword
     };
-    return new XFetch().get('/v1/pois').setParams(params).do()
+    return API.get('/v1/pois', params)
   }
 
   /**
@@ -45,7 +47,7 @@ export default class AddressModel{
    */
   static fetchAddAddress(userId, address, address_detail, geohash, name, phone, phone_bk,
                          poi_type = 0, sex = 1, tag = '公司', tag_type = 4){
-    let params = {
+    const params = {
       address,
       address_detail,
       geohash,
@@ -57,7 +59,7 @@ export default class AddressModel{
       tag,
       tag_type,
     };
-    return new XFetch().post(`/v1/users/${userId}/addresses`).setParams(params).do()
+    return API.post(`/v1/users/${userId}/addresses`, params)
   }
 
   /**
@@ -66,7 +68,7 @@ export default class AddressModel{
    * @returns {返回Promise}
    */
   static fetchGetAddressList(user_id){
-    return new XFetch().get(`/v1/users/${user_id}/addresses`).do()
+    return API.get(`/v1/users/${user_id}/addresses`)
   }
 
   /**
@@ -74,11 +76,11 @@ export default class AddressModel{
    * @returns {返回Promise}
    */
   static fetchGetSearchAddress(){
-    let params = {
+    const params = {
       keyword:keyword,
       type:'nearby'
     };
-    return new XFetch().get('v1/pois').setParams(params).do()
+    return API.get('v1/pois', params)
   }
 
   /**
@@ -88,6 +90,6 @@ export default class AddressModel{
    * @returns {返回Promise}
    */
   static fetchDeleteAddress(userid, addressid){
-    return new XFetch().delete(`/v1/users/${userid}/addresses/${addressid}`).do()
+    return API.delete(`/v1/users/${userid}/addresses/${addressid}`)
   }
 }

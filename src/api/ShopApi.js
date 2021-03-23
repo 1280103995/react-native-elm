@@ -1,4 +1,6 @@
-import {XFetch} from "react-native-xfetch";
+import {CreateApi} from './CreateApi';
+
+const API = CreateApi();
 
 export default class ShopAip{
 
@@ -10,11 +12,11 @@ export default class ShopAip{
    * @returns {返回Promise}
    */
   static fetchShopDetails(shopid,latitude,longitude){
-    let params = {
+    const params = {
       latitude,
       'longitude':longitude + '&extras[]=activities&extras[]=album&extras[]=license&extras[]=identification&extras[]=statistics',
     };
-    return new XFetch().get(`/shopping/restaurant/${shopid}`).setParams(params).do()
+    return API.get(`/shopping/restaurant/${shopid}`, params)
   }
 
   /**
@@ -23,7 +25,7 @@ export default class ShopAip{
    * @returns {返回Promise}
    */
   static fetchShopGoodsList(shopid){
-    return new XFetch().get('/shopping/v2/menu').setParams({'restaurant_id': shopid}).do()
+    return API.get('/shopping/v2/menu', {'restaurant_id': shopid})
   }
 
   /**
@@ -31,13 +33,13 @@ export default class ShopAip{
    * @returns {返回Promise}
    */
   static fetchShopRatingList(shopid){
-    let params = {
+    const params = {
       'has_content': true,
       'offset':0,
       'limit': 10,
       'tag_name':''
     };
-    return new XFetch().get(`/ugc/v2/restaurants/${shopid}/ratings`).setParams(params).do()
+    return API.get(`/ugc/v2/restaurants/${shopid}/ratings`, params)
   }
 
   /**
@@ -46,7 +48,7 @@ export default class ShopAip{
    * @returns {返回Promise}
    */
   static fetchShopScores(shopid){
-    return new XFetch().get(`/ugc/v2/restaurants/${shopid}/ratings/scores`).do()
+    return API.get(`/ugc/v2/restaurants/${shopid}/ratings/scores`)
   }
 
   /**
@@ -55,7 +57,7 @@ export default class ShopAip{
    * @returns {返回Promise}
    */
   static fetchShopRatingTags(shopid){
-    return new XFetch().get(`/ugc/v2/restaurants/${shopid}/ratings/tags`).do()
+    return API.get(`/ugc/v2/restaurants/${shopid}/ratings/tags`)
   }
 
   /**
@@ -65,12 +67,12 @@ export default class ShopAip{
    * @returns {返回Promise}
    */
   static fethcSearchRestaurant(geohash, keyword){
-    let params = {
+    const params = {
       'extras[]': 'restaurant_activity',
       geohash,
       keyword,
       type: 'search'
     };
-    return new XFetch().get('/v4/restaurants').setParams(params).do()
+    return API.get('/v4/restaurants', params)
   }
 }

@@ -37,7 +37,7 @@ export default class ChangeRedPacketScreen extends BaseScreen {
   _fetch(){
     RedPacketApi.fetchExChangeRedPacket(UserInfo.user_id, this.codeText, this.captchaText).then((res)=>{
       this.props.navigation.goBack();
-      Toast.show(res.success);
+      Toast.show(res.data.success);
     })
   }
 

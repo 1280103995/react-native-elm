@@ -22,7 +22,7 @@ export default class RedPacket extends Component {
 
   componentDidMount() {
     RedPacketApi.fetchGetRedPacketNum(UserInfo.user_id).then((res) => {
-      this.setState({data: res})
+      this.setState({data: res.data})
     })
   }
 

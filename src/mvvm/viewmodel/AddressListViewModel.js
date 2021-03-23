@@ -7,7 +7,7 @@ export default class AddressListViewModel {
 
   fetchData(user_id){
     AddressModel.fetchGetAddressList(user_id).then((res)=>{
-      this.list = res
+      this.list = res.data
     })
   }
 
@@ -20,7 +20,7 @@ export default class AddressListViewModel {
   deleteItem(user_id, item){
     AddressModel.fetchDeleteAddress(user_id, item.id).then((res)=>{
       this.removeItem(item);
-      Toast.show(res.success)
+      Toast.show(res.data.success)
     })
   }
 

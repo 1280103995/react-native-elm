@@ -15,7 +15,7 @@ export default class AddAddressViewModel {
     if (this._checkNull()) {
       AddressModel.fetchAddAddress(user_id, this.addressName,
         this.detailAddress, this.geohash, this.name, this.phone, this.phone2).then((res) => {
-        Toast.show(res.success);
+        Toast.show(res.data.success);
         navigation.state.params.callback(true);
         navigation.goBack()
       })

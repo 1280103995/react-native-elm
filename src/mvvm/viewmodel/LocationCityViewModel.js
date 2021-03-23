@@ -11,18 +11,18 @@ export default class LocationCityViewModel {
 
   fetchCityData() {
     LocationApi.fetchHotCity().then((res) => {
-      this.hotList = res;
+      this.hotList = res.data;
     });
     LocationApi.fetchAllCtiy().then((res) => {
       let items = [];
       let length = letters.length;
       for (let i = 0; i < length; i++) {
         let letter = letters[i];
-        if (res[letter] === undefined) continue;
+        if (res.data[letter] === undefined) continue;
         //渲染SectionList，必须的数据结构
         let sectionItem = {
           key: letter,
-          data: res[letter]
+          data: res.data[letter]
         };
         items.push(sectionItem)
       }

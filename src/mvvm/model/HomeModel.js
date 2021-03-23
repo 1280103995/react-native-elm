@@ -1,5 +1,7 @@
 import Url from "../../api/Url";
-import {XFetch} from "react-native-xfetch";
+import {CreateApi} from "../../api/CreateApi";
+
+const API = CreateApi();
 
 export default class HomeModel{
 
@@ -7,20 +9,20 @@ export default class HomeModel{
    * 获取首页默认地址
    */
   static fetchCityGuess(){
-    let params = {'type': 'guess'};
-    return new XFetch().get(Url.Home.cityUrl).setParams(params).do()
+    const params = {'type': 'guess'};
+    return API.get(Url.Home.cityUrl, params)
   }
 
   /**
    * 获取msite页面食品分类列表
    */
   static fetchFoodTypes(geohash){
-    let params = {
+    const params = {
       'geohash': geohash,
       'group_type': '1',
       'flags[]': 'F'
     };
-    return new XFetch().get(Url.Home.footType).do()
+    return API.get(Url.Home.footType, params)
   }
 
   /**
@@ -50,7 +52,7 @@ export default class HomeModel{
       }
     });
 
-    let params = {
+    const params = {
       latitude,
       longitude,
       offset,
@@ -62,13 +64,13 @@ export default class HomeModel{
       order_by,
       'delivery_mode[]': delivery_mode + supportStr
     };
-    return new XFetch().get(Url.Home.shopList).setParams(params).do()
+    return API.get(Url.Home.shopList, params)
   }
 
   static getWeather(cityName: string){
-    let param = {
+    const param = {
         'city': cityName
     };
-    return new XFetch().get('http://wthrcdn.etouch.cn/weather_mini').setParams(param).do()
+    return API.get('http://wthrcdn.etouch.cn/weather_mini', param)
   }
 }

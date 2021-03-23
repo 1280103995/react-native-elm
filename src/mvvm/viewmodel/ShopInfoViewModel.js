@@ -12,18 +12,18 @@ export default class ShopInfoViewModel {
 
   getShopData(id, latitude, longitude) {
     ShopInfoModel.fetchShopDetails(id, latitude, longitude).then((res) => {
-      this.shopImgPath = res.image_path;
-      this.shopName = res.name;
-      this.shopPromotion = res.promotion_info;
+      this.shopImgPath = res.data.image_path;
+      this.shopName = res.data.name;
+      this.shopPromotion = res.data.promotion_info;
     });
   }
 
   fetchFootList(shopId) {
     ShopInfoModel.fetchShopGoodsList(shopId).then((res) => {
       let items = [];
-      const length = res.length;
+      const length = res.data.length;
       for (let i = 0; i < length; i++) {
-        let tempItem = res[i];
+        let tempItem = res.data[i];
         if (tempItem.foods === undefined || tempItem.foods == null || tempItem.foods.length === 0) {
           continue;
         }

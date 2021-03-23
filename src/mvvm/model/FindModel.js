@@ -1,5 +1,7 @@
-import {XFetch} from "react-native-xfetch";
 import Url from "../../api/Url";
+import {CreateApi} from "../../api/CreateApi";
+
+const API = CreateApi();
 
 export default class FindModel{
 
@@ -10,13 +12,13 @@ export default class FindModel{
    * @returns {返回Promise}
    */
   static fethcSearchRestaurant(geohash, keyword){
-    let params = {
+    const params = {
       'extras[]': 'restaurant_activity',
       geohash,
       keyword,
       type: 'search'
     };
-    return new XFetch().get(Url.Find.search).setParams(params).do()
+    return API.get(Url.Find.search, params)
   }
 
 }

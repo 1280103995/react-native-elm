@@ -13,20 +13,20 @@ class CategoryViewModel {
 
   getData(latitude, longitude) {
     CategoryModel.fetchFoodCategory(latitude, longitude).then((res) => {
-      this.category = res;
-      this.categoryChild = res[0].sub_categories
+      this.category = res.data;
+      this.categoryChild = res.data[0].sub_categories
     });
 
     CategoryModel.fetchFoodDelivery(latitude, longitude).then((res) => {
-      this.delivery=res
+      this.delivery=res.data
     });
 
     CategoryModel.fetchFoodActivity(latitude, longitude).then((res) => {
-      this.activity= res
+      this.activity= res.data
     });
 
     HomeModel.fetchShopList(latitude, longitude, 0).then((res) => {
-      this.shopList = res
+      this.shopList = res.data
     })
   }
 

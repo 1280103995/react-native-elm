@@ -1,4 +1,6 @@
-import {XFetch} from "react-native-xfetch";
+import {CreateApi} from "../../api/CreateApi";
+
+const API = CreateApi();
 
 export default class OrderModel{
 
@@ -8,11 +10,10 @@ export default class OrderModel{
    * @returns {返回Promise}
    */
   static fetchOrderList(user_id){
-    let params = {
+    const params = {
       limit: 10,
       offset: 0,
     };
-    return new XFetch().get(`/bos/v2/users/${user_id}/orders`).setParams(params).do()
-  }
+    return API.get(`/bos/v2/users/${user_id}/orders`, params)}
 
 }

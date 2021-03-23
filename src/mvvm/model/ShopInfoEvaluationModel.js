@@ -1,4 +1,6 @@
-import {XFetch} from "react-native-xfetch";
+import {CreateApi} from "../../api/CreateApi";
+
+const API = CreateApi();
 
 export default class ShopInfoEvaluationModel{
 
@@ -8,7 +10,7 @@ export default class ShopInfoEvaluationModel{
    * @returns {返回Promise}
    */
   static fetchShopScores(shopid){
-    return new XFetch().get(`/ugc/v2/restaurants/${shopid}/ratings/scores`).do()
+    return API.get(`/ugc/v2/restaurants/${shopid}/ratings/scores`)
   }
 
   /**
@@ -17,7 +19,7 @@ export default class ShopInfoEvaluationModel{
    * @returns {返回Promise}
    */
   static fetchShopRatingTags(shopid){
-    return new XFetch().get(`/ugc/v2/restaurants/${shopid}/ratings/tags`).do()
+    return API.get(`/ugc/v2/restaurants/${shopid}/ratings/tags`)
   }
 
   /**
@@ -25,13 +27,13 @@ export default class ShopInfoEvaluationModel{
    * @returns {返回Promise}
    */
   static fetchShopRatingList(shopid){
-    let params = {
+    const params = {
       'has_content': true,
       'offset':0,
       'limit': 10,
       'tag_name':''
     };
-    return new XFetch().get(`/ugc/v2/restaurants/${shopid}/ratings`).setParams(params).do()
+    return API.get(`/ugc/v2/restaurants/${shopid}/ratings`, params)
   }
 
 }

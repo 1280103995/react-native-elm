@@ -1,4 +1,6 @@
-import {XFetch} from "react-native-xfetch";
+import {CreateApi} from './CreateApi';
+
+const API = CreateApi();
 
 export default class RedPacketApi{
 
@@ -7,7 +9,7 @@ export default class RedPacketApi{
    * @returns {返回Promise}
    */
   static fetchGetSearch(){
-    return new XFetch().get('/v3/profile/explain').do()
+    return API.get('/v3/profile/explain')
   }
 
   /**
@@ -18,11 +20,11 @@ export default class RedPacketApi{
    * @returns {返回Promise}
    */
   static fetchVipCart(user_id, number, password){
-    let params = {
+    const params = {
       number,
       password
     };
-    return new XFetch().post(`/member/v1/users/${user_id}/delivery_card/physical_card/bind`).setParams(params).do()
+    return API.post(`/member/v1/users/${user_id}/delivery_card/physical_card/bind`, params)
   }
 
   /**
@@ -31,7 +33,7 @@ export default class RedPacketApi{
    * @returns {返回Promise}
    */
   static fetchGetRedPacketNum(user_id){
-    return new XFetch().get(`/promotion/v2/users/${user_id}/hongbaos?limit=20&offset=0`).do()
+    return API.get(`/promotion/v2/users/${user_id}/hongbaos?limit=20&offset=0`)
   }
 
   /**
@@ -40,7 +42,7 @@ export default class RedPacketApi{
    * @returns {返回Promise}
    */
   static fetchGetExired(user_id){
-    return new XFetch().get(`/promotion/v2/users/${user_id}/expired_hongbaos?limit=20&offset=0`).do()
+    return API.get(`/promotion/v2/users/${user_id}/expired_hongbaos?limit=20&offset=0`)
   }
 
   /**
@@ -51,10 +53,10 @@ export default class RedPacketApi{
    * @returns {返回Promise}
    */
   static fetchExChangeRedPacket(user_id, exchange_code, captcha_code){
-    let params = {
+    const params = {
       exchange_code,
       captcha_code,
     };
-    return new XFetch().get(`/v1/users/${user_id}/hongbao/exchange`).do()
+    return API.get(`/v1/users/${user_id}/hongbao/exchange`, params)
   }
 }

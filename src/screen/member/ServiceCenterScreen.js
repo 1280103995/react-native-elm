@@ -23,7 +23,7 @@ export default class ServiceCenterScreen extends BaseScreen {
 
   componentDidMount() {
       RedPacketApi.fetchGetSearch().then((res)=>{
-        let obj = res;
+        let obj = res.data;
         let keys = Object.keys(obj);
         let arr = [];
         keys.forEach((key,index) => {

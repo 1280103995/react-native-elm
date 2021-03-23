@@ -1,4 +1,6 @@
-import {XFetch} from "react-native-xfetch";
+import {CreateApi} from './CreateApi';
+
+const API = CreateApi();
 
 export default class OrderApi{
 
@@ -10,21 +12,20 @@ export default class OrderApi{
    * @returns {返回Promise}
    */
   static fetchCheckout(geohash, entities, shopid){
-    let params = {
+    const params = {
       come_from: "web",
       geohash,
       entities,
       restaurant_id: shopid,
     };
-    return new XFetch().post('/v1/carts/checkout').setParams(params).do()
-  }
+    return API.post('/v1/carts/checkout', params)}
 
   /**
    * 获取快速备注列表
    * @returns {返回Promise}
    */
-  static fetchGetRemark(){
-    return new XFetch().get(`/v1/carts/${id}/remarks`).do()
+  static fetchGetRemark(id){
+    return API.get(`/v1/carts/${id}/remarks`)
   }
 
   /**
@@ -39,7 +40,7 @@ export default class OrderApi{
    * @returns {返回Promise}
    */
   static fetchPlaceOrders(user_id, cart_id, address_id, description, entities, geohash, sig){
-    let params = {
+    const params = {
       address_id,
       'come_from': "mobile_web",
       'deliver_time': "",
@@ -49,8 +50,7 @@ export default class OrderApi{
       'paymethod_id': 1,
       sig,
     };
-    return new XFetch().get(`/v1/users/${user_id}/carts/${cart_id}/orders`).setParams(params).do()
-  }
+    return API.get(`/v1/users/${user_id}/carts/${cart_id}/orders`, params)}
 
   /**
    * 重新发送订单验证码
@@ -60,11 +60,11 @@ export default class OrderApi{
    * @returns {返回Promise}
    */
   static fetchrePostVerify(cart_id, sig, type){
-    let params = {
+    const params = {
       sig,
       type,
     };
-    return new XFetch().get(`/v1/carts/${cart_id}/verify_code`).setParams(params).do()
+    return API.get(`/v1/carts/${cart_id}/verify_code`, params)
   }
 
   /**
@@ -88,7 +88,7 @@ export default class OrderApi{
                              sig,
                              validation_code,
                              validation_token){
-    let params = {
+    const params = {
       address_id,
       'come_from': "mobile_web",
       'deliver_time': "",
@@ -100,7 +100,7 @@ export default class OrderApi{
       validation_code,
       validation_token,
     };
-    return new XFetch().get(`/v1/users/${user_id}/carts/${cart_id}/orders`).setParams(params).do()
+    return API.get(`/v1/users/${user_id}/carts/${cart_id}/orders`, params)
   }
 
   /**
@@ -110,14 +110,14 @@ export default class OrderApi{
    * @returns {返回Promise}
    */
   static fetchPayRequest(merchantOrderNo, userId){
-    let params = {
+    const params = {
       'merchantId': 5,
       merchantOrderNo,
       'source': 'MOBILE_WAP',
       userId,
       'version': '1.0.0',
     };
-    return new XFetch().get('/payapi/payment/queryOrder').setParams(params).do()
+    return API.get('/payapi/payment/queryOrder', params)
   }
 
   /**
@@ -127,11 +127,11 @@ export default class OrderApi{
    * @returns {返回Promise}
    */
   static fetchOrderList(user_id, offset){
-    let params = {
+    const params = {
       limit: 10,
       offset,
     };
-    return new XFetch().get(`/bos/v2/users/${user_id}/orders`).setParams(params).do()
+    return API.get(`/bos/v2/users/${user_id}/orders`, params)
   }
 
   /**
@@ -141,7 +141,7 @@ export default class OrderApi{
    * @returns {返回Promise}
    */
   static fetchOrderInfo(user_id, orderid){
-    return new XFetch().get(`/bos/v1/users/${user_id}/orders/${orderid}/snapshot`).do()
+    return API.get(`/bos/v1/users/${user_id}/orders/${orderid}/snapshot`)
   }
 
 }

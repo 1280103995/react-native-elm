@@ -8,7 +8,7 @@ class FindViewModel {
 
   getSearchData(geohash, keyWord: string){
     FindModel.fethcSearchRestaurant(geohash, keyWord).then((res) => {
-      this.shopList = res
+      this.shopList = res.data
     }).catch((err) => {
     }).finally(()=> {
       this.setSearchState(true);

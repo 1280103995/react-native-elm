@@ -1,4 +1,6 @@
-import {XFetch} from "react-native-xfetch";
+import {CreateApi} from "../../api/CreateApi";
+
+const API = CreateApi();
 
 export default class AuthModel{
 
@@ -7,7 +9,8 @@ export default class AuthModel{
    * @returns {返回Promise}
    */
   static fetchCaptcha(){
-    return new XFetch().post('/v1/captchas').useCookie(true).do()
+    // return API.post('/v1/captchas').useCookie(true).do()
+    return API.post('/v1/captchas')
   }
 
   /**
@@ -16,12 +19,12 @@ export default class AuthModel{
    * @returns {返回Promise}
    */
   static fetchSms(phone){
-    let params = {
+    const params = {
       mobile: phone,
       scene: 'login',
       type: 'sms'
     };
-    return new XFetch().post('/v4/mobile/verify_code/send').setParams(params).do()
+    return API.post('/v4/mobile/verify_code/send', params)
   }
 
   /**
@@ -31,11 +34,11 @@ export default class AuthModel{
    * @returns {返回Promise}
    */
   static fetchCheckExist(checkNumber, type){
-    let params = {
+    const params = {
       [type]: checkNumber,
       type
     };
-    return new XFetch().post('/v1/users/exists').setParams(params).do()
+    return API.post('/v1/users/exists', params)
   }
 
   /**
@@ -47,7 +50,7 @@ export default class AuthModel{
    * @returns {返回Promise}
    */
   static fetchSendMobile(sendData, captcha_code, type, password){
-    let params = {
+    const params = {
       action: "send",
       captcha_code,
       [type]: sendData,
@@ -55,7 +58,7 @@ export default class AuthModel{
       way: type,
       password,
     };
-    return new XFetch().post('/v1/mobile/verify_code/send').setParams(params).do()
+    return API.post('/v1/mobile/verify_code/send',params)
   }
 
   /**
@@ -64,10 +67,10 @@ export default class AuthModel{
    * @returns {返回Promise}
    */
   static fetchUserInfo(user_id){
-    let params = {
+    const params = {
       user_id
     };
-    return new XFetch().get('/v1/user').setParams(params).do()
+    return API.get('/v1/user',params)
   }
 
   /**
@@ -78,12 +81,12 @@ export default class AuthModel{
    * @returns {返回Promise}
    */
   static fetchMobileLogin(code, mobile, validate_token){
-    let params = {
+    const params = {
       code,
       mobile,
       validate_token
     };
-    return new XFetch().post('/v1/login/app_mobile').setParams(params).do()
+    return API.post('/v1/login/app_mobile',params)
   }
 
   /**
@@ -95,7 +98,8 @@ export default class AuthModel{
    */
   static fetchAccountLogin(username, password, captcha_code){
     let formData = {username,password,captcha_code};
-    return new XFetch().post('/v2/login').setParams(formData).useCookie(true).do()
+    // return API.post('/v2/login', formData).useCookie(true).do()
+    return API.post('/v2/login', formData)
   }
 
   /**
@@ -103,7 +107,7 @@ export default class AuthModel{
    * @returns {返回Promise}
    */
   static fetchLogout(){
-    return new XFetch().get('/v2/signout').do()
+    return API.get('/v2/signout')
   }
 
   /**
@@ -116,13 +120,13 @@ export default class AuthModel{
    * @returns {返回Promise}
    */
   static fetchUpdatePwd(username, oldpassWord, newpassword, confirmpassword, captcha_code){
-    let params = {
+    const params = {
       username,
       oldpassWord,
       newpassword,
       confirmpassword,
       captcha_code
     };
-    return new XFetch().post('/v2/changepassword').setParams(params).do()
+    return API.post('/v2/changepassword', params)
   }
 }

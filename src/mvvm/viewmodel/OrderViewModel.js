@@ -7,7 +7,7 @@ class OrderViewModel{
 
   getOrderData(userId){
     OrderModel.fetchOrderList(userId).then((res)=>{
-      this.list = res
+      this.list = res.data
     }).finally(()=>{
       this.refreshState = false
     })

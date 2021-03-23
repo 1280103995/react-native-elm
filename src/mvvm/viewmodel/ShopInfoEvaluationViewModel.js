@@ -13,19 +13,19 @@ class ShopInfoEvaluationViewModel{
 
   getEvaluationDate(id){
     ShopInfoEvaluationModel.fetchShopScores(id).then((res) => {
-        this.overallScore = res.overall_score;
-        this.compareRating = Math.ceil(res.compare_rating) * 100 + '%';
-        this.serviceScore = res.service_score;
-        this.foodScore = res.food_score;
-        this.deliverTime = res.deliver_time
+        this.overallScore = res.data.overall_score;
+        this.compareRating = Math.ceil(res.data.compare_rating) * 100 + '%';
+        this.serviceScore = res.data.service_score;
+        this.foodScore = res.data.food_score;
+        this.deliverTime = res.data.deliver_time
     });
 
     ShopInfoEvaluationModel.fetchShopRatingTags(id).then((res) => {
-      this.tags = res
+      this.tags = res.data
     });
 
     ShopInfoEvaluationModel.fetchShopRatingList(id).then((res)=>{
-      this.list = res
+      this.list = res.data
     })
   }
 

@@ -14,7 +14,7 @@ export default class LoginViewModel{
    */
   fetchRefreshCaptcha = () => {
     AuthModel.fetchCaptcha().then((res)=>{
-      this.captcha = res.code
+      this.captcha = res.data.code
     })
   };
 
@@ -29,7 +29,7 @@ export default class LoginViewModel{
     if (this._checkNull()) {
       AuthModel.fetchAccountLogin(this.nameText, this.pwdText, this.captchaText).then((res) => {
         isLogin = true;
-        UserInfo = res;
+        UserInfo = res.data;
         navigation.state.params.callback();
         navigation.goBack()
       })
